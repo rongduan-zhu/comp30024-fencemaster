@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Board {
 	private ArrayList<ArrayList<Cell> > cellArray;
-	
-	Board(int dimension) {
+
+	public Board(int dimension) {
 		/* Specifying capacity at start will save the time of dynamically reallocating
 		 * more memory */
 		dimension = dimension * 2 - 1;
@@ -13,5 +13,5 @@ public class Board {
 			cellArray.add(new ArrayList<Cell>());
 //			todo: allocate memory for each cell
 		}
-	} 
+	}
 }
