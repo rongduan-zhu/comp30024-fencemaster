@@ -1,0 +1,30 @@
+Tripod(tripodW, tripodB):
+	get all edge nodes with B, store in queueW
+	get all edge nodes with W, store in queueB
+
+	tripodW = false
+	tripodB = false
+
+	while queueW.notEmpty pop node:
+		if node.depth_first_search(queueW)
+			tripodW = true
+			break
+	while queueB.notEmpty pop node:
+		if node.depth_first_search(queueB)
+			tripodB = true
+			break
+
+node.depth_first_search(nodeOnEdges):
+	edgeList = edgeList - edgeOfNode
+	uniqueEdgeVisited = 0
+	stack = {root}
+	while stack.notEmpty:
+		curNode = stack.pop
+		if curNode.onUnvisitedEdge:
+			uniqueEdgeVisited++
+			edgeList -= curNode.edge
+			nodeOnEdges.del(curNode)
+		if uniqueEdgeVisited == 3:
+			return true
+		stack.push(curNode.allUnvisitedNeighbours)
+
