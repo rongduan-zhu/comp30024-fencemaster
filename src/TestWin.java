@@ -28,9 +28,8 @@ public class TestWin {
 		}
 		/* SEARCH */
 		TripodAgent findTripod = new TripodAgent(board);
-		Boolean black = false, white = false;
-		findTripod.searchForTripod(black, white);
-		System.out.println(white);
+		ArrayList<Boolean> tripods = findTripod.searchForTripod();
+		System.out.println(tripods.get(0) + " " + tripods.get(1));
 	}
 
 	public static Board createBoardFromInput(Scanner stdIn, int dimension) {
