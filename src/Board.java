@@ -3,16 +3,17 @@ import java.util.ArrayList;
 
 public class Board {
 	private ArrayList<ArrayList<Cell> > cellArray;
-	private Integer dimension;
+	private Integer numRows;
 
-	public Board(int dimension) {
+	public Board(int numRows) {
 		/* Specifying capacity at start will save the time of dynamically reallocating
 		 * more memory */
-		this.dimension = dimension * 2 - 1;
-		cellArray = new ArrayList<ArrayList<Cell>>(this.dimension);
-		for (int i = 0; i < this.dimension; ++i) {
-			cellArray.add(new ArrayList<Cell>(this.dimension));
-			for (int j = 0; j < this.dimension; ++j) {
+		this.numRows = numRows * 2 - 1;
+		// a 2D ArrayList
+		cellArray = new ArrayList<ArrayList<Cell>>(this.numRows);
+		for (int i = 0; i < this.numRows; i++) {
+			cellArray.add(new ArrayList<Cell>());
+			for (int j = 0; j < this.numRows; j++) {
 				if (isValidPosition(i, j)) {
 					cellArray.get(i).add(new Cell());
 				}
@@ -21,15 +22,15 @@ public class Board {
 	}
 	
 	public boolean isValidPosition(int row, int column) {
-		if (row < 0 || row > this.dimension - 1 ||
-				column < 0 || column > this.dimension - 1) {
+		if (row < 0 || row > this.numRows - 1 ||
+				column < 0 || column > this.numRows - 1) {
 			return false;
 		}
 		
-		int boardMiddle = (this.dimension + 1) / 2 - 1,
+		int boardMiddle = (this.numRows + 1) / 2 - 1,
 			columnBound = boardMiddle + row;
 		if (row > boardMiddle) {
-			columnBound = boardMiddle + (this.dimension - 1) - row;
+			columnBound = boardMiddle + (this.numRows - 1) - row;
 		}
 		
 		if (column <= columnBound) {
@@ -56,8 +57,8 @@ public class Board {
 	@Override
 	public String toString() {
 		String boardString = new String();
-		for (int i = 0; i < dimension; ++i) {
-			for (int j = 0; j < dimension; ++j) {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numRows; j++) {
 				boardString += get(i, j);
 			}
 			boardString += "\n";
