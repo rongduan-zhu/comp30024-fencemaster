@@ -1,9 +1,10 @@
 public class Cell {
-	public final String BLACK = "B";
-	public final String WHITE = "W";
-	public final String EMPTY = "-";
+	public static final String BLACK = "B";
+	public static final String WHITE = "W";
+	public static final String EMPTY = "-";
 
 	private String content;
+	private boolean visited = false;
 
 	public Cell() {
 		content = new String(EMPTY);
@@ -30,5 +31,13 @@ public class Cell {
 	@Override
 	public String toString() {
 		return content;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 }

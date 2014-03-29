@@ -16,17 +16,21 @@ public class TestWin {
 		// dimension of the board, i.e. how many cells each edge has
 		int dimension = stdIn.nextInt();
 		// dimension must be > 5
-		if (dimension <= 5) {
+		if (dimension < 5) {
 			System.out.println("Error: Board dimension too small. Exiting program.");
 			System.exit(1);
 		}
 		Board board = createBoardFromInput(stdIn, dimension);
-
 		System.out.println(board);
 		//Tests get neighbours
 		for (ArrayList<Integer> x : board.getNeighbours(5, 1)) {
 			System.out.println(x.get(0) + " " + x.get(1));
 		}
+		/* SEARCH */
+		TripodAgent findTripod = new TripodAgent(board);
+		Boolean black = false, white = false;
+		findTripod.searchForTripod(black, white);
+		System.out.println(white);
 	}
 
 	public static Board createBoardFromInput(Scanner stdIn, int dimension) {

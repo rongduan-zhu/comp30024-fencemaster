@@ -15,7 +15,7 @@ Tripod(tripodW, tripodB):
 			break
 
 node.depth_first_search(nodeOnEdges):
-	edgeList = edgeList - edgeOfNode
+	edgeList = listOfAllEdges
 	uniqueEdgeVisited = 0
 	stack = {root}
 	while stack.notEmpty:
