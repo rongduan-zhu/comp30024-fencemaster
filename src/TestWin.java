@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestWin {
@@ -22,6 +23,10 @@ public class TestWin {
 		Board board = createBoardFromInput(stdIn, dimension);
 
 		System.out.println(board);
+		//Tests get neighbours
+		for (ArrayList<Integer> x : board.getNeighbours(5, 1)) {
+			System.out.println(x.get(0) + " " + x.get(1));
+		}
 	}
 
 	public static Board createBoardFromInput(Scanner stdIn, int dimension) {

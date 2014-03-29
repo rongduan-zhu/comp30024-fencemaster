@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 public class Board {
 	private ArrayList<ArrayList<Cell> > cellArray;
@@ -74,7 +74,51 @@ public class Board {
 		return columnBound;
 	}
 
-	public String getNeighbour(int row, int column) {
-		return "";
+	/**
+	 * returns a 2d arraylist, with each item of first layer being the row and column
+	 * of a neighbour. eg [[1,2], [1,3]]
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	public ArrayList<ArrayList<Integer> > getNeighbours(int row, int column) {
+		/* Got to check for 6 directions, assume checking for x's neighbours, then
+		 * got to check for x's top, right, bottom-right, bottom, left, and top-left */
+		if (!isValidPosition(row, column)) {
+			return null;
+		}
+		String content = get(row, column);
+		ArrayList<ArrayList<Integer> > neighbours = new ArrayList<ArrayList<Integer> >();
+		
+		//Checks top
+		if (get(row - 1, column).equals(content)) {
+			neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column)));
+		}
+		
+		//Checks right
+		if (get(row, column + 1).equals(content)) {
+			neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column + 1)));
+		}
+		
+		//Checks bottom-right
+		if (get(row + 1, column + 1).equals(content)) {
+			neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column + 1)));
+		}
+		
+		//Checks bottom
+		if (get(row + 1, column).equals(content)) {
+			neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column)));
+		}
+		
+		//Checks left
+		if (get(row, column - 1).equals(content)) {
+			neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column - 1)));
+		}
+		
+		//Checks top-left
+		if (get(row - 1, column - 1).equals(content)) {
+			neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column - 1)));
+		}
+		return neighbours;
 	}
 }
