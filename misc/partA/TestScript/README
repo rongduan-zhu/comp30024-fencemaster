@@ -1,0 +1,11 @@
+This TestScript.sh gives you a chance to test your partA implementation with the test cases we have used.
+
+Copy the content of this folder and the files you want to test into the same folder. From one of the Unix machines go to the directory and run "TestScript.sh"
+
+Note: In your source code, replace all your error messages for corrupted inputs with "Error":
+
+System.out.println("Error");
+
+Note: You can resolve the error "bash: ./TestScript.sh: bad interpreter: Permission denied" by giving the required permission to "TestScript.sh" using the following command:
+
+> chmod u+rwx TestScript.sh
