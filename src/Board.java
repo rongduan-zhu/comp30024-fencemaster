@@ -89,36 +89,62 @@ public class Board {
 		}
 		String content = get(row, column);
 		ArrayList<ArrayList<Integer> > neighbours = new ArrayList<ArrayList<Integer> >();
-		
+
 		//Checks top
 		if (get(row - 1, column).equals(content)) {
 			neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column)));
 		}
-		
+
 		//Checks right
 		if (get(row, column + 1).equals(content)) {
 			neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column + 1)));
 		}
-		
+
 		//Checks bottom-right
 		if (get(row + 1, column + 1).equals(content)) {
 			neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column + 1)));
 		}
-		
+
 		//Checks bottom
 		if (get(row + 1, column).equals(content)) {
 			neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column)));
 		}
-		
+
 		//Checks left
 		if (get(row, column - 1).equals(content)) {
 			neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column - 1)));
 		}
-		
+
 		//Checks top-left
 		if (get(row - 1, column - 1).equals(content)) {
 			neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column - 1)));
 		}
 		return neighbours;
+	}
+
+	public boolean isEdgeNode(int row, int column) {
+		if (!isValidPosition(row, column)) {
+			return false;
+		}
+		int boardMiddle = (this.numRows + 1) / 2 - 1;
+		//Nothing on the middle row is an edge node
+		if (row < boardMiddle || row > boardMiddle) {
+			//if its not top row or bottom row, then if its on either side, its an edge
+			if (row != 0 && row != this.numRows - 1) {
+				if (column == 0 || column == getMaxColumn(row)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				//if its top row or bottom row, then get all row except for the edges
+				if (column > 0 && column < boardMiddle) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 }

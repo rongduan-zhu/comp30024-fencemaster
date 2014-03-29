@@ -39,6 +39,9 @@ public class TestWin {
 				if (stdIn.hasNext()) {
 					item = stdIn.next();
 					board.set(i, j, item);
+					if (board.isEdgeNode(i, j)) {
+						System.out.println(i + " " + j);
+					}
 				} else {
 					// run out of values to read so wasn't even data inputed
 					System.out.println("Error: Not enough cells in input. Exiting program.");
