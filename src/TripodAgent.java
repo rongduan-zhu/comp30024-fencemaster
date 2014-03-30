@@ -20,7 +20,7 @@ public class TripodAgent {
 	public ArrayList<Boolean> searchForTripod() {
 		ArrayList<Boolean> returnList = new ArrayList<Boolean>(Arrays.asList(false, false));
 		findAllEdgeNodes();
-		for (int i = 0; i < blackEdgeNodes.size(); ++i) {
+		for (int i = 0; i < blackEdgeNodes.size(); i++) {
 			ArrayList<Integer> position = blackEdgeNodes.get(i);
 			if(board.getCell(position.get(0), position.get(1)).isVisited()) {
 				continue;
@@ -31,7 +31,7 @@ public class TripodAgent {
 			}
 		}
 		
-		for (int i = 0; i < whiteEdgeNodes.size(); ++i) {
+		for (int i = 0; i < whiteEdgeNodes.size(); i++) {
 			ArrayList<Integer> position = whiteEdgeNodes.get(i);
 			if(board.getCell(position.get(0), position.get(1)).isVisited()) {
 				continue;
@@ -61,7 +61,7 @@ public class TripodAgent {
 				//if current edge is unvisited
 				edgeIndex = board.whichEdge(curNode.get(0), curNode.get(1));
 				if (!edgeList.get(edgeIndex)) {
-					++edgeVisited;
+					edgeVisited++;
 					edgeList.set(edgeIndex, true);
 					board.getCell(curNode.get(0), curNode.get(1)).setVisited(true);
 				}
@@ -81,8 +81,8 @@ public class TripodAgent {
 	}
 
 	private void findAllEdgeNodes() {
-		for (int i = 0; i < board.getNumRows(); ++i) {
-			for (int j = 0; j < board.getMaxColumn(i); ++j) {
+		for (int i = 0; i < board.getNumRows(); i++) {
+			for (int j = 0; j < board.getMaxColumn(i); j++) {
 				if (board.isEdgeNode(i, j)) {
 					if (board.get(i, j).equals(Cell.BLACK)) {
 						blackEdgeNodes.add(new ArrayList<Integer>(Arrays.asList(i, j)));

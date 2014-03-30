@@ -16,7 +16,7 @@ public class TestWin {
 		// dimension of the board, i.e. how many cells each edge has
 		int dimension = stdIn.nextInt();
 		// dimension must be > 5
-		if (dimension < 5) {
+		if (dimension <= 5) {
 			System.out.println("Error: Board dimension too small. Exiting program.");
 			System.exit(1);
 		}
@@ -46,7 +46,7 @@ public class TestWin {
 						System.out.println(i + " " + j);
 					}
 				} else {
-					// run out of values to read so wasn't even data inputed
+					// run out of values to read so not enough data inputed
 					System.out.println("Error: Not enough cells in input. Exiting program.");
 					System.exit(1);
 				}
