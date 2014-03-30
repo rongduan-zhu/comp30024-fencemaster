@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Board {
+	public static final int ALL_NEIGHBOURS = 1;
+	public static final int VISITED_NEIGHBOURS = 2;
+	public static final int UNVISITED_NEIGHBOURS = 3;
+
 	private ArrayList<ArrayList<Cell> > cellArray;
 	private Integer numRows;
 
@@ -80,13 +84,13 @@ public class Board {
 	}
 
 	/**
-	 * returns all unvisited neighbours as a 2d arraylist, with each item of first layer being the row and column
-	 * of a neighbour. eg [[1,2], [1,3]]
 	 * @param row
 	 * @param column
-	 * @return
+	 * @param type
+	 * @return returns all unvisited neighbours as a 2d arraylist, with each item of first layer being the row and column
+	 * 		   of a neighbour. eg [[1,2], [1,3]]
 	 */
-	public ArrayList<ArrayList<Integer> > getNeighbours(int row, int column) {
+	public ArrayList<ArrayList<Integer> > getNeighbours(int row, int column, int type) {
 		/* Got to check for 6 directions, assume checking for x's neighbours, then
 		 * got to check for x's top, right, bottom-right/bottom-left, bottom, left,
 		 * and top-left/top-right */
@@ -98,17 +102,30 @@ public class Board {
 		int neighbourRow,
 			neighbourColumn,
 			boardMiddle = (this.numRows + 1) / 2 - 1;
+		boolean typeConstraint;
 
 		//Checks top
 		if (isValidPosition(row - 1, column)) {
-			if (!cellArray.get(row - 1).get(column).isVisited() && get(row - 1, column).equals(content)) {
+			if (type == ALL_NEIGHBOURS) {
+				typeConstraint = true;
+			} else {
+				typeConstraint = getCell(row - 1, column).isVisited();
+				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
+			}
+			if (typeConstraint && get(row - 1, column).equals(content)) {
 				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column)));
 			}
 		}
 
 		//Checks right
 		if (isValidPosition(row, column + 1)) {
-			if (!cellArray.get(row).get(column + 1).isVisited() && get(row, column + 1).equals(content)) {
+			if (type == ALL_NEIGHBOURS) {
+				typeConstraint = true;
+			} else {
+				typeConstraint = getCell(row, column + 1).isVisited();
+				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
+			}
+			if (typeConstraint && get(row, column + 1).equals(content)) {
 				neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column + 1)));
 			}
 		}
@@ -122,21 +139,39 @@ public class Board {
 			neighbourColumn = column - 1;
 		}
 		if (isValidPosition(neighbourRow, neighbourColumn)) {
-			if (!cellArray.get(neighbourRow).get(neighbourColumn).isVisited() && get(neighbourRow, neighbourColumn).equals(content)) {
+			if (type == ALL_NEIGHBOURS) {
+				typeConstraint = true;
+			} else {
+				typeConstraint = getCell(neighbourRow, neighbourColumn).isVisited();
+				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
+			}
+			if (typeConstraint && get(neighbourRow, neighbourColumn).equals(content)) {
 				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
 			}
 		}
 
 		//Checks bottom
 		if (isValidPosition(row + 1, column)) {
-			if (!cellArray.get(row + 1).get(column).isVisited() && get(row + 1, column).equals(content)) {
+			if (type == ALL_NEIGHBOURS) {
+				typeConstraint = true;
+			} else {
+				typeConstraint = getCell(row + 1, column).isVisited();
+				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
+			}
+			if (typeConstraint && get(row + 1, column).equals(content)) {
 				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column)));
 			}
 		}
 
 		//Checks left
 		if (isValidPosition(row, column - 1)) {
-			if (!cellArray.get(row).get(column - 1).isVisited() && get(row, column - 1).equals(content)) {
+			if (type == ALL_NEIGHBOURS) {
+				typeConstraint = true;
+			} else {
+				typeConstraint = getCell(row, column - 1).isVisited();
+				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
+			}
+			if (typeConstraint && get(row, column - 1).equals(content)) {
 				neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column - 1)));
 			}
 		}
@@ -150,7 +185,13 @@ public class Board {
 			neighbourColumn = column + 1;
 		}
 		if (isValidPosition(neighbourRow, neighbourColumn)) {
-			if (!cellArray.get(neighbourRow).get(neighbourColumn).isVisited() && get(neighbourRow, neighbourColumn).equals(content)) {
+			if (type == ALL_NEIGHBOURS) {
+				typeConstraint = true;
+			} else {
+				typeConstraint = getCell(neighbourRow, neighbourColumn).isVisited();
+				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
+			}
+			if (typeConstraint && get(neighbourRow, neighbourColumn).equals(content)) {
 				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
 			}
 		}

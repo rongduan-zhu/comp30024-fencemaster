@@ -45,7 +45,7 @@ public class Cell {
 	public String toString() {
 		return content;
 	}
-	
+
 	/**
 	 * checks if current cell has been visited
 	 * @return boolean, true if it has been visited, false otherwise

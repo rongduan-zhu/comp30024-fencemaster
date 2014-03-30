@@ -23,7 +23,7 @@ public class TestWin {
 		Board board = createBoardFromInput(stdIn, dimension);
 		System.out.println(board);
 		//Tests get neighbours
-		for (ArrayList<Integer> x : board.getNeighbours(5, 1)) {
+		for (ArrayList<Integer> x : board.getNeighbours(5, 1, Board.ALL_NEIGHBOURS)) {
 			System.out.println(x.get(0) + " " + x.get(1));
 		}
 		/* SEARCH */

@@ -19,6 +19,8 @@ public class TripodAgent {
 	 */
 	public ArrayList<Boolean> searchForTripod() {
 		ArrayList<Boolean> returnList = new ArrayList<Boolean>(Arrays.asList(false, false));
+		//reset visited state of all nodes
+		board.resetVisited();
 		findAllEdgeNodes();
 		for (int i = 0; i < blackEdgeNodes.size(); ++i) {
 			ArrayList<Integer> position = blackEdgeNodes.get(i);
@@ -69,7 +71,7 @@ public class TripodAgent {
 			if (edgeVisited == 3) {
 				return true;
 			}
-			stack.addAll(board.getNeighbours(curNode.get(0), curNode.get(1)));
+			stack.addAll(board.getNeighbours(curNode.get(0), curNode.get(1), Board.UNVISITED_NEIGHBOURS));
 		}
 		return false;
 	}
