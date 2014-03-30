@@ -82,7 +82,7 @@ public class TripodAgent {
 
 	private void findAllEdgeNodes() {
 		for (int i = 0; i < board.getNumRows(); ++i) {
-			for (int j = 0; j < board.getMaxColumn(i); ++j) {
+			for (int j = 0; j <= board.getMaxColumn(i); ++j) {
 				if (board.isEdgeNode(i, j)) {
 					if (board.get(i, j).equals(Cell.BLACK)) {
 						blackEdgeNodes.add(new ArrayList<Integer>(Arrays.asList(i, j)));

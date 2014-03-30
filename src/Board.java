@@ -62,6 +62,11 @@ public class Board {
 		return boardString;
 	}
 
+	/**
+	 * Return the right most column index (0 based) of the input row
+	 * @param row
+	 * @return right most column index, int
+	 */
 	public int getMaxColumn(int row) {
 		if (row > this.numRows - 1) {
 			return -1;
@@ -199,7 +204,7 @@ public class Board {
 
 	public void resetVisited() {
 		for (int i = 0; i < numRows; ++i) {
-			for (int j = 0; j < getMaxColumn(i); ++j) {
+			for (int j = 0; j <= getMaxColumn(i); ++j) {
 				cellArray.get(i).get(j).setVisited(false);
 			}
 		}
