@@ -7,7 +7,7 @@ public class TestWin {
 	/* Temporary main method in here for testing */
 	public static void main(String args[]) throws FileNotFoundException {
 		// set the standard input stream to be a text file (for testing input)
-		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-tripod.txt"));
+		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop.txt"));
 
 		Scanner stdIn = new Scanner(System.in);
 
@@ -26,18 +26,18 @@ public class TestWin {
 		Board board = createBoardFromInput(stdIn, dimension);
 		System.out.println(board);
 		//Tests get neighbours
-		/*for (ArrayList<Integer> x : board.getNeighbours(5, 1)) {
+		/*for (ArrayList<Integer> x : board.getNeighbours(0, 1)) {
 			System.out.println(x.get(0) + " " + x.get(1));
 		}*/
 		
 		LoopSearch findLoop = new LoopSearch(board);
-		findLoop.searchForLoop(Cell.WHITE);
+		System.out.println(findLoop.searchForLoop(Cell.BLACK));
 		/* SEARCH */
 		TripodAgent findTripod = new TripodAgent(board);
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
 		System.out.println(tripods.get(0) + " " + tripods.get(1));
 		
-		
+		return;
 	}
 
 	public static Board createBoardFromInput(Scanner stdIn, int dimension) {

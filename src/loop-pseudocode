@@ -8,20 +8,23 @@ searchForLoop():Boolean {
 				neighbours = currentNode.getNeighbours()
 				// every node in a loop has to have at least 2 neighbours
 				if neighbours.length < 2
-					return false
+					// this node isn't part of loop so go to next cell in the queue
+					continue
 				
-				// check if neighbours are neighbours of each other
+				
 				for i in neighbours.length {
 					secondNeighbourList = neighbours[i].getNeighbours()
 					// check neighbours neighbours aren't neighbours with current node
 					if (secondNeighbourList.contains(currentNode)) {
-						return false;
+						// this node isn't part of loop so go to next cell in the queue
+						continue
 					}
-
+					// check if neighbours are neighbours of each other
 					for j in neighbours.length{
 						if i != j {
-							if secondNeighbourList.contains(j) {
-								return false
+							if neighbours[j].getNeighbours().contains(neighbours[i]) {
+								// this node isn't part of loop so go to next cell in the queue
+								continue
 							}
 						}
 					}

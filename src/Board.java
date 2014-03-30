@@ -152,7 +152,80 @@ public class Board {
 		}
 		return neighbours;
 	}
+	
+	// duplicated this method for now, should change getNeighbours to include argument for whether you want unvisited/visited
+	public ArrayList<ArrayList<Integer>> getAllNeighbours(int row, int column) {
+		/* Got to check for 6 directions, assume checking for x's neighbours, then
+		 * got to check for x's top, right, bottom-right/bottom-left, bottom, left,
+		 * and top-left/top-right */
+		if (!isValidPosition(row, column)) {
+			return null;
+		}
+		String content = get(row, column);
+		ArrayList<ArrayList<Integer>> neighbours = new ArrayList<ArrayList<Integer>>();
+		int neighbourRow,
+			neighbourColumn,
+			boardMiddle = (this.numRows + 1) / 2 - 1;
 
+		//Checks top
+		if (isValidPosition(row - 1, column)) {
+			if (get(row - 1, column).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column)));
+			}
+		}
+
+		//Checks right
+		if (isValidPosition(row, column + 1)) {
+			if (get(row, column + 1).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column + 1)));
+			}
+		}
+
+		//Checks bottom-right/bottom-left
+		if (row < boardMiddle) {
+			neighbourRow = row + 1;
+			neighbourColumn = column + 1;
+		} else {
+			neighbourRow = row + 1;
+			neighbourColumn = column - 1;
+		}
+		if (isValidPosition(neighbourRow, neighbourColumn)) {
+			if (get(neighbourRow, neighbourColumn).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+			}
+		}
+
+		//Checks bottom
+		if (isValidPosition(row + 1, column)) {
+			if (get(row + 1, column).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column)));
+			}
+		}
+
+		//Checks left
+		if (isValidPosition(row, column - 1)) {
+			if (get(row, column - 1).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column - 1)));
+			}
+		}
+
+		//Checks top-left/top-right
+		if (row <= boardMiddle) {
+			neighbourRow = row - 1;
+			neighbourColumn = column - 1;
+		} else {
+			neighbourRow = row - 1;
+			neighbourColumn = column + 1;
+		}
+		if (isValidPosition(neighbourRow, neighbourColumn)) {
+			if (get(neighbourRow, neighbourColumn).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+			}
+		}
+		return neighbours;
+	}
+	
+	
 	public boolean isEdgeNode(int row, int column) {
 		if (!isValidPosition(row, column)) {
 			return false;
