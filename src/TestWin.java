@@ -37,8 +37,8 @@ public class TestWin {
 		// create a new board object to store input into
 		Board board = new Board(dimension);
 		String item;
-		for (int i = 0; i < numRows; i++) {
-			for (int j = 0; j <= board.getMaxColumn(i); j++) {
+		for (int i = 0; i < numRows; ++i) {
+			for (int j = 0; j <= board.getMaxColumn(i); ++j) {
 				if (stdIn.hasNext()) {
 					item = stdIn.next();
 					board.set(i, j, item);
