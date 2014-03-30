@@ -1,8 +1,10 @@
 public class Cell {
+	/** constant strings determining what the cell contains */
 	public static final String BLACK = "B";
 	public static final String WHITE = "W";
 	public static final String EMPTY = "-";
 
+	/**  */
 	private String content;
 	private boolean visited = false;
 
