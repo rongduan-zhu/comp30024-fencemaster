@@ -38,8 +38,20 @@ public class LoopSearch {
 					
 					// every cell in a loop must have at least two neighbours
 					if (currentCellNeighbours.size() < 2) {
-						// this node isn't part of loop so go to next cell in the queue
+						// this cell isn't part of loop so go to next cell in the queue
+						visitedCells = 0;
 						continue;
+					} else if (currentCellNeighbours.size() == 2) {
+						// when you have two neighbours, they cannot be neighbours of each other 
+						// (i.e. they must 'spread apart' from start)
+						// otherwise it is not a loop
+						ArrayList<Integer> neighbourOne = currentCellNeighbours.get(0);
+						ArrayList<Integer> neighbourTwo = currentCellNeighbours.get(1);
+						ArrayList<ArrayList<Integer>> neighbourOneNeighbours = board.getAllNeighbours(neighbourOne.get(0), neighbourTwo.get(1));
+						if (neighbourOneNeighbours.contains(neighbourTwo)) {
+							visitedCells = 0;
+							continue;
+						}
 					}
 					for (ArrayList<Integer> oneNeighbour : currentCellNeighbours) {
 						if (!board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).isVisited()) {
@@ -51,17 +63,6 @@ public class LoopSearch {
 								System.out.println("second neighbours are neighbours with current cell at: " + currentCell);
 								break;
 							}*/
-							// check that neighbours aren't neighbours of each other, otherwise not a loop
-							for (ArrayList<Integer> otherNeighbour: currentCellNeighbours) {
-								// make sure not checking same cell against itself
-								if (!oneNeighbour.equals(otherNeighbour)) {
-									ArrayList<ArrayList<Integer>> otherNeighbours = board.getAllNeighbours(otherNeighbour.get(0), otherNeighbour.get(1));
-									if (otherNeighbours.contains(oneNeighbour)) {
-										// this node isn't part of loop so go to next cell in the queue
-										continue;
-									}
-								}
-							}
 							// add cells to start of queue so that you get further away from start before coming back
 							cellsToVisitQueue.add(0, oneNeighbour);
 						}
