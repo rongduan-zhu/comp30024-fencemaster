@@ -29,12 +29,26 @@ public class TestWin {
 		/*for (ArrayList<Integer> x : board.getNeighbours(0, 1)) {
 			System.out.println(x.get(0) + " " + x.get(1));
 		}*/
-		
+		long startTime, endTime;
 		LoopSearch findLoop = new LoopSearch(board);
+		
+		startTime = System.nanoTime();
+		
 		System.out.println(findLoop.searchForLoop(Cell.BLACK));
+		System.out.println(findLoop.searchForLoop(Cell.WHITE));
+		
+		endTime = System.nanoTime();
+		
+		System.out.println("Finding a loop took: " + (endTime - startTime) / Math.pow(10, 9) + " seconds.");
 		/* SEARCH */
 		TripodAgent findTripod = new TripodAgent(board);
+		
+		startTime = System.nanoTime();
+		
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
+		
+		endTime = System.nanoTime();
+		System.out.println("Finding a tripod took: " + (endTime - startTime) / Math.pow(10, 9) + " seconds.");
 		System.out.println(tripods.get(0) + " " + tripods.get(1));
 		
 		return;

@@ -17,9 +17,13 @@ public class LoopSearch {
 		
 		for (ArrayList<Integer> oneCell : colourCells) {
 			// check if cell is visited before to prevent checking cells multiple times
-			if (!board.getCell(oneCell.get(0), oneCell.get(1)).isVisited()) {
+			/*if (!board.getCell(oneCell.get(0), oneCell.get(1)).isVisited()) {*/
+				// mark current cell as visited i.e. do not try to check it again as a loop starting position
+				/*board.getCell(oneCell.get(0), oneCell.get(1)).setVisited(true);*/
+				
 				// create a queue of cells to visit and add this cell as the intial cell to visit
 				ArrayList<ArrayList<Integer>> cellsToVisitQueue = new ArrayList<ArrayList<Integer>>();
+				
 				cellsToVisitQueue.add(oneCell);
 				// cell that the loop search began from
 				ArrayList<Integer> startCell = oneCell;
@@ -27,18 +31,21 @@ public class LoopSearch {
 				ArrayList<Integer> currentCell;
 				// 2D array list of neighbour cells to current cell
 				ArrayList<ArrayList<Integer>> currentCellNeighbours;
+				
 				int visitedCells = 0;
 				while (cellsToVisitQueue.size() > 0) {
 					currentCell = cellsToVisitQueue.remove(0);
-					visitedCells++;
-					// mark current cell as visited
+					if (board.getCell(currentCell.get(0), currentCell.get(1)).isVisited()) {
+						continue;
+					}
 					board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
-					System.out.println("i am at cell: " + currentCell);
-					currentCellNeighbours = board.getAllNeighbours(currentCell.get(0), currentCell.get(1));
+					visitedCells++;
 					
+					currentCellNeighbours = board.getAllNeighbours(currentCell.get(0), currentCell.get(1));
+					System.out.println("i am at cell: " + currentCell + " and the neighbours are: " + currentCellNeighbours);
 					// every cell in a loop must have at least two neighbours
 					if (currentCellNeighbours.size() < 2) {
-						// this cell isn't part of loop so go to next cell in the queue
+						// not enough neighbours, go to next cell in queue
 						visitedCells = 0;
 						continue;
 					} else if (currentCellNeighbours.size() == 2) {
@@ -47,32 +54,29 @@ public class LoopSearch {
 						// otherwise it is not a loop
 						ArrayList<Integer> neighbourOne = currentCellNeighbours.get(0);
 						ArrayList<Integer> neighbourTwo = currentCellNeighbours.get(1);
-						ArrayList<ArrayList<Integer>> neighbourOneNeighbours = board.getAllNeighbours(neighbourOne.get(0), neighbourTwo.get(1));
+						ArrayList<ArrayList<Integer>> neighbourOneNeighbours = board.getAllNeighbours(neighbourOne.get(0), neighbourOne.get(1));
 						if (neighbourOneNeighbours.contains(neighbourTwo)) {
 							visitedCells = 0;
 							continue;
 						}
+					} else if (currentCellNeighbours.size() == 6) {
+						// the only case of having six neighbours is a cell completely surrounded which is not a loop
+						visitedCells = 0;
+						continue;
 					}
 					for (ArrayList<Integer> oneNeighbour : currentCellNeighbours) {
 						if (!board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).isVisited()) {
-							// commented this out for now as have to get third neighbours not second
-							/*// get neighbours of this neighbour, i.e. second neighbours
-							ArrayList<ArrayList<Integer>> secondNeighbours = board.getAllNeighbours(oneNeighbour.get(0), oneNeighbour.get(1));
-							// check that these neighbours aren't neighbours with current cell
-							if (secondNeighbours.contains(currentCell)) {
-								System.out.println("second neighbours are neighbours with current cell at: " + currentCell);
-								break;
-							}*/
 							// add cells to start of queue so that you get further away from start before coming back
-							cellsToVisitQueue.add(0, oneNeighbour);
+							cellsToVisitQueue.add(0, oneNeighbour);														
 						}
-						if (oneNeighbour.equals(startCell) && !currentCell.equals(startCell) && visitedCells >= 5) {
+						// visited cells for 3 to ensure it doesn't go out one cell then come back, not sure about this yet
+						if (oneNeighbour.equals(startCell) && !currentCell.equals(startCell) && visitedCells >= 3) {
 							System.out.println("FOUND IT!!! at cell:" + currentCell + " and start cell is:" + startCell);
 							return true;
 						}
 					}					
 				}
-			}			
+			/*}*/		
 		}
 		System.out.println("failed, returning false");
 		return false;
