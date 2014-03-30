@@ -4,17 +4,14 @@ import java.util.Arrays;
 
 public class TripodAgent {
 	private Board board;
-	private ArrayList<ArrayList<Integer> > blackEdgeNodes = new ArrayList<ArrayList<Integer> >();
-	private ArrayList<ArrayList<Integer> > whiteEdgeNodes = new ArrayList<ArrayList<Integer> >();
+	private ArrayList<ArrayList<Integer>> blackEdgeNodes = new ArrayList<ArrayList<Integer>>();
+	private ArrayList<ArrayList<Integer>> whiteEdgeNodes = new ArrayList<ArrayList<Integer>>();
 
 	public TripodAgent(Board board) {
 		this.board = board;
 	}
 	
 	/**
-	 * 
-	 * @param black
-	 * @param white
 	 * @return A tuple, first item is if black has a tripod, second for white
 	 */
 	public ArrayList<Boolean> searchForTripod() {

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Board {
-	private ArrayList<ArrayList<Cell> > cellArray;
+	private ArrayList<ArrayList<Cell>> cellArray;
 	private Integer numRows;
 
 	public Board(int numRows) {
@@ -67,6 +67,7 @@ public class Board {
 			return -1;
 		}
 		int boardMiddle = (this.numRows + 1) / 2 - 1,
+			
 			columnBound = boardMiddle + row;
 		if (row > boardMiddle) {
 			columnBound = boardMiddle + (this.numRows - 1) - row;
@@ -81,7 +82,7 @@ public class Board {
 	 * @param column
 	 * @return
 	 */
-	public ArrayList<ArrayList<Integer> > getNeighbours(int row, int column) {
+	public ArrayList<ArrayList<Integer>> getNeighbours(int row, int column) {
 		/* Got to check for 6 directions, assume checking for x's neighbours, then
 		 * got to check for x's top, right, bottom-right/bottom-left, bottom, left,
 		 * and top-left/top-right */
@@ -89,7 +90,7 @@ public class Board {
 			return null;
 		}
 		String content = get(row, column);
-		ArrayList<ArrayList<Integer> > neighbours = new ArrayList<ArrayList<Integer> >();
+		ArrayList<ArrayList<Integer>> neighbours = new ArrayList<ArrayList<Integer>>();
 		int neighbourRow,
 			neighbourColumn,
 			boardMiddle = (this.numRows + 1) / 2 - 1;
@@ -219,5 +220,5 @@ public class Board {
 
 		return cellArray.get(row).get(column);
 	}
-
+	
 }
