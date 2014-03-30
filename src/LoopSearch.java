@@ -32,6 +32,8 @@ public class LoopSearch {
 				// 2D array list of neighbour cells to current cell
 				ArrayList<ArrayList<Integer>> currentCellNeighbours;
 				
+				String direction = "right";
+				
 				int visitedCells = 0;
 				while (cellsToVisitQueue.size() > 0) {
 					currentCell = cellsToVisitQueue.remove(0);
@@ -45,8 +47,8 @@ public class LoopSearch {
 					System.out.println("i am at cell: " + currentCell + " and the neighbours are: " + currentCellNeighbours);
 					// every cell in a loop must have at least two neighbours
 					if (currentCellNeighbours.size() < 2) {
+						System.out.println("NOT ENOUGH NEIGHBOURS");
 						// not enough neighbours, go to next cell in queue
-						visitedCells = 0;
 						continue;
 					} else if (currentCellNeighbours.size() == 2) {
 						// when you have two neighbours, they cannot be neighbours of each other 
@@ -56,21 +58,81 @@ public class LoopSearch {
 						ArrayList<Integer> neighbourTwo = currentCellNeighbours.get(1);
 						ArrayList<ArrayList<Integer>> neighbourOneNeighbours = board.getAllNeighbours(neighbourOne.get(0), neighbourOne.get(1));
 						if (neighbourOneNeighbours.contains(neighbourTwo)) {
-							visitedCells = 0;
+							System.out.println("TWO NEIGHBOURS ARE NEIGHBOURS OF EACH OTHER");
 							continue;
 						}
 					} else if (currentCellNeighbours.size() == 6) {
+						System.out.println("SIX NEIGHBOURS");
 						// the only case of having six neighbours is a cell completely surrounded which is not a loop
-						visitedCells = 0;
 						continue;
 					}
 					for (ArrayList<Integer> oneNeighbour : currentCellNeighbours) {
 						if (!board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).isVisited()) {
-							// add cells to start of queue so that you get further away from start before coming back
+							if (direction.equals("right")) {
+								if ((oneNeighbour.get(1) < currentCell.get(1)) || 
+										((oneNeighbour.get(0) > currentCell.get(0)) && (oneNeighbour.get(1) > currentCell.get(1)))) {
+									continue;
+								}
+							}
+							if (direction.equals("down-right")) {
+								if ((oneNeighbour.get(1) < currentCell.get(1)) ||
+										(oneNeighbour.get(0) < currentCell.get(0))) {
+									continue;
+								}
+							}
+							if (direction.equals("down-left")) {
+								if ((oneNeighbour.get(0) < currentCell.get(0)) ||
+										((oneNeighbour.get(1) > currentCell.get(1)) && (oneNeighbour.get(0) == currentCell.get(0)))) {
+									continue;
+								}
+							}
+							if (direction.equals("up-right")) {
+								if ((oneNeighbour.get(0) > currentCell.get(0)) ||
+										((oneNeighbour.get(1) < currentCell.get(1)) && (oneNeighbour.get(0) == currentCell.get(0)))) {
+									continue;
+								}
+							}
+							if (direction.equals("up-left")) {
+								if ((oneNeighbour.get(0) > currentCell.get(0)) ||
+										((oneNeighbour.get(1) > currentCell.get(1)) && (oneNeighbour.get(0) == currentCell.get(0)))) {
+									continue;
+								}
+							}
+							if (direction.equals("left")) {
+								if ((oneNeighbour.get(1) > currentCell.get(1)) ||
+										((oneNeighbour.get(0) < currentCell.get(0)) && (oneNeighbour.get(1) == currentCell.get(1)))) {
+									continue;
+								}
+							}
+							// neighbour is right of current cell
+							if (oneNeighbour.get(1) > currentCell.get(1)) {
+								if (oneNeighbour.get(0) == currentCell.get(0)) {
+									// neighbour is directly right of current cell
+									direction = "right";
+								} else {
+									// neighbour is down and right of current cell
+									direction = "down-right";
+								}
+							} else if (oneNeighbour.get(1) == currentCell.get(1)) {
+								if (oneNeighbour.get(0) < currentCell.get(0)) {
+									// neighbour is up and right of current cell
+									direction = "up-right";
+								} else {
+									direction = "down-left";
+								}
+							} else {
+								if (oneNeighbour.get(0) < currentCell.get(0)) {
+									// neighbour is up and left of current cell
+									direction = "up-left";
+								} else {
+									// neighbour is directly left of current cell
+									direction = "left";
+								}
+							}
 							cellsToVisitQueue.add(0, oneNeighbour);														
 						}
 						// visited cells for 3 to ensure it doesn't go out one cell then come back, not sure about this yet
-						if (oneNeighbour.equals(startCell) && !currentCell.equals(startCell) && visitedCells >= 3) {
+						if (oneNeighbour.equals(startCell) && !currentCell.equals(startCell) && visitedCells >= 6) {
 							System.out.println("FOUND IT!!! at cell:" + currentCell + " and start cell is:" + startCell);
 							return true;
 						}
