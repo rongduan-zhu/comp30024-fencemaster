@@ -1,0 +1,39 @@
+searchForLoop():Boolean {
+	for each node of colour C {
+		if node.visited == false {
+			Q = makeQueue(node)
+			startNode = node
+			while Q not empty { 
+				currentNode = Q.pop()
+				neighbours = currentNode.getNeighbours()
+				// every node in a loop has to have at least 2 neighbours
+				if neighbours.length < 2
+					// this node isn't part of loop so go to next cell in the queue
+					continue
+				
+				
+				for i in neighbours.length {
+					secondNeighbourList = neighbours[i].getNeighbours()
+					// check neighbours neighbours aren't neighbours with current node
+					if (secondNeighbourList.contains(currentNode)) {
+						// this node isn't part of loop so go to next cell in the queue
+						continue
+					}
+					// check if neighbours are neighbours of each other
+					for j in neighbours.length{
+						if i != j {
+							if neighbours[j].getNeighbours().contains(neighbours[i]) {
+								// this node isn't part of loop so go to next cell in the queue
+								continue
+							}
+						}
+					}
+					if (neighbours[i] == startNode) {
+						return true
+					}
+					Q.push(neighbours[i])
+				}
+			}
+		}
+	}
+}
