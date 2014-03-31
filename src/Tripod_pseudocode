@@ -1,0 +1,46 @@
+Tripod() Return (black_has_tripod, white_has_tripod):
+	get all edge nodes with B, store in queueW
+	get all edge nodes with W, store in queueB
+
+	tripodW = false
+	tripodB = false
+
+	while queueW.notEmpty pop node:
+		if node.depth_first_search(queueW)
+			tripodW = true
+			break
+	while queueB.notEmpty pop node:
+		if node.depth_first_search(queueB)
+			tripodB = true
+			break
+	return tripodB, tripodW
+
+node.depth_first_search(nodeOnEdges):
+	edgeList = listOfAllEdges
+	uniqueEdgeVisited = 0
+	stack = {root}
+	while stack.notEmpty:
+		curNode = stack.pop
+		if curNode.onUnvisitedEdge:
+			uniqueEdgeVisited++
+			edgeList -= curNode.edge
+			nodeOnEdges.del(curNode)
+		if uniqueEdgeVisited == 3:
+			return true
+		stack.push(curNode.allUnvisitedNeighbours)
+
+Worst Case Running Time: O(N)
+Running time analysis assumes worst case performance
+Let N be the number of nodes
+In Tripod()
+	get all edge nodes is O(N);
+	Going through both both queues is O(N); (1)
+In node.depth_first_search()
+	first three operations is O(1);
+	Exploring the first node, and since check neighbours looks all six neighbours,
+	in total, after all neighbours are looked at, its O(6N/2) for each colour. (2)
+
+Combining these two together, note that if in node.depth_first_search, if all same colour nodes
+are connected, then node.depth_first_search will only run once for each colour. So it means
+every node in the graph will only be visited once, there for the total running time is O(6N),
+which after dropping the constant, is O(N)

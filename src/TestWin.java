@@ -63,9 +63,17 @@ public class TestWin {
 		System.out.println("Finding a tripod took: " + (endTime - startTime) / Math.pow(10, 9) + " seconds.");
 		System.out.println(tripods.get(0) + " " + tripods.get(1));
 		*/
+		TripodAgent findTripod = new TripodAgent(board);
+		ArrayList<Boolean> tripods = findTripod.searchForTripod();
+		System.out.println(tripods.get(0) + " " + tripods.get(1));
 		return;
 	}
 
+	/**
+	 * @param stdIn, input stream
+	 * @param dimension, dimension of the board, that is how long an individual edge is
+	 * @return the board constructed from standard input as Board
+	 */
 	public static Board createBoardFromInput(Scanner stdIn, int dimension) {
 		int numRows = dimension * 2 - 1;
 		// create a new board object to store input into

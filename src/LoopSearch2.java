@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 public class LoopSearch2 {
 	private Board board;
-	private int middleRowIndex; 
+	private int middleRowIndex;
 
 	public LoopSearch2(Board board) {
 		this.board = board;
 		this.middleRowIndex = (board.getNumRows() + 1) / 2 - 1;
 	}
-	
+
 	/**
 	 * Search for loops on the board
 	 * Loop is a connected set of cells of the same colour with an empty cell/cell of different colour within the loop
@@ -22,23 +22,23 @@ public class LoopSearch2 {
 		for (int i = 0; i < board.getNumRows(); i++) {
 			for (int j = 0; j <= board.getMaxColumn(i); j++) {
 				/*System.out.println("cell: " + i + ", " + j + ". down left: " + sameColourDownLeft(i,j) + " . right: " + sameColourRight(i,j) + " . down right: " + sameColourDownRight(i,j));*/
-				/* find a corner cell - cell where down-left cell is same colour and 
+				/* find a corner cell - cell where down-left cell is same colour and
 				 * right cell is same colour but down-right cell is not same colour
 				 * to begin possible location to start searching for a loop
 				 * e.g. a situation like:
 				 *    B B
-				 *   B -    
+				 *   B -
 				 */
 				if (board.getCell(i, j).getContent().equals(colour) &&
 						sameColourDownLeft(i, j) &&
 						sameColourRight(i,j) &&
-						!sameColourDownRight(i, j)) {					
+						!sameColourDownRight(i, j)) {
 					/* once this is found, find the other top corner
 					 * e.g.:
 					 *      B B
 					 *       - B
-					 */					
-					
+					 */
+
 					// cell to begin the search from
 					ArrayList<Integer> startCell = new ArrayList<Integer>(Arrays.asList(i,j));
 					// current cell (for iteration)
@@ -51,7 +51,7 @@ public class LoopSearch2 {
 					 * if the down-right cell is the same colour, this is a potential end for the top row of the loop
 					 * as the loop top row must eventually go down to connect to the other side */
 					while (!sameColourDownRight(currentCell.get(0), currentCell.get(1))) {
-						/* if the cell to the right is not the same colour (and loop hasn't broken yet) 
+						/* if the cell to the right is not the same colour (and loop hasn't broken yet)
 						 * then this isn't the start of a loop */
 						if (!sameColourRight(currentCell.get(0), currentCell.get(1))) {
 							brokeOutOfLoop = 1;
@@ -74,10 +74,10 @@ public class LoopSearch2 {
 					}
 				}
 			}
-		}		
-		return false;		
+		}
+		return false;
 	}
-	
+
 	/**
 	 * Depth first search from a given startCell to the final/goal cell (cell down-right of final topRow cell)
 	 * Will only search for cells on the same row or below as the startCell
@@ -89,14 +89,14 @@ public class LoopSearch2 {
 		// create a queue and initially add the start cell
 		ArrayList<ArrayList<Integer>> cellsToSearchQueue = new ArrayList<ArrayList<Integer>>();
 		cellsToSearchQueue.add(startCell);
-		
+
 		ArrayList<Integer> currentCell, downRightCell, goalCell, lastTopRowCell;
 		ArrayList<ArrayList<Integer>> neighbours;
-				
+
 		// save the goal cell to a variable
 		lastTopRowCell = topRow.get(topRow.size()-1);
 		goalCell = getDownRightCell(lastTopRowCell.get(0), lastTopRowCell.get(1));
-		
+
 		// mark all cells in top row and those down-right of top row as visited (to prevent DFS going to them)
 		for (ArrayList<Integer> oneCell : topRow) {
 			board.getCell(oneCell.get(0), oneCell.get(1)).setVisited(true);
@@ -113,7 +113,7 @@ public class LoopSearch2 {
 			// set cells to visited (to prevent going back to same cell)
 			board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
 			// get all the neighbours of the current cell
-			neighbours = board.getAllNeighbours(currentCell.get(0), currentCell.get(1));
+			neighbours = board.getNeighbours(currentCell.get(0), currentCell.get(1), Board.ALL_NEIGHBOURS);
 
 			for (ArrayList<Integer> oneNeighbour : neighbours) {
 				// check if the neighbour is the goal cell
@@ -131,11 +131,11 @@ public class LoopSearch2 {
 					// found the goal cell!
 					return true;
 				}
-			}			
-		}		
+			}
+		}
 		return false;
 	}
-	
+
 	/**
 	 * Whether the cell down-left of inputed cell is same colour
 	 * @param i row index of cell
@@ -162,7 +162,7 @@ public class LoopSearch2 {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Whether the cell right of inputed cell is same colour
 	 * @param i row index of cell
@@ -181,7 +181,7 @@ public class LoopSearch2 {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Whether the cell down-right of inputed cell is same colour
 	 * @param i row index of cell
@@ -190,7 +190,7 @@ public class LoopSearch2 {
 	 */
 	private boolean sameColourDownRight(int i, int j) {
 		if (board.isValidPosition(i, j)) {
-			String colour = board.getCell(i, j).getContent();			
+			String colour = board.getCell(i, j).getContent();
 			if (i < middleRowIndex) {
 				if (board.isValidPosition(i+i, j+1)) {
 					return board.getCell(i+1, j+1).getContent().equals(colour);
@@ -208,7 +208,7 @@ public class LoopSearch2 {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Find the cell that is down and right of inputed cell
 	 * @param i row index of cell

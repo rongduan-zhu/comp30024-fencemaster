@@ -1,5 +1,5 @@
 public class Cell {
-	/** constant strings determining what the cell contains */
+	/** class constant strings determining what the cell contains */
 	public static final String BLACK = "B";
 	public static final String WHITE = "W";
 	public static final String EMPTY = "-";
@@ -38,25 +38,23 @@ public class Cell {
 		this.content = content;
 	}
 
-	@Override
 	/**
 	 * @param content, return cell as a String
 	 */
+	@Override
 	public String toString() {
 		return content;
 	}
 
 	/**
-	 * checks if current cell has been visited
-	 * @return boolean, true if it has been visited, false otherwise
+	 * @return true if it has been visited, false otherwise as boolean
 	 */
 	public boolean isVisited() {
 		return visited;
 	}
 
 	/**
-	 * set visited value of current cell
-	 * @param visited
+	 * @param visited, set the visited state of the cell
 	 */
 	public void setVisited(boolean visited) {
 		this.visited = visited;
