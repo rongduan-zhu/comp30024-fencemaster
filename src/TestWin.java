@@ -7,7 +7,7 @@ public class TestWin {
 	/* Temporary main method in here for testing */
 	public static void main(String args[]) throws FileNotFoundException {
 		// set the standard input stream to be a text file (for testing input)
-		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop5.txt"));
+		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop12.txt"));
 
 		Scanner stdIn = new Scanner(System.in);
 
@@ -19,7 +19,7 @@ public class TestWin {
 		// dimension of the board, i.e. how many cells each edge has
 		int dimension = stdIn.nextInt();
 		// dimension must be > 5
-		if (dimension <= 5) {
+		if (dimension < 5) {
 			System.out.println("Error: Board dimension too small. Exiting program.");
 			System.exit(1);
 		}
@@ -33,8 +33,13 @@ public class TestWin {
 		LoopSearch findLoop = new LoopSearch(board);
 		
 		startTime = System.nanoTime();
-		
+		System.out.println("TESTING FOR BLACK LOOP");
+		System.out.println("");
 		System.out.println(findLoop.searchForLoop(Cell.BLACK));
+		System.out.println("");
+		System.out.println("");
+		System.out.println("TESTING FOR WHITE LOOP");
+		System.out.println("");
 		System.out.println(findLoop.searchForLoop(Cell.WHITE));
 		
 		endTime = System.nanoTime();

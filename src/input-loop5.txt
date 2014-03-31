@@ -18,6 +18,3 @@
        - - B B - B W - - - - - 
         - - - - B W - - - - - 
          - - - - W - - - - - 
-
-
-         FOR SOME REASON IT JUMPS FROM [7,6] TO [4,9] THEN FINDS A LOOP INSTANTLY
