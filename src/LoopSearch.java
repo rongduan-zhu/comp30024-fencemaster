@@ -16,9 +16,14 @@ public class LoopSearch {
 		}*/
 		
 		int middleRowIndex = (board.getNumRows() + 1) / 2 - 1; 
-		for (ArrayList<Integer> oneCell : colourCells) {				
+		
+		for (ArrayList<Integer> oneCell : colourCells) {
+			if (board.getCell(oneCell.get(0), oneCell.get(1)).isVisited()) {
+				continue;
+			}	
 			// create a queue of cells to visit and add this cell as the intial cell to visit
 			ArrayList<ArrayList<Integer>> cellsToVisitQueue = new ArrayList<ArrayList<Integer>>();
+			// !!!!!!!!!! starting cell should check in 4 directions, fix later
 			oneCell.add(directionToInt("right"));
 			cellsToVisitQueue.add(oneCell);
 			// cell that the loop search began from
@@ -27,20 +32,20 @@ public class LoopSearch {
 			ArrayList<Integer> currentCell;
 			// 2D array list of neighbour cells to current cell
 			ArrayList<ArrayList<Integer>> currentCellNeighbours;
-			
-			String direction;
-			String nextDirection;
+			System.out.println("i am starting at cell: " + startCell);
+			String direction, nextDirection;
 			while (cellsToVisitQueue.size() > 0) {
+				System.out.println("queue is: " + cellsToVisitQueue);
 				currentCell = cellsToVisitQueue.remove(0);
-				if (board.getCell(currentCell.get(0), currentCell.get(1)).isVisited()) {
-					continue;
-				}				
+			
 				currentCellNeighbours = board.getAllNeighbours(currentCell.get(0), currentCell.get(1));
 				System.out.println("i am at cell: " + currentCell + " and the neighbours are: " + currentCellNeighbours);
 				// every cell in a loop must have at least two neighbours
 				if (currentCellNeighbours.size() < 2) {
 					// not enough neighbours, go to next cell in queue
 					System.out.println("not enough neighbours, skipping this cell");
+					// set to visited as this cell cannot possibly start a loop
+					board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
 					continue;
 				} else if (currentCellNeighbours.size() == 2) {
 					// when you have two neighbours, they cannot be neighbours of each other 
@@ -51,11 +56,15 @@ public class LoopSearch {
 					ArrayList<ArrayList<Integer>> neighbourOneNeighbours = board.getAllNeighbours(neighbourOne.get(0), neighbourOne.get(1));
 					if (neighbourOneNeighbours.contains(neighbourTwo)) {
 						System.out.println("two neighbours next to each other, skipping this cell");
+						// set to visited as this cell cannot possibly start a loop
+						board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
 						continue;
 					}
 				} else if (currentCellNeighbours.size() == 6) {
 					// the only case of having six neighbours is a cell completely surrounded which is not a loop
 					System.out.println("found 6 neighbours, skipping this cell");
+					// set to visited as this cell cannot possibly start a loop
+					board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
 					continue;
 				}
 				
