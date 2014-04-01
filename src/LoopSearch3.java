@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
 
 public class LoopSearch3 {
 	private Board board;
@@ -16,10 +14,7 @@ public class LoopSearch3 {
 	 * @param colour Colour of loop to search for
 	 * @return true if a loop is found, false otherwise
 	 */
-	public boolean searchForLoop(String colour) {
-		Comparator<ArrayList<Integer>> cellComparator = new CellComparator();
-		PriorityQueue<ArrayList<Integer>> notColourCellsQueue = new PriorityQueue<ArrayList<Integer>>(10, cellComparator);
-		
+	public boolean searchForLoop(String colour) {		
 		ArrayList<ArrayList<Integer>> diffColourCells, currentCellNeighbours, diffColourCellsQueue;
 		ArrayList<Integer> currentCell;
 		
@@ -33,13 +28,13 @@ public class LoopSearch3 {
 		// is there a better way to add the cells without sifting every time a new one is added?
 		// Now create a minimum (smallest at head) priority queue
 		for (ArrayList<Integer> oneCell : diffColourCells) {
-			//notColourCellsQueue.add(oneCell);
 			/* add visited nodes nodes to start (initially all edges are visited)
 			 * and all unvisited nodes to end
 			 */
-			if (!board.getCell(oneCell.get(0), oneCell.get(1)).isVisited()) {
+			if (!board.isEdgeOrCornerNode(oneCell.get(0), oneCell.get(1))) {
 				diffColourCellsQueue.add(oneCell);
 			} else {
+				board.getCell(oneCell.get(0), oneCell.get(1)).setVisited(true);
 				diffColourCellsQueue.add(0, oneCell);
 			}
 		}						
@@ -47,10 +42,8 @@ public class LoopSearch3 {
 		 * For each element in the queue, we want to find it's unvisited neighbours (of not colour specified) and visit those.
 		 * If you can't visit a cell that means it is completely surrounded by the colour, hence you've found a ring
 		 */
-		//while (!notColourCellsQueue.isEmpty()) {
 		while (!diffColourCellsQueue.isEmpty()) {
 			// remove head (first element)
-			//currentCell = notColourCellsQueue.poll();
 			currentCell = diffColourCellsQueue.remove(0);
 			/* the current cell is not visited
 			 *  means that it was added at the start and its visited value never changed
@@ -90,7 +83,6 @@ public class LoopSearch3 {
 					// initialize dist of edge/corners to 0 - visited
 					if (board.isEdgeOrCornerNode(i, j)) {
 						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j)));
-						board.getCell(i, j).setVisited(true);
 					} else {
 						// other nodes be set to 1 - not visited
 						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j)));

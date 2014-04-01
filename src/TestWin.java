@@ -7,7 +7,7 @@ public class TestWin {
 	/* Temporary main method in here for testing */
 	public static void main(String args[]) throws FileNotFoundException {
 		// set the standard input stream to be a text file (for testing input)
-		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop.txt"));
+		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop6.txt"));
 
 		Scanner stdIn = new Scanner(System.in);
 
