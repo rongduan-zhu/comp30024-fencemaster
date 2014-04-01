@@ -11,6 +11,10 @@ public class Board {
 	private ArrayList<ArrayList<Cell> > cellArray;
 	/** Integer representing total number of rows */
 	private Integer numRows;
+	/** Total number of cells given dimension */
+	private Integer totalNumCells;
+	/** Number of occupied cells */
+	private Integer occupiedCells = 0;
 
 	/**
 	 * Board constructor, makes a board with all Cells initialized to empty
@@ -20,6 +24,11 @@ public class Board {
 		/* Specifying capacity at start will save the time of dynamically reallocating
 		 * more memory */
 		this.numRows = numRows * 2 - 1;
+		/* Assume edge length is x, then total number of valid positions is
+		 * 3*n^2 - 3*n + 1
+		 * */
+		this.totalNumCells = 3 * numRows * numRows - 3 * numRows + 1;
+
 		// a 2D ArrayList
 		cellArray = new ArrayList<ArrayList<Cell>>(this.numRows);
 		for (int i = 0; i < this.numRows; i++) {
@@ -226,7 +235,7 @@ public class Board {
 		}
 		return neighbours;
 	}
-	
+
 	/**
 	 * @param row, row index, 0 based
 	 * @param column, column index, 0 based
@@ -334,7 +343,7 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @param row, row index, 0 based
 	 * @param column, column index, 0 based
@@ -418,6 +427,34 @@ public class Board {
 		}
 
 		return cellArray.get(row).get(column);
+	}
+
+	/**
+	 * @return the total number of occupied cells as int
+	 */
+	public Integer getOccupiedCells() {
+		return occupiedCells;
+	}
+
+	/**
+	 * @param occupiedCells, set number of occupied cells to this
+	 */
+	public void setOccupiedCells(Integer occupiedCells) {
+		this.occupiedCells = occupiedCells;
+	}
+
+	/**
+	 * @return the total number of cells as int
+	 */
+	public Integer getTotalNumCells() {
+		return totalNumCells;
+	}
+
+	/**
+	 * Increments the number of occupied cells by 1
+	 */
+	public void incrementOccupiedCells() {
+		++occupiedCells;
 	}
 
 }

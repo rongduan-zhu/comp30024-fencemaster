@@ -1,6 +1,7 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TestWin {
@@ -29,9 +30,9 @@ public class TestWin {
 		/*for (ArrayList<Integer> x : board.getNeighbours(0, 1)) {
 			System.out.println(x.get(0) + " " + x.get(1));
 		}*/
-		
+
 		long startTime, endTime;
-		
+
 		System.out.println("======================");
 		System.out.println("LOOP SEARCH 2 RUNNING");
 		System.out.println("======================");
@@ -50,7 +51,7 @@ public class TestWin {
 		System.out.println("----------------------");
 		System.out.println("LOOP SEARCH 2 ENDED");
 		System.out.println("======================");
-		
+
 		board.resetVisited();
 		System.out.println("======================");
 		System.out.println("LOOP SEARCH 3 RUNNING");
@@ -98,10 +99,43 @@ public class TestWin {
 		System.out.println("Finding a tripod took: " + (endTime - startTime) / Math.pow(10, 9) + " seconds.");
 		System.out.println(tripods.get(0) + " " + tripods.get(1));
 		*/
+
+		/*==========================Do not delete lines below==================================*/
+
+		LoopSearch3 findLoop = new LoopSearch3(board);
 		TripodAgent findTripod = new TripodAgent(board);
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
-		System.out.println(tripods.get(0) + " " + tripods.get(1));
-		return;
+		ArrayList<Boolean> loops = new ArrayList<Boolean> (
+				Arrays.asList(
+						findLoop.searchForLoop(Cell.BLACK),
+						findLoop.searchForLoop(Cell.WHITE)
+				)
+		);
+		outputResult(board, tripods, loops);
+	}
+
+	/**
+	 * Print the appropriate output based on the specification using the output provided by the
+	 * searching algorithms
+	 * @param board, current board
+	 * @param tripods, results from tripod search, (black, white)
+	 * @param loops, results from loop search
+	 */
+	public static void outputResult(Board board, ArrayList<Boolean> tripods, ArrayList<Boolean> loops) {
+		if (tripods.get(0) && loops.get(0)) {
+			System.out.println("Black\nBoth");
+		} else if (tripods.get(1) && loops.get(1)) {
+			System.out.println("White\nBoth");
+		} else if (tripods.get(0) || loops.get(0)) {
+			System.out.println("Black\n" + (tripods.get(0) ? "Tripod" : "Loop"));
+		} else if (tripods.get(1) || loops.get(1)) {
+			System.out.println("White\n" + (tripods.get(1) ? "Tripod" : "Loop"));
+		} else {
+			System.out.println(
+					(board.getOccupiedCells() < board.getTotalNumCells()
+							? "None" : "Draw")
+					+ "\nNil");
+		}
 	}
 
 	/**
@@ -119,9 +153,7 @@ public class TestWin {
 				if (stdIn.hasNext()) {
 					item = stdIn.next();
 					board.set(i, j, item);
-					/*if (board.isEdgeNode(i, j)) {
-						System.out.println(i + " " + j);
-					}*/
+					board.incrementOccupiedCells();
 				} else {
 					// run out of values to read so not enough data inputed
 					System.out.println("Error: Not enough cells in input. Exiting program.");
