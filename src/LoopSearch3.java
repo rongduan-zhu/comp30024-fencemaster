@@ -5,8 +5,7 @@ import java.util.PriorityQueue;
 
 public class LoopSearch3 {
 	private Board board;
-	private static final int INFINITY = 100;
-
+	
 	public LoopSearch3(Board board) {
 		this.board = board;
 	}
@@ -24,73 +23,51 @@ public class LoopSearch3 {
 		ArrayList<ArrayList<Integer>> diffColourCells, currentCellNeighbours;
 		ArrayList<Integer> currentCell;
 		
+		/* Find all edge cells that aren't of the colour ring you are searching for.
+		 * Each element of this arraylist has the format [i, j, notVisited],
+		 * where notVisited = 0 if it has been visited and notVisited = 1 if it has not been visited.
+		 * E.g. [1,2,0] is the cell at position (1,2) and it has been visited
+		 */
 		diffColourCells = findAllCellsNotOfColour(colour);		
 		// is there a better way to add the cells without sifting every time a new one is added?
+		// Now create a minimum (smallest at head) priority queue
 		for (ArrayList<Integer> oneCell : diffColourCells) {
 			notColourCellsQueue.add(oneCell);
-		}				
+		}						
 		
-		/*System.out.println(board.getNonSameColourNeighbours(4,4, colour));*/
-		
-		
+		/* Modified dijkstra's algorithm to find all reachable cells.
+		 * For each element in the queue, we want to find it's unvisited neighbours (of not colour specified) and visit those.
+		 * If you can't visit a cell that means it is completely surrounded by the colour, hence you've found a ring
+		 */
 		while (!notColourCellsQueue.isEmpty()) {
 			// remove head (first element)
 			currentCell = notColourCellsQueue.poll();
-			
-			board.getCell(currentCell.get(0), currentCell.get(1)).timesVisited++;
-			//System.out.println("my current cell is: " + currentCell);
-			if (board.getCell(currentCell.get(0), currentCell.get(1)).getDist() == INFINITY) {
+			/* the current cell is not visited
+			 *  means that it was added at the start and its visited value never changed
+			 *  i.e. it is unreachable from the edges of the board
+			 */
+			if (!board.getCell(currentCell.get(0), currentCell.get(1)).isVisited()) {
 				System.out.println("FOUND A LOOP OF COLOUR: " + colour);
 				System.out.println("found a cell that is surrounded at: " + currentCell);
-				break;
-			}
-			/*
-			 * no decreasekey operation in java priority queue so instead just skip elements
-			 * that are marked as visited
-		 	 */ 			 
-			/*if (!board.getCell(currentCell.get(0), currentCell.get(1)).isVisited()) {
-				board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
-			} else {
-				continue;
-			}*/			
-			board.getCell(currentCell.get(0), currentCell.get(1)).setVisited(true);
+				return true;
+			}		
+			
 			currentCellNeighbours = board.getNonSameColourNeighbours(currentCell.get(0), currentCell.get(1), colour);
 			for (ArrayList<Integer> oneNeighbour : currentCellNeighbours) {
 				if (!board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).isVisited()) {
+					// we have found a new unvisited node, add it into the queue with value of 0 - visited
+					notColourCellsQueue.add(new ArrayList<Integer>(Arrays.asList(oneNeighbour.get(0), oneNeighbour.get(1), 0)));
 					// set the cell to visited to mark that it has been added into the queue
 					board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).setVisited(true);
-					// we have found a new unvisited node, add it into the queue with distance of 1
-					notColourCellsQueue.add(new ArrayList<Integer>(Arrays.asList(oneNeighbour.get(0), oneNeighbour.get(1), 1)));
-					board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).setDist(1);
-				}
-			}
-		}
-		for (int i=0; i < board.getNumRows(); i++) {
-			for (int j = 0; j <= board.getMaxColumn(i); j++) {
-				System.out.println("cell: " + "(" + i + ", " + j + ") has been visited: " + board.getCell(i,j).timesVisited + " times");
-				board.getCell(i, j).timesVisited = 0;
-			}
-		}	
-		
-		
-		// now check for any cells that still have a dist of infinity
-		for (int i=0; i < board.getNumRows(); i++) {
-			for (int j = 0; j <= board.getMaxColumn(i); j++) {
-				if (!board.get(i,j).equals(colour)) {
-					if (board.getCell(i,j).getDist() == INFINITY) {
-						System.out.println("FOUND A LOOP OF COLOUR: " + colour);
-						System.out.println("found a cell (end) that is surrounded at: " + i + ", " + j);
-						return true;
-					}
 				}
 			}
 		}		
-		
+		// every cell was visited which means there are no loops
 		return false;
 	}
 	
 	/**
-	 * Finds and returns all cells of the specified colour
+	 * Finds and returns all edge cells of the specified colour
 	 * @param colour String of what colour cell to search for
 	 * @return 2D ArrayList of all cells of the specified colour. E.g. [[0,1],[0,2],[2,4]]
 	 */
@@ -99,15 +76,13 @@ public class LoopSearch3 {
 		for (int i = 0; i < board.getNumRows(); i++) {
 			for (int j = 0; j <= board.getMaxColumn(i); j++) {
 				if (!board.get(i,j).equals(colour)) {
-					// initialize dist of edge/corners to 0 - i.e. they are sources
+					// initialize dist of edge/corners to 0 - visited
 					if (board.isEdgeOrCornerNode(i, j)) {
 						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j,0)));
-						board.getCell(i, j).setDist(0);
 						board.getCell(i, j).setVisited(true);
 					} else {
-						// other nodes be set to 'infinity' - 100
-						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j,INFINITY)));
-						board.getCell(i, j).setDist(100);
+						// other nodes be set to 1 - not visited
+						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j,1)));
 					}
 				}
 			}
