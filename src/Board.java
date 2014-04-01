@@ -226,6 +226,83 @@ public class Board {
 		}
 		return neighbours;
 	}
+	
+	/**
+	 * @param row, row index, 0 based
+	 * @param column, column index, 0 based
+	 * @param colour the colour which you wish to find neighbours that aren't that colour
+	 * @return returns all neighbours as a 2d arraylist, with each item of first layer being the row and column
+	 * 		   of a neighbour. eg [[1,2], [1,3]]
+	 */
+	public ArrayList<ArrayList<Integer> > getNonSameColourNeighbours(int row, int column, String colour) {
+		/* Got to check for 6 directions, assume checking for x's neighbours, then
+		 * got to check for x's top, right, bottom-right/bottom-left, bottom, left,
+		 * and top-left/top-right */
+		if (!isValidPosition(row, column)) {
+			return null;
+		}
+		ArrayList<ArrayList<Integer>> neighbours = new ArrayList<ArrayList<Integer>>();
+		int neighbourRow,
+			neighbourColumn,
+			boardMiddle = (this.numRows + 1) / 2 - 1;
+
+		//Checks top
+		if (isValidPosition(row - 1, column)) {
+			if (!get(row - 1, column).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column)));
+			}
+		}
+
+		//Checks right
+		if (isValidPosition(row, column + 1)) {
+			if (!get(row, column + 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column + 1)));
+			}
+		}
+
+		//Checks bottom-right/bottom-left
+		if (row < boardMiddle) {
+			neighbourRow = row + 1;
+			neighbourColumn = column + 1;
+		} else {
+			neighbourRow = row + 1;
+			neighbourColumn = column - 1;
+		}
+		if (isValidPosition(neighbourRow, neighbourColumn)) {
+			if (!get(neighbourRow, neighbourColumn).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+			}
+		}
+
+		//Checks bottom
+		if (isValidPosition(row + 1, column)) {
+			if (!get(row + 1, column).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column)));
+			}
+		}
+
+		//Checks left
+		if (isValidPosition(row, column - 1)) {
+			if (!get(row, column - 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row, column - 1)));
+			}
+		}
+
+		//Checks top-left/top-right
+		if (row <= boardMiddle) {
+			neighbourRow = row - 1;
+			neighbourColumn = column - 1;
+		} else {
+			neighbourRow = row - 1;
+			neighbourColumn = column + 1;
+		}
+		if (isValidPosition(neighbourRow, neighbourColumn)) {
+			if (!get(neighbourRow, neighbourColumn).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+			}
+		}
+		return neighbours;
+	}
 
 	/**
 	 * @param row, row index, 0 based
@@ -256,6 +333,42 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * @param row, row index, 0 based
+	 * @param column, column index, 0 based
+	 * @return true if (row, column) is on an edge or a corner
+	 */
+	public boolean isEdgeOrCornerNode(int row, int column) {
+		if (!isValidPosition(row, column)) {
+			return false;
+		}
+		int boardMiddle = (this.numRows + 1) / 2 - 1;
+		// check non middle row cells
+		if (row < boardMiddle || row > boardMiddle) {
+			//if its not top row or bottom row, then if its on either side, its an edge
+			if (row != 0 && row != this.numRows - 1) {
+				if (column == 0 || column == getMaxColumn(row)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				//if its top row or bottom row, then get all row except for the edges
+				if (column >= 0 && column <= boardMiddle) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} else {
+			if (column == 0 || column == (this.numRows - 1)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	/**

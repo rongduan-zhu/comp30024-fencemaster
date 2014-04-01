@@ -6,14 +6,18 @@ public class Cell {
 
 	/** stores what is in this cell */
 	private String content;
+	/** for loop search 3 */
+	private int dist;
 	/** stores if this node has been visited */
 	private boolean visited = false;
+	public int timesVisited = 0;
 
 	/**
 	 * Initialize the Cell, with its content set to Empty
 	 */
 	public Cell() {
 		content = new String(EMPTY);
+		this.dist = 100;
 	}
 
 	/**
@@ -22,6 +26,7 @@ public class Cell {
 	 */
 	public Cell(String type) {
 		content = new String(type);
+		this.dist = 100;
 	}
 
 	/**
@@ -58,5 +63,13 @@ public class Cell {
 	 */
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public int getDist() {
+		return dist;
+	}
+
+	public void setDist(int dist) {
+		this.dist = dist;
 	}
 }

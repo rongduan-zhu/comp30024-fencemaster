@@ -7,7 +7,7 @@ public class TestWin {
 	/* Temporary main method in here for testing */
 	public static void main(String args[]) throws FileNotFoundException {
 		// set the standard input stream to be a text file (for testing input)
-		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop13.txt"));
+		System.setIn(new FileInputStream("C:/Users/Maxim/Documents/Uni/COMP30024/Project1/AIProj/src/input-loop17.txt"));
 
 		Scanner stdIn = new Scanner(System.in);
 
@@ -29,14 +29,52 @@ public class TestWin {
 		/*for (ArrayList<Integer> x : board.getNeighbours(0, 1)) {
 			System.out.println(x.get(0) + " " + x.get(1));
 		}*/
+		
+		long startTime, endTime;
+		
+		System.out.println("======================");
+		System.out.println("LOOP SEARCH 2 RUNNING");
+		System.out.println("======================");
 		LoopSearch2 findLoop2 = new LoopSearch2(board);
 		System.out.println("TESTING FOR BLACK LOOP");
-		System.out.println("");
+		System.out.println("----------------------");
+		startTime = System.nanoTime();
 		findLoop2.searchForLoop(Cell.BLACK);
+		endTime = System.nanoTime();
+		System.out.println((endTime - startTime) / Math.pow(10, 9) + " seconds.");
+		System.out.println("----------------------");
 		System.out.println("TESTING FOR WHITE LOOP");
-		System.out.println("");
+		System.out.println("----------------------");
+		startTime = System.nanoTime();
 		findLoop2.searchForLoop(Cell.WHITE);
-		/*long startTime, endTime;
+		endTime = System.nanoTime();
+		System.out.println((endTime - startTime) / Math.pow(10, 9) + " seconds.");
+		System.out.println("----------------------");
+		System.out.println("LOOP SEARCH 2 ENDED");
+		System.out.println("======================");
+		
+		board.resetVisited();
+		System.out.println("======================");
+		System.out.println("LOOP SEARCH 3 RUNNING");
+		System.out.println("======================");
+		System.out.println("TESTING FOR BLACK LOOP");
+		System.out.println("----------------------");
+		LoopSearch3 findLoop3 = new LoopSearch3(board);
+		startTime = System.nanoTime();
+		findLoop3.searchForLoop(Cell.BLACK);
+		endTime = System.nanoTime();
+		System.out.println((endTime - startTime) / Math.pow(10, 9) + " seconds.");
+		System.out.println("----------------------");
+		board.resetVisited();
+		startTime = System.nanoTime();
+		System.out.println("TESTING FOR WHITE LOOP");
+		endTime = System.nanoTime();
+		System.out.println((endTime - startTime) / Math.pow(10, 9) + " seconds.");
+		System.out.println("----------------------");
+		findLoop3.searchForLoop(Cell.WHITE);
+		System.out.println("LOOP SEARCH 3 ENDED");
+		System.out.println("======================");
+		/*
 		LoopSearch findLoop = new LoopSearch(board);
 
 		startTime = System.nanoTime();
