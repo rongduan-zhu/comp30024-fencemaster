@@ -1,11 +1,10 @@
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class TestWin {
-	/* Temporary main method in here for testing */
-	public static void main(String args[]) throws FileNotFoundException {
+	
+	public static void main(String args[]) {
 		Scanner stdIn = new Scanner(System.in);
 
 		// correct input begins with an integer
