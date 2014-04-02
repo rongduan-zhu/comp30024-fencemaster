@@ -16,7 +16,7 @@ For the opposite case where the board is filled entirely by the colour you are n
 Loop Search Pseudocode:
 
 searchForLoop(String colourToFind):boolean {
-	nonColourCells <- all cells that are not of colour colourToFind
+	nonColourCells <- all cells that are not of colour colourToFind // with cells on the edge marked as visited
 	H <- makeQueue(nonColourCells) // visited cells at start, unvisited at end
 
 	while (H not empty) {
