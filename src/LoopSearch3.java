@@ -3,28 +3,28 @@ import java.util.Arrays;
 
 public class LoopSearch3 {
 	private Board board;
-	
+
 	public LoopSearch3(Board board) {
 		this.board = board;
 	}
-	
+
 	/**
 	 * Search for loops on the board
 	 * Loop is a connected set of cells of the same colour with an empty cell/cell of different colour within the loop
 	 * @param colour Colour of loop to search for
 	 * @return true if a loop is found, false otherwise
 	 */
-	public boolean searchForLoop(String colour) {		
+	public boolean searchForLoop(String colour) {
 		ArrayList<ArrayList<Integer>> diffColourCells, currentCellNeighbours, diffColourCellsQueue;
 		ArrayList<Integer> currentCell;
-		
+
 		/* Find all edge cells that aren't of the colour ring you are searching for.
 		 * Each element of this arraylist has the format [i, j, notVisitedBySearch],
 		 * where notVisited = 0 if it has been visited and notVisited = 1 if it has not been visited.
 		 * E.g. [1,2,0] is the cell at position (1,2) and it has been visited
 		 */
 		diffColourCellsQueue = new ArrayList<ArrayList<Integer>>();
-		diffColourCells = findAllCellsNotOfColour(colour);		
+		diffColourCells = findAllCellsNotOfColour(colour);
 		// is there a better way to add the cells without sifting every time a new one is added?
 		// Now create a minimum (smallest at head) priority queue
 		for (ArrayList<Integer> oneCell : diffColourCells) {
@@ -37,7 +37,7 @@ public class LoopSearch3 {
 				board.getCell(oneCell.get(0), oneCell.get(1)).setVisited(true);
 				diffColourCellsQueue.add(0, oneCell);
 			}
-		}						
+		}
 		/* Modified dijkstra's algorithm to find all reachable cells.
 		 * For each element in the queue, we want to find it's unvisited neighbours (of not colour specified) and visit those.
 		 * If you can't visit a cell that means it is completely surrounded by the colour, hence you've found a ring
@@ -53,8 +53,8 @@ public class LoopSearch3 {
 				System.out.println("FOUND A LOOP OF COLOUR: " + colour);
 				System.out.println("found a cell that is surrounded at: " + currentCell);
 				return true;
-			}		
-			
+			}
+
 			currentCellNeighbours = board.getNonSameColourNeighbours(currentCell.get(0), currentCell.get(1), colour);
 			for (ArrayList<Integer> oneNeighbour : currentCellNeighbours) {
 				if (!board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).isVisited()) {
@@ -65,11 +65,11 @@ public class LoopSearch3 {
 					board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).setVisited(true);
 				}
 			}
-		}		
+		}
 		// every cell was visited which means there are no loops
 		return false;
 	}
-	
+
 	/**
 	 * Finds and returns all edge cells of the specified colour
 	 * @param colour String of what colour cell to search for

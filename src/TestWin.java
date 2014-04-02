@@ -153,7 +153,9 @@ public class TestWin {
 				if (stdIn.hasNext()) {
 					item = stdIn.next();
 					board.set(i, j, item);
-					board.incrementOccupiedCells();
+					if (!item.equals(Cell.EMPTY)) {
+						board.incrementOccupiedCells();
+					}
 				} else {
 					// run out of values to read so not enough data inputed
 					System.out.println("Error: Not enough cells in input. Exiting program.");
