@@ -68,7 +68,6 @@ public class LoopSearch2 {
 						cellList.add(currentCell);
 						// perform a depth first search from the starting cell to the end cell
 						if (dfsForFullLoop(startCell, cellList) == true) {
-							System.out.println("FOUND A LOOP");
 							return true;
 						}
 					}

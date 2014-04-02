@@ -50,8 +50,6 @@ public class LoopSearch3 {
 			 *  i.e. it is unreachable from the edges of the board
 			 */
 			if (!board.getCell(currentCell.get(0), currentCell.get(1)).isVisited()) {
-				System.out.println("FOUND A LOOP OF COLOUR: " + colour);
-				System.out.println("found a cell that is surrounded at: " + currentCell);
 				return true;
 			}
 
