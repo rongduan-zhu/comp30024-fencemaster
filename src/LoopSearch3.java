@@ -18,6 +18,10 @@ public class LoopSearch3 {
 		ArrayList<ArrayList<Integer>> diffColourCells, currentCellNeighbours, diffColourCellsQueue;
 		ArrayList<Integer> currentCell;
 
+		/* reset visited status of each cell in the board as loopsearch changes this 
+		 * (previous loop searches or tripod search may have set these values)
+		 */ 
+		board.resetVisited();
 		/* Find all edge cells that aren't of the colour ring you are searching for.
 		 * Each element of this arraylist has the format [i, j, notVisitedBySearch],
 		 * where notVisited = 0 if it has been visited and notVisited = 1 if it has not been visited.
@@ -78,13 +82,7 @@ public class LoopSearch3 {
 		for (int i = 0; i < board.getNumRows(); i++) {
 			for (int j = 0; j <= board.getMaxColumn(i); j++) {
 				if (!board.get(i,j).equals(colour)) {
-					// initialize dist of edge/corners to 0 - visited
-					if (board.isEdgeOrCornerNode(i, j)) {
-						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j)));
-					} else {
-						// other nodes be set to 1 - not visited
-						cellList.add(new ArrayList<Integer>(Arrays.asList(i,j)));
-					}
+					cellList.add(new ArrayList<Integer>(Arrays.asList(i,j)));
 				}
 			}
 		}
