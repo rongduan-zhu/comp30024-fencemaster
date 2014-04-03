@@ -1,3 +1,13 @@
+General Code Structure:
+We've decided to have a Board class and a Cell class. A board has internally a 2D array of Cells. Internally,
+we've represented the same way as how inputs are displayed. Top left is a valid position, as well as bottom
+left. There are appropriate methods defined for getting border boundaries, and getting all the neighbours, as
+well as all the necessary setters and getters. The TestWin class is the entry point for the program, it first
+creates a Board object, with all positions initialized to empty. Then a new method is called for reading input
+from the stand input. Then the code first searches for tripod, with the Tripod search class. Then it searches for
+loops with the Loop search class. The appropriate outputs returned from the two searches, both as tuples
+(black, white), then is fed into the output method to display the appropriate output.
+
 Tripod Search Pseudocode:
 
 Tripod() Return (black_has_tripod, white_has_tripod):
