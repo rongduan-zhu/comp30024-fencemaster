@@ -21,7 +21,7 @@ public class TestWin {
 		}
 		Board board = createBoardFromInput(stdIn, dimension);
 
-		LoopSearch3 findLoop = new LoopSearch3(board);
+		LoopSearch findLoop = new LoopSearch(board);
 		TripodAgent findTripod = new TripodAgent(board);
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
 		ArrayList<Boolean> loops = new ArrayList<Boolean> (

@@ -1,3 +1,5 @@
+Tripod Search Pseudocode:
+
 Tripod() Return (black_has_tripod, white_has_tripod):
 	get all edge nodes with B, store in queueW
 	get all edge nodes with W, store in queueB
@@ -6,19 +8,19 @@ Tripod() Return (black_has_tripod, white_has_tripod):
 	tripodB = false
 
 	while queueW.notEmpty pop node:
-		if node.depth_first_search(queueW)
+		if node.NotVisited and depth_first_search(node, queueW)
 			tripodW = true
 			break
 	while queueB.notEmpty pop node:
-		if node.depth_first_search(queueB)
+		if node.NotVisited and depth_first_search(node, queueB)
 			tripodB = true
 			break
 	return tripodB, tripodW
 
-node.depth_first_search(nodeOnEdges):
+depth_first_search(node, nodeOnEdges):
 	edgeList = listOfAllEdges
 	uniqueEdgeVisited = 0
-	stack = {root}
+	stack = {node}
 	while stack.notEmpty:
 		curNode = stack.pop
 		if curNode.onUnvisitedEdge:
@@ -29,13 +31,15 @@ node.depth_first_search(nodeOnEdges):
 			return true
 		stack.push(curNode.allUnvisitedNeighbours)
 
+Time Complexity:
+
 Worst Case Running Time: O(N)
 Running time analysis assumes worst case performance
 Let N be the number of nodes
 In Tripod()
 	get all edge nodes is O(N);
 	Going through both both queues is O(N); (1)
-In node.depth_first_search()
+In depth_first_search()
 	first three operations is O(1);
 	Exploring the first node, and since check neighbours looks all six neighbours,
 	in total, after all neighbours are looked at, its O(6N/2) for each colour. (2)
@@ -43,4 +47,55 @@ In node.depth_first_search()
 Combining these two together, note that if in node.depth_first_search, if all same colour nodes
 are connected, then node.depth_first_search will only run once for each colour. So it means
 every node in the graph will only be visited once, there for the total running time is O(6N),
-which after dropping the constant, is O(N)
+which after dropping the constant factor, is O(N)
+
+==============================================================================================
+
+Loop Search Algorithm Description:
+
+To find loops, a modified version of Dijkstra's Algorithm is used.
+
+We create a queue of all cells that aren't of the colour we are trying to find a loop for. For example this queue would include all White and Empty cells if we were searching for a black loop. This queue marks all of these cells that are on the edges of the board as visited and adds them in the front of the queue and all other of these cells as unvisited and adds them at the end of the queue.
+
+We then process this queue, popping elements from the start each time. For each of these elements we check to find unvisited neighbours and add them to the start of the queue, marking them as visited. If we find an unvisited node, we have found a loop so we return true. If we process this whole queue without finding an unvisited node, then we return false.
+
+The queue searches the entire board from the edge inwards. This results in cells of the specified colour loop you want to find blocking the path of the search. Due to this, if a cell is unvisited it means that it was unreachable by the search and is hence fully enclosed and therefore a loop.
+
+In the case of the entire board being filled by the colour you are searching for the queue will be empty and hence return false (no loop)
+
+For the opposite case where the board is filled entirely by the colour you are not searching for, the queue will search every node, find no unvisited node and hence return false (no loop)
+
+
+Loop Search Pseudocode:
+
+searchForLoop(String colourToFind):boolean {
+	nonColourCells <- all cells that are not of colour colourToFind // with cells on the edge marked as visited
+	H <- makeQueue(nonColourCells) // visited cells at start, unvisited at end
+
+	while (H not empty) {
+		oneCell <- H.pop() // pop from front of queue
+
+		if (oneCell.visited not true) {
+			return true
+		}
+
+		N <- oneCell.getNeighboursNotOfColour(colourToFind)
+
+		for each neighbour in N {
+			if (neighbour.visited not true) {
+				H.addAtStart(neighbour)
+			}
+			H.visited <- true
+		}
+	}
+	return false
+}
+
+Time Complexity:
+O(N) where N is the number of cells in the board (note that this is assuming nonColourCells is populated as the board is read in from input)
+
+Every node is visited once as once it is visited, the visited value is set to true and it is never visited again.
+
+For every node, there is a maximum of 6 neighbours (excluding edge nodes) which adds a constant factor onto the complexity (still O(N))
+
+This is also assuming that the queue operations pop() (from start) and addAtStart() are all O(1)
