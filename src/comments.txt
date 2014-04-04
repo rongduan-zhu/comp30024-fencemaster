@@ -1,6 +1,6 @@
 General Code Structure:
-We've decided to have a Board class and a Cell class. A board has internally a 2D array of Cells. Internally,
-we've represented the same way as how inputs are displayed. Top left is a valid position, as well as bottom
+We've decided to have a Board class and a Cell class. A board internally has a 2D array of Cells. Internally,
+we've represented it same way as the inputs is entered. Top left is a valid position, as well as bottom
 left. There are appropriate methods defined for getting border boundaries, and getting all the neighbours, as
 well as all the necessary setters and getters. The TestWin class is the entry point for the program, it first
 creates a Board object, with all positions initialized to empty. Then a new method is called for reading input
