@@ -7,8 +7,8 @@ public class TripodAgent {
 	private Board board;
 
 	/** Queues for holding all nodes that is on an edge but not corners*/
-	private ArrayList<ArrayList<Integer>> blackEdgeNodes = new ArrayList<ArrayList<Integer>>();
-	private ArrayList<ArrayList<Integer>> whiteEdgeNodes = new ArrayList<ArrayList<Integer>>();
+	private ArrayList<ArrayList<Integer> > blackEdgeNodes = new ArrayList<ArrayList<Integer> >();
+	private ArrayList<ArrayList<Integer> > whiteEdgeNodes = new ArrayList<ArrayList<Integer> >();
 
 	/**
 	 * @param Initializes board to the game board
@@ -22,14 +22,14 @@ public class TripodAgent {
 	 */
 	public ArrayList<Boolean> searchForTripod() {
 		ArrayList<Boolean> returnList = new ArrayList<Boolean>(Arrays.asList(false, false));
-		//reset visited state of all nodes
+		// reset visited state of all nodes
 		board.resetVisited();
-		//find all nodes that are on an edge but not corner
+		// find all nodes that are on an edge but not corner
 		findAllEdgeNodes();
-		//Searches for black tripod, stops as soon as a tripod has been found
+		// Searches for black tripod, stops as soon as a tripod has been found
 		for (int i = 0; i < blackEdgeNodes.size(); ++i) {
 			ArrayList<Integer> position = blackEdgeNodes.get(i);
-			if(board.getCell(position.get(0), position.get(1)).isVisited()) {
+			if (board.getCell(position.get(0), position.get(1)).isVisited()) {
 				continue;
 			}
 			if (depth_first_search(blackEdgeNodes)) {
@@ -37,10 +37,10 @@ public class TripodAgent {
 				break;
 			}
 		}
-		//Searches for white tripod, stops as soon as a tripod has been found
+		// Searches for white tripod, stops as soon as a tripod has been found
 		for (int i = 0; i < whiteEdgeNodes.size(); ++i) {
 			ArrayList<Integer> position = whiteEdgeNodes.get(i);
-			if(board.getCell(position.get(0), position.get(1)).isVisited()) {
+			if (board.getCell(position.get(0), position.get(1)).isVisited()) {
 				continue;
 			}
 			if (depth_first_search(whiteEdgeNodes)) {
@@ -55,7 +55,7 @@ public class TripodAgent {
 	 * @param queue, holding all edge nodes of the same colour that are not on a corner
 	 * @return true if a tripod has been found
 	 */
-	private boolean depth_first_search(ArrayList<ArrayList<Integer>> queue) {
+	private boolean depth_first_search(ArrayList<ArrayList<Integer> > queue) {
 		//Sets 6 edges to unvisited
 		ArrayList<Boolean> edgeList = new ArrayList<Boolean>(
 										Arrays.asList(false, false, false, false, false, false));
@@ -65,11 +65,11 @@ public class TripodAgent {
 			edgeIndex;
 
 		stack.add(pop(queue));
-		//Continues exploring graph until stack is empty
+		// Continues exploring graph until stack is empty
 		while (stack.size() > 0) {
 			curNode = pop(stack);
 			board.getCell(curNode.get(0), curNode.get(1)).setVisited(true);
-			//if current node is on edge
+			// if current node is on edge
 			if (board.isEdgeNode(curNode.get(0), curNode.get(1))) {
 				edgeIndex = board.whichEdge(curNode.get(0), curNode.get(1));
 				/* if the edge the current node is on is unvisited, then
@@ -84,7 +84,7 @@ public class TripodAgent {
 					board.getCell(curNode.get(0), curNode.get(1)).setVisited(true);
 				}
 			}
-			//if three unique edges contains connected nodes of same colour, then found
+			// if three unique edges contains connected nodes of same colour, then found
 			if (edgeVisited == 3) {
 				return true;
 			}
@@ -111,7 +111,7 @@ public class TripodAgent {
 	 */
 	private void findAllEdgeNodes() {
 		for (int i = 0; i < board.getNumRows(); ++i) {
-			for (int j = 0; j <= board.getMaxColumn(i); ++j) {
+			for (int j = 0; j < board.getNumRows(); ++j) {
 				if (board.isEdgeNode(i, j)) {
 					if (board.get(i, j).equals(Cell.BLACK)) {
 						blackEdgeNodes.add(new ArrayList<Integer>(Arrays.asList(i, j)));

@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * @author Rongduan
+ *
+ */
 public class Board {
 	/** class constants that indicate which type of neighbours to get */
 	public static final int ALL_NEIGHBOURS = 1;
@@ -34,15 +38,13 @@ public class Board {
 		for (int i = 0; i < this.numRows; i++) {
 			cellArray.add(new ArrayList<Cell>());
 			for (int j = 0; j < this.numRows; j++) {
-				if (isValidPosition(i, j)) {
-					cellArray.get(i).add(new Cell());
-				}
+				cellArray.get(i).add(new Cell());
 			}
 		}
 	}
 
 	/**
-	 *
+	 * Finds whether specified position is valid on the board
 	 * @param row, row index, 0 based
 	 * @param column, column index, 0 based
 	 * @return true if (row, column) is a valid position, false otherwise
@@ -55,10 +57,11 @@ public class Board {
 
 		int columnBound = getMaxColumn(row);
 
-		if (column <= columnBound) {
-			return true;
+		if (row <= getMiddleRowIndex()) {
+			return column <= columnBound;
+		} else {
+			return column >= columnBound;
 		}
-		return false;
 	}
 
 	/**
@@ -112,20 +115,26 @@ public class Board {
 		if (row > this.numRows - 1) {
 			return -1;
 		}
-		int boardMiddle = (this.numRows + 1) / 2 - 1,
-
+		int boardMiddle = getMiddleRowIndex(),
 			columnBound = boardMiddle + row;
 		if (row > boardMiddle) {
-			columnBound = boardMiddle + (this.numRows - 1) - row;
+			columnBound = row - boardMiddle;
 		}
 		return columnBound;
+	}
+
+	/** Return the index of the row in the middle
+	 * 	@return the index of the middle row
+	 */
+	public int getMiddleRowIndex() {
+		return (this.numRows + 1) / 2 - 1;
 	}
 
 	/**
 	 * @param row, row index, 0 based
 	 * @param column, column index, 0 based
 	 * @param type, all neighbours | all unvisited | all visited
-	 * @return returns all unvisited neighbours as a 2d arraylist, with each item of first layer being the row and column
+	 * @return returns neighbours of type as a 2d arraylist, with each item of first layer being the row and column
 	 * 		   of a neighbour. eg [[1,2], [1,3]]
 	 */
 	public ArrayList<ArrayList<Integer> > getNeighbours(int row, int column, int type) {
@@ -137,9 +146,6 @@ public class Board {
 		}
 		String content = get(row, column);
 		ArrayList<ArrayList<Integer>> neighbours = new ArrayList<ArrayList<Integer>>();
-		int neighbourRow,
-			neighbourColumn,
-			boardMiddle = (this.numRows + 1) / 2 - 1;
 		boolean typeConstraint;
 
 		//Checks top
@@ -168,23 +174,15 @@ public class Board {
 			}
 		}
 
-		//Checks bottom-right/bottom-left
-		if (row < boardMiddle) {
-			neighbourRow = row + 1;
-			neighbourColumn = column + 1;
-		} else {
-			neighbourRow = row + 1;
-			neighbourColumn = column - 1;
-		}
-		if (isValidPosition(neighbourRow, neighbourColumn)) {
+		if (isValidPosition(row + 1, column + 1)) {
 			if (type == ALL_NEIGHBOURS) {
 				typeConstraint = true;
 			} else {
-				typeConstraint = getCell(neighbourRow, neighbourColumn).isVisited();
+				typeConstraint = getCell(row + 1, column + 1).isVisited();
 				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
 			}
-			if (typeConstraint && get(neighbourRow, neighbourColumn).equals(content)) {
-				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+			if (typeConstraint && get(row + 1, column + 1).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column + 1)));
 			}
 		}
 
@@ -214,23 +212,16 @@ public class Board {
 			}
 		}
 
-		//Checks top-left/top-right
-		if (row <= boardMiddle) {
-			neighbourRow = row - 1;
-			neighbourColumn = column - 1;
-		} else {
-			neighbourRow = row - 1;
-			neighbourColumn = column + 1;
-		}
-		if (isValidPosition(neighbourRow, neighbourColumn)) {
+		//Checks top-left
+		if (isValidPosition(row - 1, column - 1)) {
 			if (type == ALL_NEIGHBOURS) {
 				typeConstraint = true;
 			} else {
-				typeConstraint = getCell(neighbourRow, neighbourColumn).isVisited();
+				typeConstraint = getCell(row - 1, column - 1).isVisited();
 				typeConstraint = type == VISITED_NEIGHBOURS ? typeConstraint : !typeConstraint;
 			}
-			if (typeConstraint && get(neighbourRow, neighbourColumn).equals(content)) {
-				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+			if (typeConstraint && get(row - 1, column - 1).equals(content)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column - 1)));
 			}
 		}
 		return neighbours;
@@ -251,9 +242,6 @@ public class Board {
 			return null;
 		}
 		ArrayList<ArrayList<Integer>> neighbours = new ArrayList<ArrayList<Integer>>();
-		int neighbourRow,
-			neighbourColumn,
-			boardMiddle = (this.numRows + 1) / 2 - 1;
 
 		//Checks top
 		if (isValidPosition(row - 1, column)) {
@@ -269,17 +257,10 @@ public class Board {
 			}
 		}
 
-		//Checks bottom-right/bottom-left
-		if (row < boardMiddle) {
-			neighbourRow = row + 1;
-			neighbourColumn = column + 1;
-		} else {
-			neighbourRow = row + 1;
-			neighbourColumn = column - 1;
-		}
-		if (isValidPosition(neighbourRow, neighbourColumn)) {
-			if (!get(neighbourRow, neighbourColumn).equals(colour)) {
-				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+		//Checks bottom-right
+		if (isValidPosition(row + 1, column + 1)) {
+			if (!get(row + 1, column + 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column + 1)));
 			}
 		}
 
@@ -297,17 +278,10 @@ public class Board {
 			}
 		}
 
-		//Checks top-left/top-right
-		if (row <= boardMiddle) {
-			neighbourRow = row - 1;
-			neighbourColumn = column - 1;
-		} else {
-			neighbourRow = row - 1;
-			neighbourColumn = column + 1;
-		}
-		if (isValidPosition(neighbourRow, neighbourColumn)) {
-			if (!get(neighbourRow, neighbourColumn).equals(colour)) {
-				neighbours.add(new ArrayList<Integer>(Arrays.asList(neighbourRow, neighbourColumn)));
+		//Checks top-left
+		if (isValidPosition(row - 1, column - 1)) {
+			if (!get(row - 1, column - 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column - 1)));
 			}
 		}
 		return neighbours;
@@ -322,23 +296,16 @@ public class Board {
 		if (!isValidPosition(row, column)) {
 			return false;
 		}
-		int boardMiddle = (this.numRows + 1) / 2 - 1;
+		int boardMiddle = getMiddleRowIndex();
 		//Nothing on the middle row is an edge node
 		if (row < boardMiddle || row > boardMiddle) {
+			int columnBound = getMaxColumn(row);
 			//if its not top row or bottom row, then if its on either side, its an edge
 			if (row != 0 && row != this.numRows - 1) {
-				if (column == 0 || column == getMaxColumn(row)) {
-					return true;
-				} else {
-					return false;
-				}
+				return column == 0 || column == columnBound || column == this.numRows - 1;
 			} else {
 				//if its top row or bottom row, then get all row except for the edges
-				if (column > 0 && column < boardMiddle) {
-					return true;
-				} else {
-					return false;
-				}
+				return !(column == 0 || column == columnBound || column == this.numRows - 1);
 			}
 		}
 		return false;
@@ -353,46 +320,33 @@ public class Board {
 		if (!isValidPosition(row, column)) {
 			return false;
 		}
-		int boardMiddle = (this.numRows + 1) / 2 - 1;
+		int boardMiddle = getMiddleRowIndex();
 		// check non middle row cells
 		if (row < boardMiddle || row > boardMiddle) {
+			int columnBound = getMaxColumn(row);
 			//if its not top row or bottom row, then if its on either side, its an edge
 			if (row != 0 && row != this.numRows - 1) {
-				if (column == 0 || column == getMaxColumn(row)) {
-					return true;
-				} else {
-					return false;
-				}
+				return column == 0 || column == columnBound || column == this.numRows - 1;
 			} else {
-				//if its top row or bottom row, then get all row except for the edges
-				if (column >= 0 && column <= boardMiddle) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		} else {
-			if (column == 0 || column == (this.numRows - 1)) {
 				return true;
-			} else {
-				return false;
 			}
 		}
+		return column == 0 || column == (this.numRows - 1);
 	}
 
 	/**
-	 * on an edge
+	 * Find which edge the cell is on. This method assumes that the node is an edge node
 	 * top = 0, right = 1, bottom-right = 2, bottom = 3, left = 4, top-left = 5
-	 * @return which edge a node belongs to. This method assumes that the node is a node
+	 * @return which edge a node belongs to.
 	 */
 	public int whichEdge(int row, int column) {
-		int boardMiddle = (this.numRows + 1) / 2 - 1;
+		int boardMiddle = getMiddleRowIndex();
 		if (row == 0) {
 			return 0;
 		} else if (row < boardMiddle) {
 			return column == 0 ? 5 : 1;
 		} else if (row < numRows - 1) {
-			return column == 0 ? 4 : 2;
+			return column == this.numRows - 1 ? 4 : 2;
 		} else {
 			return 3;
 		}
@@ -403,8 +357,10 @@ public class Board {
 	 */
 	public void resetVisited() {
 		for (int i = 0; i < numRows; ++i) {
-			for (int j = 0; j <= getMaxColumn(i); ++j) {
-				cellArray.get(i).get(j).setVisited(false);
+			for (int j = 0; j < numRows; ++j) {
+				if (isValidPosition(i, j)) {
+					cellArray.get(i).get(j).setVisited(false);
+				}
 			}
 		}
 	}

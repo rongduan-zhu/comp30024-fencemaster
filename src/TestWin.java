@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class TestWin {
-	
+
 	public static void main(String args[]) {
 		Scanner stdIn = new Scanner(System.in);
 
@@ -20,7 +20,6 @@ public class TestWin {
 			System.exit(1);
 		}
 		Board board = createBoardFromInput(stdIn, dimension);
-
 		LoopSearch findLoop = new LoopSearch(board);
 		TripodAgent findTripod = new TripodAgent(board);
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
@@ -68,9 +67,17 @@ public class TestWin {
 		Board board = new Board(dimension);
 		String item;
 		for (int i = 0; i < numRows; ++i) {
-			for (int j = 0; j <= board.getMaxColumn(i); ++j) {
+			for (int j = 0; j < numRows; ++j) {
+				if (!board.isValidPosition(i, j)) {
+					continue;
+				}
 				if (stdIn.hasNext()) {
 					item = stdIn.next();
+					if (!validInput(item)) {
+						System.out.println("Error: Invalid input");
+						System.exit(1);
+					}
+
 					board.set(i, j, item);
 					if (!item.equals(Cell.EMPTY)) {
 						board.incrementOccupiedCells();
@@ -83,5 +90,9 @@ public class TestWin {
 			}
 		}
 		return board;
+	}
+
+	public static boolean validInput(String item) {
+		return item.equals(Cell.BLACK) || item.equals(Cell.WHITE) || item.equals(Cell.EMPTY);
 	}
 }

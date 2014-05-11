@@ -18,9 +18,9 @@ public class LoopSearch {
 		ArrayList<ArrayList<Integer>> diffColourCells, currentCellNeighbours, diffColourCellsQueue;
 		ArrayList<Integer> currentCell;
 
-		/* reset visited status of each cell in the board as loopsearch changes this 
+		/* reset visited status of each cell in the board as loopsearch changes this
 		 * (previous loop searches or tripod search may have set these values)
-		 */ 
+		 */
 		board.resetVisited();
 		/* Find all edge cells that aren't of the colour ring you are searching for.
 		 * Each element of this arraylist has the format [i, j, notVisitedBySearch],
@@ -29,7 +29,7 @@ public class LoopSearch {
 		 */
 		diffColourCellsQueue = new ArrayList<ArrayList<Integer>>();
 		diffColourCells = findAllCellsNotOfColour(colour);
-		// is there a better way to add the cells without sifting every time a new one is added?
+
 		// Now create a minimum (smallest at head) priority queue
 		for (ArrayList<Integer> oneCell : diffColourCells) {
 			/* add visited nodes nodes to start (initially all edges are visited)
@@ -61,7 +61,6 @@ public class LoopSearch {
 			for (ArrayList<Integer> oneNeighbour : currentCellNeighbours) {
 				if (!board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).isVisited()) {
 					// we have found a new unvisited node, add it into the queue with value of 0 - visited
-					//notColourCellsQueue.add(new ArrayList<Integer>(Arrays.asList(oneNeighbour.get(0), oneNeighbour.get(1), 0)));
 					diffColourCellsQueue.add(0, new ArrayList<Integer>(Arrays.asList(oneNeighbour.get(0), oneNeighbour.get(1))));
 					// set the cell to visited to mark that it has been added into the queue
 					board.getCell(oneNeighbour.get(0), oneNeighbour.get(1)).setVisited(true);
@@ -80,8 +79,8 @@ public class LoopSearch {
 	private ArrayList<ArrayList<Integer>> findAllCellsNotOfColour(String colour) {
 		ArrayList<ArrayList<Integer>> cellList = new ArrayList<ArrayList<Integer>>();
 		for (int i = 0; i < board.getNumRows(); i++) {
-			for (int j = 0; j <= board.getMaxColumn(i); j++) {
-				if (!board.get(i,j).equals(colour)) {
+			for (int j = 0; j <= board.getNumRows(); j++) {
+				if (board.isValidPosition(i, j) && !board.get(i,j).equals(colour)) {
 					cellList.add(new ArrayList<Integer>(Arrays.asList(i,j)));
 				}
 			}

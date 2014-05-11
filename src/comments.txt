@@ -1,3 +1,6 @@
+Maxim Lobanov (587697)
+Rongduan Zhu (584169)
+
 General Code Structure:
 We've decided to have a Board class and a Cell class. A board internally has a 2D array of Cells. Internally,
 we've represented it same way as the inputs is entered. Top left is a valid position, as well as bottom
