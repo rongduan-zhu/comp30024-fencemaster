@@ -1,6 +1,9 @@
 package mlobanov;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import aiproj.fencemaster.*;
 
 /**
@@ -230,11 +233,11 @@ public class Mlobanov implements Player, Piece {
 		// gameBoard.searchForLoop()
 		
 		// -1 = INVALID/Non-Terminal State, 0 = EMPTY/DRAW, 1 = WHITE, 2 = BLACK
-		LoopSearch findLoop = new LoopSearch(board);
-		TripodAgent findTripod = new TripodAgent(board);
+		LoopSearch findLoop = new LoopSearch(gameBoard);
+		TripodAgent findTripod = new TripodAgent(gameBoard);
 		// test if there is a tripod win
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
-		int result = whoWon(tripods)
+		int result = whoWon(tripods);
 		if (result != -1) {
 			return result;
 		}
@@ -250,8 +253,8 @@ public class Mlobanov implements Player, Piece {
 			return result;
 		}
 		// check if board is full
-		if (board.getOccupiedCells() < board.getTotalNumCells()) {
-			return -1
+		if (gameBoard.getOccupiedCells() < gameBoard.getTotalNumCells()) {
+			return -1;
 		}
 		return 0;
 	}

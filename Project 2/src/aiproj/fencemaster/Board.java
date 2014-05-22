@@ -44,7 +44,7 @@ public class Board {
 		for (int i = 0; i < this.numRows; i++) {
 			cellArray.add(new ArrayList<Cell>());
 			for (int j = 0; j < this.numRows; j++) {
-				cellArray.get(i).add(new Cell());
+				cellArray.get(i).add(new Cell(i, j));
 			}
 		}
 	}
