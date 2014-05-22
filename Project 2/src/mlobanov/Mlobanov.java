@@ -149,7 +149,30 @@ public class Mlobanov implements Player, Piece {
 		// gameBoard.searchForLoop()
 		
 		// -1 = INVALID/Non-Terminal State, 0 = EMPTY/DRAW, 1 = WHITE, 2 = BLACK
-		return 1;
+		LoopSearch findLoop = new LoopSearch(board);
+		TripodAgent findTripod = new TripodAgent(board);
+		// test if there is a tripod win
+		ArrayList<Boolean> tripods = findTripod.searchForTripod();
+		int result = whoWon(tripods)
+		if (result != -1) {
+			return result;
+		}
+		// test if there is a loop win
+		ArrayList<Boolean> loops = new ArrayList<Boolean> (
+				Arrays.asList(
+						findLoop.searchForLoop(Cell.BLACK),
+						findLoop.searchForLoop(Cell.WHITE)
+				)
+		);
+		result = whoWon(loops);
+		if (result != -1) {
+			return result;
+		}
+		// check if board is full
+		if (board.getOccupiedCells() < board.getTotalNumCells()) {
+			return -1
+		}
+		return 0;
 	}
 	
 	/* Function called by referee to get the board configuration in String format
@@ -181,5 +204,19 @@ public class Mlobanov implements Player, Piece {
 
 	public void setOpponentLastMove(Move opponentLastMove) {
 		this.opponentLastMove = opponentLastMove;
+	}
+
+	/**
+	* takes result as [blackResult, whiteResult]
+	* returns 2 if black won, 1 if white, -1 if none
+	*/
+	private int whoWon(ArrayList<Boolean> result) {
+		if (result.get(0)) {
+			return 2;
+		}
+		if (result.get(0)) {
+			return 1;
+		}
+		return -1;
 	}
 }
