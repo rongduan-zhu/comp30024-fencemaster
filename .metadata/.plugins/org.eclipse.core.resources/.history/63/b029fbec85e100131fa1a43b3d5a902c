@@ -42,6 +42,11 @@ public class Mlobanov implements Player, Piece {
 	private int moveCount = 0;
 	private Move opponentLastMove;
 	
+	public static void main(String[] args) {
+		Board gameBoard = new Board(5);
+		System.out.println(gameBoard);
+	}
+	
 	/* Constructor */
 	public Mlobanov() {
 		
