@@ -1,0 +1,28 @@
+package aiproj.fencemaster;
+
+import java.io.PrintStream;
+import aiproj.fencemaster.*;
+
+public class Mlobanov implements Player, Piece {
+	public int init(int n, int p) {
+		
+		
+		return 0;
+	}
+	
+	public Move makeMove() {
+		
+	}
+	
+	public int opponentMove(Move m) {
+		
+	}
+	
+	public int getWinner() {
+		
+	}
+	
+	public void printBoard(PrintStream output) {
+		
+	}
+}

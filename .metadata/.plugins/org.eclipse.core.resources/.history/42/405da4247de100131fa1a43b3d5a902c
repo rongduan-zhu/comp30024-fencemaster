@@ -1,0 +1,16 @@
+package aiproj.fencemaster;
+
+/**
+ * 
+ * @author Maxim Lobanov (mlobanov) & Rongduan Zhu (rz)
+ *
+ */
+
+public class Board {
+	
+	
+	public Board (int dimension) {
+		)
+	}
+
+}

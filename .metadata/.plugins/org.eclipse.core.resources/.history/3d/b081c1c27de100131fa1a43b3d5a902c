@@ -1,0 +1,27 @@
+package aiproj.fencemaster;
+
+import java.util.ArrayList;
+
+/**
+ * 
+ * @author Maxim Lobanov (mlobanov) & Rongduan Zhu (rz)
+ *
+ */
+
+public class Board {
+	
+	private ArrayList<ArrayList<Cell>> cellArray;
+	
+	/**
+	 * Board constructor
+	 * @param dimension How big each edge of board is
+	 */
+	public Board (int dimension) {
+		
+		cellArray = new ArrayList<ArrayList<Cell>>(dimension);
+		for (int i = 0; i < dimension, i++) {
+			
+		}
+	}
+
+}
