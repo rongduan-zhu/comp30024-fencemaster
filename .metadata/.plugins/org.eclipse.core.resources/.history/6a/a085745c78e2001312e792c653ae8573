@@ -30,11 +30,6 @@ public class Test {
 		}
 		
 		Board board = createBoardFromInput(stdIn, dimension);
-		System.out.println(board);
-		
-		Mlobanov player = new Mlobanov();
-		player.init(board, dimension);
-		player.makeMove();
 		
 		stdIn.close();
 	}

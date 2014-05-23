@@ -74,18 +74,8 @@ public class Mlobanov implements Player, Piece {
 		return 0;
 	}
 	
-	/**
-	 * Testing init, pass in a board state
-	 * @param oneBoard
-	 * @param p
-	 */
 	public void init(Board oneBoard, int p) {
 		setColour(p);
-		if (p == Piece.BLACK) { 
-			setOpponentColour(Piece.WHITE);
-		} else {
-			setOpponentColour(Piece.BLACK);
-		}
 		gameBoard = oneBoard; 
 	}
 	
@@ -144,14 +134,9 @@ public class Mlobanov implements Player, Piece {
 		 * value doesn't matter as value will always be changed on a real board */
 		bestCell = new Cell(0, 0);
 		
-		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
-			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
-				if (!gameBoard.isValidPosition(i, j)) {
-					continue;
-				}
-				
+		for (int i = 0; i < gameBoard.getNumRows(); i++) {
+			for (int j = 0; j < gameBoard.getNumRows(); j++) {
 				oneCell = gameBoard.getCell(i, j);
-				System.out.println("Cell is at: " + oneCell.getRow() + ", " + oneCell.getCol());
 				/* pretend opponent has taken the cell and see what the value is */
 				value = minimaxValue(oneCell, getColour(), 0);
 				/* record cell with the highest value */
@@ -202,7 +187,7 @@ public class Mlobanov implements Player, Piece {
 			/* currently player's turn */
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth + 1);
+					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth - 1);
 					if (value > maxValue) {
 						maxValue = value;
 					}
@@ -216,7 +201,7 @@ public class Mlobanov implements Player, Piece {
 			/* currently enemy turn */
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth + 1);
+					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth - 1);
 					if (value < minValue) {
 						minValue = value;
 					}

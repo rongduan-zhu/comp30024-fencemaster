@@ -149,9 +149,7 @@ public class Mlobanov implements Player, Piece {
 				if (!gameBoard.isValidPosition(i, j)) {
 					continue;
 				}
-				
 				oneCell = gameBoard.getCell(i, j);
-				System.out.println("Cell is at: " + oneCell.getRow() + ", " + oneCell.getCol());
 				/* pretend opponent has taken the cell and see what the value is */
 				value = minimaxValue(oneCell, getColour(), 0);
 				/* record cell with the highest value */

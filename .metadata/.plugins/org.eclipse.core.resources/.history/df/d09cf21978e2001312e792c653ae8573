@@ -1,21 +1,15 @@
 package mlobanov;
 
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Test {
 	
 	public static void main(String[] args) {
-		try {
-			System.setIn(new FileInputStream("input.txt"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		System.setIn(new FileInputStream("input.txt"));
 		Scanner stdIn = new Scanner(System.in);
-		
+
 		// correct input begins with an integer
 		if (!stdIn.hasNextInt()) {
 			System.out.println("Error: No dimension detected. Exiting program.");
@@ -27,16 +21,7 @@ public class Test {
 		if (dimension < 1) {
 			System.out.println("Error: Board dimension too small. Exiting program.");
 			System.exit(1);
-		}
-		
-		Board board = createBoardFromInput(stdIn, dimension);
-		System.out.println(board);
-		
-		Mlobanov player = new Mlobanov();
-		player.init(board, dimension);
-		player.makeMove();
-		
-		stdIn.close();
+		})
 	}
 	/**
 	 * @param stdIn, input stream
