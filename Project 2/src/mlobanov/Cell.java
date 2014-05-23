@@ -1,5 +1,4 @@
-package aiproj.fencemaster;
-
+package mlobanov;
 public class Cell {
 	/** class constant strings determining what the cell contains */
 	public static final String BLACK = "B";
