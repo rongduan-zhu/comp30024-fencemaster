@@ -150,6 +150,7 @@ public class Mlobanov implements Player, Piece {
 		/* defining best cell to prevent possible uninitialised variable error
 		 * value doesn't matter as value will always be changed on a real board */
 		bestCell = new Cell(0, 0);
+		
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				// check if the cell is in a valid position
@@ -163,9 +164,7 @@ public class Mlobanov implements Player, Piece {
 					continue;
 				}
 				/* pretend opponent has taken the cell and see what the value is */
-				
 				value = minimaxValue(oneCell, getColour(), 0);
-				
 				/* record cell with the highest value */
 				if (value > maxValue) {
 					maxValue = value;
@@ -173,7 +172,7 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}
-
+		
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
 		
 		/* for each move in Moves(game) do
@@ -195,8 +194,6 @@ public class Mlobanov implements Player, Piece {
 		int minValue = 10000;
 		int value;
 		
-		Cell oneCell;
-		
 		String content;
 		if (colour == Piece.BLACK) {
 			content = Cell.BLACK;
@@ -211,7 +208,7 @@ public class Mlobanov implements Player, Piece {
 			/* evaluate move based on which player's move it is */
 			value = evaluateMove(moveCell, colour);
 			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			/*gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);*/
 			return value;
 		} else if (colour == getColour()) {
 			/* currently player's turn */
@@ -220,20 +217,14 @@ public class Mlobanov implements Player, Piece {
 					if (!gameBoard.isValidPosition(i, j)) {
 						continue;
 					}
-					
-					oneCell = gameBoard.getCell(i, j);
-					// check if the cell has been taken
-					if (oneCell.taken()) {
-						continue;
-					}
-					value = minimaxValue(oneCell, getOpponentColour(), depth + 1);
+					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth + 1);
 					if (value > maxValue) {
 						maxValue = value;
 					}
 				}
 			}			
 			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			/*gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);*/
 			return maxValue;
 			/* return max of minimaxValue(each successor) */
 		} else {
@@ -243,20 +234,14 @@ public class Mlobanov implements Player, Piece {
 					if (!gameBoard.isValidPosition(i, j)) {
 						continue;
 					}
-					
-					oneCell = gameBoard.getCell(i, j);
-					// check if the cell has been taken
-					if (oneCell.taken()) {
-						continue;
-					}
-					value = minimaxValue(oneCell, getOpponentColour(), depth + 1);
+					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth + 1);
 					if (value < minValue) {
 						minValue = value;
 					}
 				}
 			}
 			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			/*gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);*/
 			return minValue;
 		}
 		/*if cutoff/terminal_state(game) {

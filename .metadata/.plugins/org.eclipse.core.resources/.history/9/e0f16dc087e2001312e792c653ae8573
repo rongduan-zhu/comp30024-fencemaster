@@ -100,21 +100,13 @@ public class Mlobanov implements Player, Piece {
 		
 		// determine if best move is to swap
 		if (makeSwap()) {
-			newMove = new Move(getColour(), false, opponentLastMove.Row, opponentLastMove.Col);
+			newMove = new Move(colour, false, opponentLastMove.Row, opponentLastMove.Col);
 		} else {		
 			// find best position on board to make move
 			newMove = minimaxDecision();
 		}
 		 
 		setMoveCount(getMoveCount() + 1);
-		String self_colour;
-		if (getColour() == Piece.BLACK) {
-			self_colour = Cell.BLACK;
-		} else {
-			self_colour = Cell.WHITE;
-		}
-		gameBoard.getCell(newMove.Row, newMove.Col).setContent(self_colour);
-		System.out.println(gameBoard);
 		return newMove;
 	}
 	
@@ -150,6 +142,7 @@ public class Mlobanov implements Player, Piece {
 		/* defining best cell to prevent possible uninitialised variable error
 		 * value doesn't matter as value will always be changed on a real board */
 		bestCell = new Cell(0, 0);
+		
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				// check if the cell is in a valid position
@@ -163,9 +156,7 @@ public class Mlobanov implements Player, Piece {
 					continue;
 				}
 				/* pretend opponent has taken the cell and see what the value is */
-				
 				value = minimaxValue(oneCell, getColour(), 0);
-				
 				/* record cell with the highest value */
 				if (value > maxValue) {
 					maxValue = value;
@@ -173,9 +164,8 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}
-
-		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
 		
+		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
 		/* for each move in Moves(game) do
 			value(move) = minimax-value(apply(game), game)
 			end
@@ -194,8 +184,6 @@ public class Mlobanov implements Player, Piece {
 		int maxValue = -1;
 		int minValue = 10000;
 		int value;
-		
-		Cell oneCell;
 		
 		String content;
 		if (colour == Piece.BLACK) {
@@ -220,13 +208,7 @@ public class Mlobanov implements Player, Piece {
 					if (!gameBoard.isValidPosition(i, j)) {
 						continue;
 					}
-					
-					oneCell = gameBoard.getCell(i, j);
-					// check if the cell has been taken
-					if (oneCell.taken()) {
-						continue;
-					}
-					value = minimaxValue(oneCell, getOpponentColour(), depth + 1);
+					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth + 1);
 					if (value > maxValue) {
 						maxValue = value;
 					}
@@ -243,13 +225,7 @@ public class Mlobanov implements Player, Piece {
 					if (!gameBoard.isValidPosition(i, j)) {
 						continue;
 					}
-					
-					oneCell = gameBoard.getCell(i, j);
-					// check if the cell has been taken
-					if (oneCell.taken()) {
-						continue;
-					}
-					value = minimaxValue(oneCell, getOpponentColour(), depth + 1);
+					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth + 1);
 					if (value < minValue) {
 						minValue = value;
 					}
@@ -305,7 +281,6 @@ public class Mlobanov implements Player, Piece {
 			colour = Cell.WHITE;
 		}
 		gameBoard.getCell(m.Row, m.Col).setContent(colour);
-		/*System.out.println("Updating row and column: " + m.Row + ", " + m.Col + " for opponent:");*/
 		// update instance variable of opponent's last move
 		setOpponentLastMove(m);
 		return 0;

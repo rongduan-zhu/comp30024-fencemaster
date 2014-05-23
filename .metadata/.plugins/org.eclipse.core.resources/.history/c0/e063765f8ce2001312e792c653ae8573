@@ -114,7 +114,6 @@ public class Mlobanov implements Player, Piece {
 			self_colour = Cell.WHITE;
 		}
 		gameBoard.getCell(newMove.Row, newMove.Col).setContent(self_colour);
-		System.out.println(gameBoard);
 		return newMove;
 	}
 	
