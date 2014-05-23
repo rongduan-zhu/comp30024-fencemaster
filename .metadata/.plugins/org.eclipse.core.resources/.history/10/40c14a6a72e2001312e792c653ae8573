@@ -75,15 +75,36 @@ public class Mlobanov implements Player, Piece {
 		/* distance between two points (x1,y1) and (x2,y2) is:
 		 * (abs(x1-x2) + abs(y1-y2) + abs( (x1-y1) - (x2-y2))) / 2
 		 */
-		Move newMove;
+
+		int moveRow, moveCol, maxValueRow, maxValueCol, maxValue;
+		maxValueRow = maxValueCol = maxValue = -1;
 		
 		// determine if best move is to swap
 		if (makeSwap()) {
-			newMove = new Move(colour, false, opponentLastMove.Row, opponentLastMove.Col);
+			moveRow = opponentLastMove.Row;
+			moveCol = opponentLastMove.Col;
 		} else {		
 			// find best position on board to make move
-			newMove = minimaxDecision();
+			
+			Cell oneCell;
+			for (int i = 0; i < gameBoard.getNumRows(); i++) {
+				for (int j = 0; j < gameBoard.getNumRows(); j++) {
+					oneCell = gameBoard.getCell(i, j);
+					// check if the cell is a valid position and not taken
+					/*if (gameBoard.isValidPosition(i, j) && oneCell.notTaken()) {
+						if (oneCell.getValue() > maxValue) {
+							maxValue = oneCell.getValue();
+							maxValueRow = oneCell.getRow();
+							maxValueCol = oneCell.getCol();
+				  		}
+					}*/	
+				}
+			}		  
+			moveRow = maxValueRow;
+			moveCol = maxValueCol;
 		}
+		
+		Move newMove = new Move(colour, false, moveRow, moveCol);
 		 
 		setMoveCount(getMoveCount() + 1);
 		return newMove;
@@ -113,7 +134,7 @@ public class Mlobanov implements Player, Piece {
 	 * @param currentBoard
 	 * @return
 	 */
-	public Move minimaxDecision() {
+	public Move minimaxDecision(Board currentBoard) {
 		Move nextMove;
 		int value;
 		int maxValue = -1;
@@ -125,7 +146,7 @@ public class Mlobanov implements Player, Piece {
 		for (int i = 0; i < gameBoard.getNumRows(); i++) {
 			for (int j = 0; j < gameBoard.getNumRows(); j++) {
 				oneCell = gameBoard.getCell(i, j);
-				value = minimaxValue(oneCell, getColour(), 0);
+				value = minimaxValue(oneCell, currentBoard, getColour(), 0);
 				/* record cell with the highest value */
 				if (value > maxValue) {
 					maxValue = value;
@@ -142,13 +163,13 @@ public class Mlobanov implements Player, Piece {
 		return nextMove;
 	}
 	
-	public int minimaxValue(Cell oneCell, int colour, int depth) {
+	public int minimaxValue(Cell oneCell, Board boardState, int colour, int depth) {
 		int maxValue = -1;
 		int minValue = 10000;
 		/* make the move */
 		
 		/* search until a depth limit */
-		if ((depth == 2) || (getWinner() > 0)) {
+		if (depth == 2) {
 			/* evaluate move based on which player's move it is */
 			return evaluateMove(oneCell, colour);
 		} else if (colour == getColour()) {
@@ -166,8 +187,6 @@ public class Mlobanov implements Player, Piece {
 		} else {
 			return lowest minimax-value of successors(state)
 		}*/
-		
-		/* undo the move */
 		
 		return -1;
 	}

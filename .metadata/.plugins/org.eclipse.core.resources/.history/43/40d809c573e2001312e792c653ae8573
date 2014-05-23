@@ -84,6 +84,8 @@ public class Mlobanov implements Player, Piece {
 			// find best position on board to make move
 			newMove = minimaxDecision();
 		}
+		
+		Move newMove = new Move(colour, false, moveRow, moveCol);
 		 
 		setMoveCount(getMoveCount() + 1);
 		return newMove;
@@ -148,7 +150,8 @@ public class Mlobanov implements Player, Piece {
 		/* make the move */
 		
 		/* search until a depth limit */
-		if ((depth == 2) || (getWinner() > 0)) {
+		if ()
+		if (depth == 2) {
 			/* evaluate move based on which player's move it is */
 			return evaluateMove(oneCell, colour);
 		} else if (colour == getColour()) {

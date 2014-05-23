@@ -75,15 +75,21 @@ public class Mlobanov implements Player, Piece {
 		/* distance between two points (x1,y1) and (x2,y2) is:
 		 * (abs(x1-x2) + abs(y1-y2) + abs( (x1-y1) - (x2-y2))) / 2
 		 */
+
+		int moveRow, moveCol;
 		Move newMove;
 		
 		// determine if best move is to swap
 		if (makeSwap()) {
+			moveRow = opponentLastMove.Row;
+			moveCol = opponentLastMove.Col;
 			newMove = new Move(colour, false, opponentLastMove.Row, opponentLastMove.Col);
 		} else {		
 			// find best position on board to make move
 			newMove = minimaxDecision();
 		}
+		
+		Move newMove = new Move(colour, false, moveRow, moveCol);
 		 
 		setMoveCount(getMoveCount() + 1);
 		return newMove;
@@ -148,7 +154,8 @@ public class Mlobanov implements Player, Piece {
 		/* make the move */
 		
 		/* search until a depth limit */
-		if ((depth == 2) || (getWinner() > 0)) {
+		if ()
+		if (depth == 2) {
 			/* evaluate move based on which player's move it is */
 			return evaluateMove(oneCell, colour);
 		} else if (colour == getColour()) {

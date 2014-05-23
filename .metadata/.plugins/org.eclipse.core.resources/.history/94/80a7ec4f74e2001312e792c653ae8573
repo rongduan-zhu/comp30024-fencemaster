@@ -148,7 +148,8 @@ public class Mlobanov implements Player, Piece {
 		/* make the move */
 		
 		/* search until a depth limit */
-		if ((depth == 2) || (getWinner() > 0)) {
+		if ()
+		if (depth == 2) {
 			/* evaluate move based on which player's move it is */
 			return evaluateMove(oneCell, colour);
 		} else if (colour == getColour()) {
