@@ -168,9 +168,9 @@ public class Mlobanov implements Player, Piece {
 			/* evaluate move based on which player's move it is */
 			return evaluateMove(oneCell, colour);
 		} else if (colour == getColour()) {
-			
 			/* currently player's turn */
 			/* NEED TO COPY THE BOARD WHEN PASSING IT INTO HERE */
+			/* return max of minimaxValue(each successor)
 		} else {
 			/* currently enemy turn */
 			/* NEED TO COPY THE BOARD WHEN PASSING IT INTO HERE */

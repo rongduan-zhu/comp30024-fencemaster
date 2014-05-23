@@ -7,6 +7,13 @@ We generally favour tripods as they are easier to create as well as the individu
 
 * Evaluation Function:
 
+Evaluation Function?
+ * 		Higher value to positions near stones of your own colour
+ * 			Highest bonus for direct neighbour
+ * 			Second highest for a stone that forms a virtual connection (can connect to it no matter what)
+ * 			Third highest for stone that is 2 stones away from another one of your stones
+ 	
+
 
 * Creative Techniques:
 
