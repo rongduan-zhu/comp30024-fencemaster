@@ -153,13 +153,12 @@ public class Mlobanov implements Player, Piece {
 				
 				oneCell = gameBoard.getCell(i, j);
 				// check if the cell has been taken
-				if (oneCell.taken()) {
+				if (!oneCell.notTaken()) {
 					continue;
 				}
 				System.out.println("Cell is at: " + oneCell.getRow() + ", " + oneCell.getCol());
 				/* pretend opponent has taken the cell and see what the value is */
 				value = minimaxValue(oneCell, getColour(), 0);
-				System.out.println("Value is " + value);
 				/* record cell with the highest value */
 				if (value > maxValue) {
 					maxValue = value;
@@ -255,7 +254,7 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int evaluateMove(Cell oneCell, int colour) {
 		
-		return (int)(Math.random() * 15 + 1);
+		return 5;
 	}
 	
 	

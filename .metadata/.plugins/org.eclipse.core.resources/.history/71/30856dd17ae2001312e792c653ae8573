@@ -255,7 +255,7 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int evaluateMove(Cell oneCell, int colour) {
 		
-		return (int)(Math.random() * 15 + 1);
+		return 5;
 	}
 	
 	

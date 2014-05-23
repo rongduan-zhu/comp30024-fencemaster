@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import aiproj.fencemaster.Piece;
-
 public class Test {
 	
 	public static void main(String[] args) {
@@ -35,7 +33,7 @@ public class Test {
 		System.out.println(board);
 		
 		Mlobanov player = new Mlobanov();
-		player.init(board, Piece.WHITE);
+		player.init(board, dimension);
 		player.makeMove();
 		
 		stdIn.close();

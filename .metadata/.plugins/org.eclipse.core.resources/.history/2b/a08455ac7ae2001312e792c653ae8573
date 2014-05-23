@@ -153,7 +153,7 @@ public class Mlobanov implements Player, Piece {
 				
 				oneCell = gameBoard.getCell(i, j);
 				// check if the cell has been taken
-				if (oneCell.taken()) {
+				if (!oneCell.notTaken()) {
 					continue;
 				}
 				System.out.println("Cell is at: " + oneCell.getRow() + ", " + oneCell.getCol());
@@ -255,7 +255,7 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int evaluateMove(Cell oneCell, int colour) {
 		
-		return (int)(Math.random() * 15 + 1);
+		return 5;
 	}
 	
 	

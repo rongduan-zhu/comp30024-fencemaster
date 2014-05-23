@@ -91,7 +91,7 @@ public class Cell {
 		this.value = value;
 	}
 
-	public boolean taken() {
+	public boolean notTaken() {
 		return content.equals(BLACK) || content.equals(WHITE);
 	}
 }

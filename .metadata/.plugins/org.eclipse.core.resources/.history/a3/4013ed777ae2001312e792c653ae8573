@@ -143,7 +143,7 @@ public class Mlobanov implements Player, Piece {
 		/* defining best cell to prevent possible uninitialised variable error
 		 * value doesn't matter as value will always be changed on a real board */
 		bestCell = new Cell(0, 0);
-		
+		int takenCount = 0;
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				// check if the cell is in a valid position
@@ -153,7 +153,8 @@ public class Mlobanov implements Player, Piece {
 				
 				oneCell = gameBoard.getCell(i, j);
 				// check if the cell has been taken
-				if (oneCell.taken()) {
+				if (!oneCell.notTaken()) {
+					takenCount++;
 					continue;
 				}
 				System.out.println("Cell is at: " + oneCell.getRow() + ", " + oneCell.getCol());
@@ -167,6 +168,8 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}
+		
+		System.out.println("Taken count is " + takenCount);
 		
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
 		/* for each move in Moves(game) do
@@ -255,7 +258,7 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int evaluateMove(Cell oneCell, int colour) {
 		
-		return (int)(Math.random() * 15 + 1);
+		return 5;
 	}
 	
 	
