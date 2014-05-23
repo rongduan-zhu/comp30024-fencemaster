@@ -90,4 +90,8 @@ public class Cell {
 	public void setValue(int value) {
 		this.value = value;
 	}
+
+	public boolean notTaken() {
+		return content.equals(BLACK) || content.equals(WHITE);
+	}
 }
