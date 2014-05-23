@@ -61,7 +61,7 @@ public class Mlobanov implements Player, Piece {
 	public int init(int n, int p) {
 		// initialise player colour
 		setColour(p);
-		if (p == Piece.BLACK) { 
+		if (p == Piece.BLACK)){ 
 			setOpponentColour(Piece.WHITE);
 		} else {
 			setOpponentColour(Piece.BLACK);
@@ -92,7 +92,6 @@ public class Mlobanov implements Player, Piece {
 		}
 		 
 		setMoveCount(getMoveCount() + 1);
-		System.out.println("Making move at (" + newMove.Row + ", " + newMove.Col + ").");
 		return newMove;
 	}
 	
@@ -174,9 +173,9 @@ public class Mlobanov implements Player, Piece {
 		/* search until a depth limit */
 		if ((depth == 2) || (getWinner() > 0)) {
 			/* evaluate move based on which player's move it is */
-			value = evaluateMove(moveCell, colour);
-			/* undo the move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			value = evaluateMove(moveCell, colour);
+			
 			return value;
 		} else if (colour == getColour()) {
 			/* currently player's turn */
@@ -188,7 +187,6 @@ public class Mlobanov implements Player, Piece {
 					}
 				}
 			}			
-			/* undo the move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
 			return maxValue;
 			/* return max of minimaxValue(each successor) */
@@ -202,7 +200,6 @@ public class Mlobanov implements Player, Piece {
 					}
 				}
 			}
-			/* undo the move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
 			return minValue;
 		}
@@ -213,6 +210,10 @@ public class Mlobanov implements Player, Piece {
 		} else {
 			return lowest minimax-value of successors(state)
 		}*/
+		
+		/* undo the move */
+		
+
 	}
 	
 	/**

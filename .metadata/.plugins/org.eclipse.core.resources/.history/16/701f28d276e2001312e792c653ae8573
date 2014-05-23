@@ -61,7 +61,7 @@ public class Mlobanov implements Player, Piece {
 	public int init(int n, int p) {
 		// initialise player colour
 		setColour(p);
-		if (p == Piece.BLACK) { 
+		if (p == Piece.BLACK)){ 
 			setOpponentColour(Piece.WHITE);
 		} else {
 			setOpponentColour(Piece.BLACK);
@@ -92,7 +92,6 @@ public class Mlobanov implements Player, Piece {
 		}
 		 
 		setMoveCount(getMoveCount() + 1);
-		System.out.println("Making move at (" + newMove.Row + ", " + newMove.Col + ").");
 		return newMove;
 	}
 	
@@ -213,6 +212,10 @@ public class Mlobanov implements Player, Piece {
 		} else {
 			return lowest minimax-value of successors(state)
 		}*/
+		
+		/* undo the move */
+		
+
 	}
 	
 	/**

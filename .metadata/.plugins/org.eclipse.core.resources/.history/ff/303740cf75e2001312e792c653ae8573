@@ -45,7 +45,6 @@ import aiproj.fencemaster.*;
  */
 public class Mlobanov implements Player, Piece {
 	private int colour;
-	private int opponentColour;
 	private Board gameBoard;
 	private int moveCount = 0;
 	private Move opponentLastMove;
@@ -61,11 +60,6 @@ public class Mlobanov implements Player, Piece {
 	public int init(int n, int p) {
 		// initialise player colour
 		setColour(p);
-		if (p == Piece.BLACK) { 
-			setOpponentColour(Piece.WHITE);
-		} else {
-			setOpponentColour(Piece.BLACK);
-		}
 		// initialise the board
 		int boardTotalCells=3*n*(n-1)+1;
 		gameBoard = new Board(n);
@@ -92,7 +86,6 @@ public class Mlobanov implements Player, Piece {
 		}
 		 
 		setMoveCount(getMoveCount() + 1);
-		System.out.println("Making move at (" + newMove.Row + ", " + newMove.Col + ").");
 		return newMove;
 	}
 	
@@ -161,50 +154,24 @@ public class Mlobanov implements Player, Piece {
 		int maxValue = -1;
 		int minValue = 10000;
 		int value;
-		
-		String content;
-		if (colour == Piece.BLACK) {
-			content = Cell.BLACK;
-		} else {
-			content = Cell.WHITE;
-		}
 		/* make the move */
-		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
 		
 		/* search until a depth limit */
 		if ((depth == 2) || (getWinner() > 0)) {
 			/* evaluate move based on which player's move it is */
-			value = evaluateMove(moveCell, colour);
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			return value;
+			return evaluateMove(moveCell, colour);
 		} else if (colour == getColour()) {
 			/* currently player's turn */
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth - 1);
-					if (value > maxValue) {
-						maxValue = value;
-					}
-				}
-			}			
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			return maxValue;
-			/* return max of minimaxValue(each successor) */
-		} else {
-			/* currently enemy turn */
-			for (int i = 0; i < gameBoard.getNumRows(); i++) {
-				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					value = minimaxValue(gameBoard.getCell(i, j), getOpponentColour(), depth - 1);
-					if (value < minValue) {
-						minValue = value;
-					}
+					value = minimaxValue(gameBoard.getCell(i, j))
 				}
 			}
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			return minValue;
+			
+			/* return max of minimaxValue(each successor)
+		} else {
+			/* currently enemy turn */
+			/* NEED TO COPY THE BOARD WHEN PASSING IT INTO HERE */
 		}
 		/*if cutoff/terminal_state(game) {
 			return evaluation_fn(state)
@@ -213,6 +180,10 @@ public class Mlobanov implements Player, Piece {
 		} else {
 			return lowest minimax-value of successors(state)
 		}*/
+		
+		/* undo the move */
+		
+		return -1;
 	}
 	
 	/**
@@ -330,13 +301,5 @@ public class Mlobanov implements Player, Piece {
 			return 1;
 		}
 		return -1;
-	}
-
-	public int getOpponentColour() {
-		return opponentColour;
-	}
-
-	public void setOpponentColour(int opponentColour) {
-		this.opponentColour = opponentColour;
 	}
 }

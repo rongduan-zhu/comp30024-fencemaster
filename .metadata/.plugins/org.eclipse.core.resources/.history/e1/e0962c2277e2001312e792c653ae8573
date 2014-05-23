@@ -92,7 +92,6 @@ public class Mlobanov implements Player, Piece {
 		}
 		 
 		setMoveCount(getMoveCount() + 1);
-		System.out.println("Making move at (" + newMove.Row + ", " + newMove.Col + ").");
 		return newMove;
 	}
 	
