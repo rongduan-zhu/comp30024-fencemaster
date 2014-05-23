@@ -1,5 +1,4 @@
-package aiproj.fencemaster;
-
+package mlobanov;
 public class Cell {
 	/** class constant strings determining what the cell contains */
 	public static final String BLACK = "B";
@@ -90,5 +89,9 @@ public class Cell {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public boolean notTaken() {
+		return content.equals(BLACK) || content.equals(WHITE);
 	}
 }

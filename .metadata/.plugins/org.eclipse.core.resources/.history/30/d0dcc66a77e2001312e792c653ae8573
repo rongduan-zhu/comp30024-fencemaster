@@ -41,9 +41,5 @@ public class Test {
 		}
 		return board;
 	}
-	
-	public static boolean validInput(String item) {
-		return item.equals(Cell.BLACK) || item.equals(Cell.WHITE) || item.equals(Cell.EMPTY);
-	}
 
 }

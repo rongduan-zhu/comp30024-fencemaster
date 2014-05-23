@@ -278,7 +278,7 @@ public class Mlobanov implements Player, Piece {
 		if (result != -1) {
 			return result;
 		}
-		// check if board is full
+		// check if board is not full
 		if (gameBoard.getOccupiedCells() < gameBoard.getTotalNumCells()) {
 			return -1;
 		}
