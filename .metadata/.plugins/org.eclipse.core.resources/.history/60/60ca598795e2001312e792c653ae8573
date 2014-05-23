@@ -173,6 +173,7 @@ public class Mlobanov implements Player, Piece {
 				/* pretend opponent has taken the cell and see what the value is */
 				
 				value = minimaxValue(oneCell, getColour(), 0);
+				System.out.println("Value is " + value);
 				
 				/* record cell with the highest value */
 				if (value > maxValue) {

@@ -114,7 +114,6 @@ public class Mlobanov implements Player, Piece {
 			self_colour = Cell.WHITE;
 		}
 		gameBoard.getCell(newMove.Row, newMove.Col).setContent(self_colour);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 		System.out.println(gameBoard);
 		return newMove;
 	}
@@ -152,11 +151,8 @@ public class Mlobanov implements Player, Piece {
 		 * value doesn't matter as value will always be changed on a real board */
 		
 		/* FOR SOME REASON WHEN THERE IS ONLY ONE POSITION LEFT ON THE BOARD THIS VALUE DID NOT GET CHANGED */
-		
 		bestCell = new Cell(0, 0);
 
-		/* java -cp . aiproj.fencemaster.Referee N mlobanov.Mlobanov mlobanov.Mlobanov */
-		
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				// check if the cell is in a valid position
@@ -165,7 +161,6 @@ public class Mlobanov implements Player, Piece {
 				}
 				
 				oneCell = gameBoard.getCell(i, j);
-				
 				// check if the cell has been taken
 				if (oneCell.taken()) {
 					continue;
@@ -213,15 +208,13 @@ public class Mlobanov implements Player, Piece {
 		}
 		/* make the move */
 		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 		
 		/* search until a depth limit */
-		if ((depth == 2) || (getWinner() >= 0)) {
+		if ((depth == 2) || (getWinner() > 0)) {
 			/* evaluate move based on which player's move it is */
 			value = evaluateMove(moveCell, colour);
 			/* undo the move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return value;
 		} else if (colour == getColour()) {
 			/* currently player's turn */
@@ -244,7 +237,6 @@ public class Mlobanov implements Player, Piece {
 			}			
 			/* undo the move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return maxValue;
 			/* return max of minimaxValue(each successor) */
 		} else {
@@ -268,7 +260,6 @@ public class Mlobanov implements Player, Piece {
 			}
 			/* undo the move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return minValue;
 		}
 		/*if cutoff/terminal_state(game) {
@@ -317,7 +308,6 @@ public class Mlobanov implements Player, Piece {
 			colour = Cell.WHITE;
 		}
 		gameBoard.getCell(m.Row, m.Col).setContent(colour);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 		/*System.out.println("Updating row and column: " + m.Row + ", " + m.Col + " for opponent:");*/
 		// update instance variable of opponent's last move
 		setOpponentLastMove(m);
