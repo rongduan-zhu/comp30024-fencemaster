@@ -146,7 +146,7 @@ public class Mlobanov implements Player, Piece {
 	public Move minimaxDecision() {
 		Move nextMove;
 		int value;
-		int maxValue = -100000;
+		int maxValue = -1;
 		Cell oneCell, bestCell;
 		/* defining best cell to prevent possible uninitialised variable error
 		 * value doesn't matter as value will always be changed on a real board */		
@@ -169,7 +169,7 @@ public class Mlobanov implements Player, Piece {
 				}
 				/* pretend opponent has taken the cell and see what the value is */
 				
-				value = negamaxValue(oneCell, getColour(), 2);
+				value = minimaxValue(oneCell, getColour(), 2);
 				
 				/* record cell with the highest value */
 				if (value > maxValue) {
@@ -278,65 +278,6 @@ public class Mlobanov implements Player, Piece {
 		}*/
 	}
 	
-	public int negamaxValue(Cell moveCell, int colour, int depth) {
-		int maxValue = -100000;
-		int value, searchColour;
-		
-		Cell oneCell;
-		
-		/* SHOULD MAKE PIECE COLOUR TO CELL COLOUR METHOD OR USE SAME VALUES FOR BOTH?? */
-		String content;
-		if (colour == Piece.BLACK) {
-			content = Cell.BLACK;
-		} else {
-			content = Cell.WHITE;
-		}
-		/* make the move */
-		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-		
-		/* search until a depth limit */
-		if ((depth == 0) || (getWinner() >= 0)) {
-			/* evaluate move based on which player's move it is */
-			value = evaluateMove(moveCell, colour);
-			if (colour == getColour()) {
-				value = -value;
-			}
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-			return value;
-		} else {
-			/* check over each remaining move */
-			for (int i = 0; i < gameBoard.getNumRows(); i++) {
-				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					if (!gameBoard.isValidPosition(i, j)) {
-						continue;
-					}
-					
-					oneCell = gameBoard.getCell(i, j);
-					// check if the cell has been taken
-					if (oneCell.taken()) {
-						continue;
-					}
-					if (colour == getColour()) {
-						searchColour = getOpponentColour();
-					} else {
-						searchColour = colour;
-					}
-					value = -negamaxValue(oneCell, searchColour, depth - 1);
-					if (value > maxValue) {
-						maxValue = value;
-					}
-				}
-			}			
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-			return maxValue;
-		}
-	}
-	
 	/**
 	 * Calculate value of the move to the specified player
 	 * @param oneCell The cell that would be taken
@@ -344,7 +285,7 @@ public class Mlobanov implements Player, Piece {
 	 * @return Value of the move 
 	 */
 	public int evaluateMove(Cell oneCell, int colour) {
-		return (int)(oneCell.getRow() + oneCell.getCol());
+		return (int)(Math.random() * 15 + 1);
 	}
 	
 	

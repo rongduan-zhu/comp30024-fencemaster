@@ -146,7 +146,7 @@ public class Mlobanov implements Player, Piece {
 	public Move minimaxDecision() {
 		Move nextMove;
 		int value;
-		int maxValue = -100000;
+		int maxValue = -1;
 		Cell oneCell, bestCell;
 		/* defining best cell to prevent possible uninitialised variable error
 		 * value doesn't matter as value will always be changed on a real board */		
@@ -169,7 +169,7 @@ public class Mlobanov implements Player, Piece {
 				}
 				/* pretend opponent has taken the cell and see what the value is */
 				
-				value = negamaxValue(oneCell, getColour(), 2);
+				value = minimaxValue(oneCell, getColour(), 2);
 				
 				/* record cell with the highest value */
 				if (value > maxValue) {
@@ -344,7 +344,7 @@ public class Mlobanov implements Player, Piece {
 	 * @return Value of the move 
 	 */
 	public int evaluateMove(Cell oneCell, int colour) {
-		return (int)(oneCell.getRow() + oneCell.getCol());
+		return (int)(Math.random() * 15 + 1);
 	}
 	
 	
