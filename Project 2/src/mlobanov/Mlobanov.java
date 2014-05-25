@@ -321,7 +321,7 @@ public class Mlobanov implements Player, Piece {
 	 * from player 
 	 */
 	public void printBoard(PrintStream output) {
-		
+		output.println(gameBoard);
 	}
 	
 	/* Getters and Setters */
