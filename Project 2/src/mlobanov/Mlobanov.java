@@ -67,7 +67,6 @@ public class Mlobanov implements Player, Piece {
 			setOpponentColour(Piece.BLACK);
 		}
 		// initialise the board
-		int boardTotalCells=3*n*(n-1)+1;
 		gameBoard = new Board(n);
 		
 		
@@ -82,9 +81,9 @@ public class Mlobanov implements Player, Piece {
 	public void init(Board oneBoard, int p) {
 		setColour(p);
 		if (p == Piece.BLACK) { 
-			setOpponentColour(Piece.WHITE);
+			setOpponentColour(WHITE);
 		} else {
-			setOpponentColour(Piece.BLACK);
+			setOpponentColour(BLACK);
 		}
 		gameBoard = oneBoard; 
 	}
@@ -99,23 +98,47 @@ public class Mlobanov implements Player, Piece {
 		Move newMove;
 		
 		// determine if best move is to swap
+		if (getMoveCount() == 1) {
+			/* undo opponents move temporarily and see if it is best to swap with them */
+			
+			/* undo the move */
+			gameBoard.getCell(opponentLastMove.Row, opponentLastMove.Col).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+			
+			newMove = negamaxDecision();
+			
+			if ((newMove.Row == opponentLastMove.Row) && (newMove.Col == opponentLastMove.Col)) {
+				newMove = new Move(getColour(), true, opponentLastMove.Row, opponentLastMove.Col);
+			} else {
+				/* redo their move since we are not swapping */
+				gameBoard.getCell(opponentLastMove.Row, opponentLastMove.Col)
+					.setContent(pieceColourToCellColour(getOpponentColour()));
+				
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+			}
+		} else {
+			/* otherwise search for a move normally */
+			newMove = negamaxDecision();
+		}
+		
+		/* old stuff 
 		if (makeSwap()) {
 			newMove = new Move(getColour(), false, opponentLastMove.Row, opponentLastMove.Col);
 		} else {		
 			// find best position on board to make move
-			newMove = minimaxDecision();
-		}
-		 
+			newMove = negamaxDecision();
+		}*/
+		
+		
+		/* update local move counter */
 		setMoveCount(getMoveCount() + 1);
-		String self_colour;
-		if (getColour() == Piece.BLACK) {
-			self_colour = Cell.BLACK;
-		} else {
-			self_colour = Cell.WHITE;
-		}
+		
+		/* get cell colour string to set cell content with */
+		String self_colour = pieceColourToCellColour(getColour());
+		
 		gameBoard.getCell(newMove.Row, newMove.Col).setContent(self_colour);
 		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-		System.out.println(gameBoard);
+		
 		return newMove;
 	}
 	
@@ -143,7 +166,7 @@ public class Mlobanov implements Player, Piece {
 	 * @param currentBoard
 	 * @return
 	 */
-	public Move minimaxDecision() {
+	public Move negamaxDecision() {
 		Move nextMove;
 		int value;
 		int maxValue = Integer.MIN_VALUE;
@@ -152,12 +175,7 @@ public class Mlobanov implements Player, Piece {
 		 * value doesn't matter as value will always be changed on a real board */		
 		bestCell = new Cell(0, 0);
 		
-		String content;
-		if (getColour() == Piece.BLACK) {
-			content = Cell.BLACK;
-		} else {
-			content = Cell.WHITE;
-		}	
+		String content = pieceColourToCellColour(getColour());
 
 		/* java -cp . aiproj.fencemaster.Referee N mlobanov.Mlobanov mlobanov.Mlobanov */
 		
@@ -173,15 +191,15 @@ public class Mlobanov implements Player, Piece {
 				/* using depth = 0 reveals true vale of a cell */
 							
 				/* make the move */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 				
-				value = negamaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = negamaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 				System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* undo the move */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
 				
 				/* record cell with the highest value */
 				if (value > maxValue) {
@@ -192,102 +210,15 @@ public class Mlobanov implements Player, Piece {
 		}
 
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
-
 		return nextMove;
 	}
 	
-	/**
-	 * 
-	 * @param moveCell - The cell that has been 'taken' at this level of the tree
-	 * @param colour
-	 * @param depth
-	 * @return
-	 */
-	public int minimaxValue(Cell moveCell, int colour, int depth) {
-		int maxValue = -1;
-		int minValue = 10000;
-		int value;
-		
-		Cell oneCell;
-		
-		/* SHOULD MAKE PIECE COLOUR TO CELL COLOUR METHOD OR USE SAME VALUES FOR BOTH?? */
-		String content;
-		if (colour == Piece.BLACK) {
-			content = Cell.BLACK;
-		} else {
-			content = Cell.WHITE;
-		}
-		/* make the move */
-		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-		
-		/* search until a depth limit */
-		if ((depth == 0) || (getWinner() >= 0)) {
-			/* evaluate move based on which player's move it is */
-			value = evaluateMove(moveCell, colour);
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-			return value;
-		} else if (colour == getColour()) {
-			/* currently player's turn */
-			for (int i = 0; i < gameBoard.getNumRows(); i++) {
-				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					
-					// ensure cell is valid and not taken
-					oneCell = gameBoard.getCell(i, j);
-					if (oneCell == null || oneCell.taken()) {
-						continue;
-					}
-					
-					value = minimaxValue(oneCell, getOpponentColour(), depth - 1);
-					if (value > maxValue) {
-						maxValue = value;
-					}
-				}
-			}			
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-			return maxValue;
-			/* return max of minimaxValue(each successor) */
-		} else {
-			/* currently enemy turn */
-			for (int i = 0; i < gameBoard.getNumRows(); i++) {
-				for (int j = 0; j < gameBoard.getNumRows(); j++) {
-					if (!gameBoard.isValidPosition(i, j)) {
-						continue;
-					}
-					
-					oneCell = gameBoard.getCell(i, j);
-					// check if the cell has been taken
-					if (oneCell.taken()) {
-						continue;
-					}
-					value = minimaxValue(oneCell, getColour(), depth - 1);
-					if (value < minValue) {
-						minValue = value;
-					}
-				}
-			}
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-			return minValue;
-		}
-		/*if cutoff/terminal_state(game) {
-			return evaluation_fn(state)
-		} else if (my move) {
-			return highest minimax-value of successors(state)
-		} else {
-			return lowest minimax-value of successors(state)
-		}*/
-	}
+	
 	
 	public int negamaxValue(Cell moveCell, int colour, int depth, int alpha, int beta) {
 		int value, getWinnerResult, searchColour;
 		String content;
-		/* SHOULD MAKE PIECE COLOUR TO CELL COLOUR METHOD OR USE SAME VALUES FOR BOTH?? */
+		
 		/* update searchColour depending on which player's move it is */
 		if (colour == Piece.BLACK) {
 			content = Cell.BLACK;
@@ -296,6 +227,10 @@ public class Mlobanov implements Player, Piece {
 			content = Cell.WHITE;
 			searchColour = Piece.BLACK;
 		}
+		
+		/* make the move */
+		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
+		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 		
 		/* search until a depth limit or terminal node (win/loss/draw) */
 		getWinnerResult = getWinner();
@@ -307,6 +242,9 @@ public class Mlobanov implements Player, Piece {
 			if (colour == getOpponentColour()) {
 				value *= -1;
 			}
+			/* undo the move */
+			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return value;
 		} else {
 			Cell oneCell;
@@ -323,18 +261,14 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					
-					/* make the move */
-					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+					
 					
 					value = -1 * negamaxValue(oneCell, searchColour, depth - 1, -beta, -newAlpha);
 					if (value > maxValue) {
 						maxValue = value;
 					}
 					
-					/* undo the move */
-					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+					
 					
 					/* alpha beta pruning */					
 					if (maxValue > newAlpha) {
@@ -345,7 +279,9 @@ public class Mlobanov implements Player, Piece {
 					}					
 				}
 			}			
-			
+			/* undo the move */
+			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return maxValue;
 		}
 	}
@@ -358,8 +294,10 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int evaluateMove(Cell oneCell, int colour, int getWinnerResult) {
 		/* give highest value to a winning move */
-		if (getWinnerResult > 0) {
+		if (getWinnerResult == getColour()) {
 			return 100;
+		} else if (getWinnerResult == getOpponentColour()) {
+			/* very bad if opponent has a win */
 		}
 		return (int)(oneCell.getRow() + oneCell.getCol());
 	}
@@ -369,8 +307,9 @@ public class Mlobanov implements Player, Piece {
 	 *  Return -1 if the move is illegal otherwise return 0
 	 */
 	public int opponentMove(Move m) {
+		boolean swapped = false;
+		
 		setMoveCount(getMoveCount() + 1);
-		// Check if the move is illegal
 		
 		// Can only swap on second move in the game
 		if (getMoveCount() != 2 && m.IsSwap) {
@@ -380,17 +319,22 @@ public class Mlobanov implements Player, Piece {
 		// Can't place a piece on top of another piece or invalid position
 		String cellContent = gameBoard.getCell(m.Row, m.Col).getContent(); 
 		if (!cellContent.equals(Cell.EMPTY)) {
-			return -1;
+			// check if the content is our own cell colour (in the case of a swap)
+			if (cellContent.equals(pieceColourToCellColour(getColour()))) {
+				if (getMoveCount() == 2 && m.IsSwap){
+					swapped = true;
+				}
+			}
+			if (!swapped) {
+				return -1;
+			}
 		}
 		
-		String colour;
-		if (getOpponentColour() == Piece.BLACK) {
-			colour = Cell.BLACK;
-		} else {
-			colour = Cell.WHITE;
-		}
+		String colour = pieceColourToCellColour(getOpponentColour());
 		gameBoard.getCell(m.Row, m.Col).setContent(colour);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+		if (!swapped) {
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+		}
 		/*System.out.println("Updating row and column: " + m.Row + ", " + m.Col + " for opponent:");*/
 		// update instance variable of opponent's last move
 		setOpponentLastMove(m);
@@ -402,9 +346,6 @@ public class Mlobanov implements Player, Piece {
 	 */
 	// THIS FUNCTION TAKES TOO LONG TO BE ABLE TO BE USED IN MINIMAX
 	public int getWinner() {
-		// Kevin please do this
-		// gameBoard.searchForTripod()
-		// gameBoard.searchForLoop()
 		
 		// -1 = INVALID/Non-Terminal State, 0 = EMPTY/DRAW, 1 = WHITE, 2 = BLACK
 		LoopSearch findLoop = new LoopSearch(gameBoard);
@@ -486,5 +427,25 @@ public class Mlobanov implements Player, Piece {
 
 	public void setOpponentColour(int opponentColour) {
 		this.opponentColour = opponentColour;
+	}
+	
+	public static int cellColourToPieceColour(String cellColour) {
+		if (cellColour.equals(Cell.WHITE)) {
+			return 1;
+		}
+		if (cellColour.equals(Cell.BLACK)) {
+			return 2;
+		}
+		return -1;
+	}
+	
+	public static String pieceColourToCellColour(int pieceColour) {
+		if (pieceColour == Piece.WHITE) {
+			return Cell.WHITE;
+		}
+		if (pieceColour == Piece.BLACK) {
+			return Cell.BLACK;
+		}
+		return Cell.INVALID;
 	}
 }

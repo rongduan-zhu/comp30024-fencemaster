@@ -103,9 +103,15 @@ public class Board {
 	@Override
 	public String toString() {
 		String boardString = new String();
+		String content;
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numRows; j++) {
-				boardString += get(i, j);
+				content = get(i, j);
+				if (content.isEmpty()) {
+					boardString += " ";
+				} else {
+					boardString += get(i, j);
+				}
 			}
 			boardString += "\n";
 		}
