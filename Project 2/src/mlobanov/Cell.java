@@ -18,7 +18,7 @@ public class Cell {
 	 * Initialize the Cell, with its content set to Empty
 	 */
 	public Cell(int row, int col) {
-		content = new String(INVALID);
+		content = new String(EMPTY);
 		this.row = row;
 		this.col = col;
 	}

@@ -37,9 +37,10 @@ public class Test {
 		Mlobanov player = new Mlobanov();
 		player.init(board, Piece.WHITE);
 		player.makeMove();
-		
+
 		stdIn.close();
 	}
+	
 	/**
 	 * @param stdIn, input stream
 	 * @param dimension, dimension of the board, that is how long an individual edge is
