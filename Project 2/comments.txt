@@ -3,6 +3,8 @@ We attempt to create a skeleton which is a set of cells which are not connected,
 
 We generally favour tripods as they are easier to create as well as the individual cells giving strategical value on the board (e.g. preventing opponent tripod) even if the tripod is blocked. Rings also tend to be able to be denied using very few moves whereas tripods are much harder to prevent.
 
+We use Negamax Search with Alpha Beta pruning in order to search for the best move
+
 
 
 * Evaluation Function:

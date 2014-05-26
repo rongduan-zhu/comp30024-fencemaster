@@ -380,7 +380,7 @@ public class Board {
 
 	/**
 	 * @param row, row index, 0 based
-	 * @param column, colulmn index, 0 based
+	 * @param column, column index, 0 based
 	 * @return the Cell at (row, column) as a Cell object
 	 */
 	public Cell getCell(int row, int column) {
