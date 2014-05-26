@@ -191,15 +191,15 @@ public class Mlobanov implements Player, Piece {
 				/* using depth = 0 reveals true vale of a cell */
 							
 				/* make the move */
-				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
+				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 				
 				value = negamaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 				System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* undo the move */
-				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
+				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 				
 				/* record cell with the highest value */
 				if (value > maxValue) {
@@ -228,10 +228,6 @@ public class Mlobanov implements Player, Piece {
 			searchColour = Piece.BLACK;
 		}
 		
-		/* make the move */
-		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-		
 		/* search until a depth limit or terminal node (win/loss/draw) */
 		getWinnerResult = getWinner();
 		if ((depth == 0) || (getWinnerResult >= 0)) {
@@ -242,9 +238,7 @@ public class Mlobanov implements Player, Piece {
 			if (colour == getOpponentColour()) {
 				value *= -1;
 			}
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+			
 			return value;
 		} else {
 			Cell oneCell;
@@ -261,14 +255,18 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					
-					
+					/* make the move */
+					gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
+					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);					
 					
 					value = -1 * negamaxValue(oneCell, searchColour, depth - 1, -beta, -newAlpha);
 					if (value > maxValue) {
 						maxValue = value;
 					}
 					
-					
+					/* undo the move */
+					gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 					
 					/* alpha beta pruning */					
 					if (maxValue > newAlpha) {
@@ -279,9 +277,6 @@ public class Mlobanov implements Player, Piece {
 					}					
 				}
 			}			
-			/* undo the move */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return maxValue;
 		}
 	}
@@ -295,9 +290,11 @@ public class Mlobanov implements Player, Piece {
 	public int evaluateMove(Cell oneCell, int colour, int getWinnerResult) {
 		/* give highest value to a winning move */
 		if (getWinnerResult == getColour()) {
+			System.out.println("winner!!!");
 			return 100;
 		} else if (getWinnerResult == getOpponentColour()) {
 			/* very bad if opponent has a win */
+			return -100;
 		}
 		return (int)(oneCell.getRow() + oneCell.getCol());
 	}
