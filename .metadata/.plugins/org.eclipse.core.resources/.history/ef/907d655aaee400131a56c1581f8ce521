@@ -320,6 +320,7 @@ public class Mlobanov implements Player, Piece {
 			int searchColour;
 			int maxValue = Integer.MIN_VALUE;
 			int newAlpha = alpha;
+			int newBeta = beta;
 			Cell oneCell;
 			
 			/* update searchColour depending on which player's move it is */
@@ -343,7 +344,7 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 					
-					value = -1 * negamaxValue(oneCell, searchColour, depth - 1, -beta, -newAlpha);
+					value = -1 * negamaxValue(oneCell, searchColour, depth - 1, -newBeta, -newAlpha);
 					if (value > maxValue) {
 						maxValue = value;
 					}
@@ -353,10 +354,10 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 					
 					/* alpha beta pruning */					
-					if (maxValue > newAlpha) {
+					if (maxValue > alpha) {
 						newAlpha = maxValue;
 					}
-					if (newAlpha >= beta) {
+					if (newAlpha >= newBeta) {
 						return newAlpha;
 						
 					}					

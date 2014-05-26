@@ -343,7 +343,7 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 					
-					value = -1 * negamaxValue(oneCell, searchColour, depth - 1, -beta, -newAlpha);
+					value = -1 * negamaxValue(oneCell, searchColour, depth - 1, -beta, -alpha);
 					if (value > maxValue) {
 						maxValue = value;
 					}
@@ -353,10 +353,10 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 					
 					/* alpha beta pruning */					
-					if (maxValue > newAlpha) {
-						newAlpha = maxValue;
+					if (value > alpha) {
+						newAlpha = value;
 					}
-					if (newAlpha >= beta) {
+					if (newAlpha > beta) {
 						return newAlpha;
 						
 					}					

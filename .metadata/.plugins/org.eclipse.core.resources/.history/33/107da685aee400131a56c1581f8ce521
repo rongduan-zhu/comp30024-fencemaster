@@ -353,7 +353,7 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 					
 					/* alpha beta pruning */					
-					if (maxValue > newAlpha) {
+					if (maxValue > alpha) {
 						newAlpha = maxValue;
 					}
 					if (newAlpha >= beta) {
