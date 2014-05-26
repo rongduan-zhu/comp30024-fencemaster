@@ -176,7 +176,7 @@ public class Mlobanov implements Player, Piece {
 				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 				
-				value = negamaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = negamaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 				System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* undo the move */

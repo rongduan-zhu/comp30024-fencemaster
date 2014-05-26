@@ -285,19 +285,17 @@ public class Mlobanov implements Player, Piece {
 	}
 	
 	public int negamaxValue(Cell moveCell, int colour, int depth, int alpha, int beta) {
-		int value, getWinnerResult, searchColour;
+		int value, getWinnerResult;
 		String content;
+		
 		/* SHOULD MAKE PIECE COLOUR TO CELL COLOUR METHOD OR USE SAME VALUES FOR BOTH?? */
-		/* update searchColour depending on which player's move it is */
 		if (colour == Piece.BLACK) {
 			content = Cell.BLACK;
-			searchColour = Piece.WHITE;
 		} else {
 			content = Cell.WHITE;
-			searchColour = Piece.BLACK;
 		}
 		
-		/* search until a depth limit or terminal node (win/loss/draw) */
+		/* search until a depth limit or terminal node - a winning state */
 		getWinnerResult = getWinner();
 		if ((depth == 0) || (getWinnerResult >= 0)) {
 			/* evaluate move based on which player's move it is */
@@ -307,13 +305,26 @@ public class Mlobanov implements Player, Piece {
 			if (colour == getOpponentColour()) {
 				value *= -1;
 			}
+			
+			/* undo the move */
+			/*gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
+			
 			return value;
 		} else {
-			Cell oneCell;
+			int searchColour;
 			int maxValue = Integer.MIN_VALUE;
 			int newAlpha = alpha;
+			Cell oneCell;
 			
+			/* update searchColour depending on which player's move it is */
+			if (colour == getColour()) {
+				searchColour = getOpponentColour();
+			} else {
+				searchColour = colour;
+			}
 			/* check over each remaining move */
+			outerLoop:
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
 					
@@ -357,8 +368,7 @@ public class Mlobanov implements Player, Piece {
 	 * @return Value of the move 
 	 */
 	public int evaluateMove(Cell oneCell, int colour, int getWinnerResult) {
-		/* give highest value to a winning move */
-		if (getWinnerResult > 0) {
+		if (getWinnerResult == getColour()) {
 			return 100;
 		}
 		return (int)(oneCell.getRow() + oneCell.getCol());

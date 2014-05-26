@@ -176,7 +176,7 @@ public class Mlobanov implements Player, Piece {
 				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 				
-				value = negamaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = negamaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 				System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* undo the move */
@@ -285,8 +285,9 @@ public class Mlobanov implements Player, Piece {
 	}
 	
 	public int negamaxValue(Cell moveCell, int colour, int depth, int alpha, int beta) {
-		int value, getWinnerResult, searchColour;
+		int value, getWinnerResult;
 		String content;
+		
 		/* SHOULD MAKE PIECE COLOUR TO CELL COLOUR METHOD OR USE SAME VALUES FOR BOTH?? */
 		/* update searchColour depending on which player's move it is */
 		if (colour == Piece.BLACK) {
@@ -312,7 +313,14 @@ public class Mlobanov implements Player, Piece {
 			Cell oneCell;
 			int maxValue = Integer.MIN_VALUE;
 			int newAlpha = alpha;
+			int searchColour;
 			
+			
+			if (colour == getColour()) {
+				searchColour = getOpponentColour();
+			} else {
+				searchColour = colour;
+			}
 			/* check over each remaining move */
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {

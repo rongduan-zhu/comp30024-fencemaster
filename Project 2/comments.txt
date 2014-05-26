@@ -1,5 +1,5 @@
 * Search Strategy:
-We attempt to create a skeleton which is a set of cells which are not connected, but rather are one cell away from being connected and their connection cannot be prevented. We call this connection a virtual connection. Once a skeleton is made correctly, victory is assured by connecting the skeleton into a tripod/loop while preventing the enemy's attempts at winning.
+We attempt to create a skeleton which is a set of cells which are not connected, but rather are one cell away from being connected and their connection cannot be prevented. We call this connection a secondary connection. Once a skeleton is made correctly, victory is assured by connecting the skeleton into a tripod/loop while preventing the enemy's attempts at winning.
 
 We generally favour tripods as they are easier to create as well as the individual cells giving strategical value on the board (e.g. preventing opponent tripod) even if the tripod is blocked. Rings also tend to be able to be denied using very few moves whereas tripods are much harder to prevent.
 
@@ -12,7 +12,7 @@ We use Negamax Search with Alpha Beta pruning in order to search for the best mo
 Evaluation Function?
  * 		Higher value to positions near stones of your own colour
  * 			Highest bonus for direct neighbour
- * 			Second highest for a stone that forms a virtual connection (can connect to it no matter what)
+ * 			Second highest for a stone that forms a secondary connection (can connect to it no matter what)
  * 			Third highest for stone that is 2 stones away from another one of your stones
  	
 
@@ -21,3 +21,14 @@ Evaluation Function?
 
 Some cells are useless to be taken unless they stop the enemy from winning. This is because they do not add to a tripod/loop in any meaningful way. For example, taking the center of your own loop as you are forming one. These cells are treated with low value so that our player does not take them. If an opposing player can use it to create a winning condition, the value will be adjusted accordingly so the player considers taking them.
 
+
+
+
+
+From Internet:
+
+http://www.hamedahmadi.com/gametree/
+
+MoveAnalysis function to order moves based on how good they are (to make pruning better)
+
+Another method sometimes used to increase speed is to divide the number returned by the analysis function by a constant value. (For example divide it by 10.) This reduces the range of values that the nodes in the game tree can have, and can therefore result in more pruning. However, this makes the analysis less accurate, so it should be used with care.
