@@ -108,7 +108,7 @@ public class Mlobanov implements Player, Piece {
 								setContent(Cell.EMPTY);
 			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			
-			newMove = negamaxDecision();
+			newMove = minimaxDecision();
 			
 			if ((newMove.Row == opponentLastMove.Row) &&
 				 (newMove.Col == opponentLastMove.Col)) {
@@ -124,7 +124,7 @@ public class Mlobanov implements Player, Piece {
 			}
 		} else {
 			/* otherwise search for a move normally */
-			newMove = negamaxDecision();
+			newMove = minimaxDecision();
 		}
 		
 		/* old stuff 
@@ -144,7 +144,7 @@ public class Mlobanov implements Player, Piece {
 		
 		gameBoard.getCell(newMove.Row, newMove.Col).setContent(self_colour);
 		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-		
+		System.out.println("I am making a move at " + newMove.Row + ", " + newMove.Col);
 		return newMove;
 	}
 	
@@ -200,18 +200,18 @@ public class Mlobanov implements Player, Piece {
 							
 				/* Make a temporary move in order to detect a terminal state 
 				 * later, if it exists. */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 				
-				// System.out.println("BEGINNING NEGAMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
+				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 				
 				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				// System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* Undo the temporary move. */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
 				
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -222,7 +222,6 @@ public class Mlobanov implements Player, Piece {
 		}
 
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
-		System.out.println("I am making a move at " + nextMove.Row + ", " + nextMove.Col);
 		return nextMove;
 	}
 	
@@ -241,31 +240,39 @@ public class Mlobanov implements Player, Piece {
 		String content;
 		nextSearchColour = oppositeColour(searchColour);
 		if (searchColour == Piece.BLACK) {
-			content = Cell.WHITE;
+			content = Cell.BLACK;
 		} else {
-			content = Cell.BLACK;  
+			content = Cell.WHITE;  
 		}
 		
+		/* Make a temporary move in order to detect a terminal state later, 
+		 * if it exists */
+		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
+		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+
 		/* Check if board is in terminal state or at depth limit for 
 		 * searching. */
 		getWinnerResult = getWinner();
 		if ((getWinnerResult >= 0) || (depth == 0)) {
-			/* Evaluate move from the perspective of white. */
-			value = minimaxEvaluateMove(moveCell, searchColour, getWinnerResult);
+			
+			/* Evaluate move. */
+			value = minimaxEvaluateMove(moveCell, getWinnerResult);
 			if (getWinnerResult == 2) {
-				// System.out.println("Black has won with a move at " + moveCell.getRow() + ", " + moveCell.getCol());
+				//System.out.println("Black has won with a move at " + moveCell.getRow() + ", " + moveCell.getCol() + " and the value of this move is " + value);
 			}
+			
+			/* Undo the temporary move */
+			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return value;
 		}
 		
 		/* Not at a terminal state. */		
 		Cell oneCell;
-		int maxValue = Integer.MIN_VALUE;
-		int minValue = Integer.MAX_VALUE;
 		int newAlpha = alpha;
+		int newBeta = beta;
 	
-		if (searchColour == getColour()) {
-			
+		if (nextSearchColour == getColour()) {
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
 					
@@ -275,25 +282,22 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					
-					/* Make a temporary move in order to detect a terminal state later, 
-					 * if it exists */
-					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-	
-					/* Recurse and find the value of the node */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, -beta, -newAlpha);
+					/* Recurse and find the value of the node. */
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);			
 					
-					/* Undo the temporary move */
-					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-					
-					if (value > maxValue) {
-						maxValue = value;
-					}					
+					/* Alpha beta pruning. */
+					if (value > newAlpha) {
+						newAlpha = value;
+					}
+					if (newBeta <= newAlpha) {
+						break;
+					}
 				}
 			}		
-			
-			return maxValue;
+			/* Undo the temporary move */
+			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+			return newAlpha;
 		} else {
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
@@ -304,48 +308,39 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					
-					/* Make a temporary move in order to detect a terminal state later, 
-					 * if it exists */
-					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-	
-					/* Recurse and find the value of the node */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, -beta, -newAlpha);
+					/* Recurse and find the value of the node. */
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
 					
-					/* Undo the temporary move */
-					gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+					/* Alpha beta pruning. */
+					if (value < newBeta) {
+						newBeta = value;
+					}
 					
-					if (value < minValue) {
-						maxValue = value;
+					if (newBeta <= newAlpha) {
+						break;
 					}					
 				}
 			}
-			return minValue;
+			/* Undo the temporary move */
+			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+			return newBeta;
 		}
 	}
 	
 	/**
-	 * Calculate value of the move from the perspective of white
+	 * Calculate value of the move from the perspective of the player
 	 * @param oneCell - The cell that would be taken
 	 * @return Value of the move 
 	 */
-	public int minimaxEvaluateMove(Cell oneCell, int playerColour, int getWinnerResult) {
-		if (playerColour == getColour()) {
-			if (getWinnerResult == getColour()) {
-				return 100;
-			} else if (getWinnerResult == getOpponentColour()) {
-				return 0;
-			}
-		} else {
-			if (getWinnerResult == getOpponentColour()) {
-				return 100;
-			} else if (getWinnerResult == getColour()) {
-				return 0;
-			}
+	public int minimaxEvaluateMove(Cell oneCell, int getWinnerResult) {
+		if (getWinnerResult == getColour()) {
+			return 100;
+		}
+		if (getWinnerResult == getOpponentColour()) {
+			return -100;
 		}
 		return 5;
-		
 	}
 	
 	/** 
@@ -362,7 +357,7 @@ public class Mlobanov implements Player, Piece {
 		 * a real board. */
 		bestCell = new Cell(0, 0);
 		
-		String content = pieceColourToCellColour(getColour());
+		//String content = pieceColourToCellColour(getColour());
 
 		/* java -cp . aiproj.fencemaster.Referee N mlobanov.Mlobanov mlobanov.Mlobanov */
 		
@@ -381,23 +376,18 @@ public class Mlobanov implements Player, Piece {
 							
 				/* Make a temporary move in order to detect a terminal state 
 				 * later, if it exists. */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
+				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 				
 				System.out.println("BEGINNING NEGAMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 				
-				value = negamaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
-				/* Heuristic is always calculated from white's perspective so the root node 
-				 * needs to be negated if the player is black. */
-				if (getColour() == Piece.BLACK) {
-					value *= -1;
-				}
+				value = negamaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE);				
 
 				System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* Undo the temporary move. */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
+				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
+				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
 				
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -408,7 +398,6 @@ public class Mlobanov implements Player, Piece {
 		}
 
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
-		System.out.println("I am making a move at " + nextMove.Row + ", " + nextMove.Col);
 		return nextMove;
 	}
 	
@@ -417,20 +406,12 @@ public class Mlobanov implements Player, Piece {
 	public int negamaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta) {
 		
 		int value, getWinnerResult;
-		int nextSearchColour;
 		
-		/* nextSearchColour is changed to the opposite searchColour in order
-		 * to search with the opposite searchColour at the next level. 
-		 * Content is set to the move's searchColour so that the current
-		 * player will 'take' the piece before searching the next level.  */
-		
-		String content;
-		nextSearchColour = oppositeColour(searchColour);
-		if (searchColour == Piece.BLACK) {
-			content = Cell.WHITE;
-		} else {
-			content = Cell.BLACK;  
-		}
+		/* Make a temporary move in order to detect a terminal state later, 
+		 * if it exists */
+		String content = pieceColourToCellColour(searchColour);		
+		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
+		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 		
 		/* Check if board is in terminal state or at depth limit for 
 		 * searching. */
@@ -438,23 +419,25 @@ public class Mlobanov implements Player, Piece {
 		if ((getWinnerResult >= 0) || (depth == 0)) {
 			/* Evaluate move from the perspective of white. */
 			value = negamaxEvaluateMove(moveCell, getWinnerResult);
-			if (getWinnerResult == 2) {
-				// System.out.println("Black has won with a move at " + moveCell.getRow() + ", " + moveCell.getCol());
-			}
 			
-			/* The value is negated if it was black's move as the 
-			 * heuristic is always calculated from white's perspective. */
+			/* The value is negated if it was opponent's move as the
+			 * heuristic is always calculated from player's perspective. */
 			
-			if (searchColour == Piece.BLACK) {
+			if (searchColour == getOpponentColour()) {
 				value *= -1;
 			}
+			/* Undo the temporary move. */
+			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return value;
 		}
 		
-		/* Not at a terminal state. */		
+		/* Not at a terminal state or depth limit */		
 		Cell oneCell;
 		int maxValue = Integer.MIN_VALUE;
 		int newAlpha = alpha;
+		int nextSearchColour;
+		nextSearchColour = oppositeColour(searchColour);
 	
 		/* Negamax search at the next depth over the remaining moves on 
 		 * the board */
@@ -462,31 +445,18 @@ public class Mlobanov implements Player, Piece {
 		for (int i = 0; i < gameBoard.getNumRows(); i++) {
 			for (int j = 0; j < gameBoard.getNumRows(); j++) {
 				
-				/* Ensure cell is valid and not taken */
+				/* Ensure cell is valid and not taken. */
 				oneCell = gameBoard.getCell(i, j);
 				if (oneCell == null || oneCell.taken()) {
 					continue;
 				}
-				
-				/* Make a temporary move in order to detect a terminal state later, 
-				 * if it exists */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 
-				/* Recurse and find the value of the node */
+				/* Recurse and find the value of the node. */
 				value = -1 * negamaxValue(oneCell, nextSearchColour, depth - 1, -beta, -newAlpha);
-				if (moveCell.getRow() == 2 && moveCell.getCol() == 2) {
-					System.out.println("At 2,2 and evaluated child node " + oneCell.getRow() + ", " + oneCell.getCol() + " and got value of " + value);
-				}
-				
-				/* Undo the temporary move */
-				gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 				
 				if (value > maxValue) {
 					maxValue = value;
-				}					
-				
+				}
 				/* Alpha beta pruning. */
 				if (maxValue > newAlpha) {
 					newAlpha = maxValue;
@@ -496,8 +466,25 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}		
-		
+		/* Undo the temporary move */
+		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
+		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 		return maxValue;	
+	}
+	
+	/**
+	 * Calculate value of the move from the perspective of white
+	 * @param oneCell - The cell that would be taken
+	 * @return Value of the move 
+	 */
+	public int negamaxEvaluateMove(Cell oneCell, int getWinnerResult) {
+		if (getWinnerResult == getColour()) {
+			return 100;
+		}
+		if (getWinnerResult == getOpponentColour()) {
+			return -100;
+		}
+		return 5;
 	}
 	
 	public int oppositeColour(int pieceColour) {
@@ -507,27 +494,6 @@ public class Mlobanov implements Player, Piece {
 			return Piece.WHITE;
 		}
 	}
-	
-	/**
-	 * Calculate value of the move from the perspective of white
-	 * @param oneCell - The cell that would be taken
-	 * @return Value of the move 
-	 */
-	public int negamaxEvaluateMove(Cell oneCell, int getWinnerResult) {
-		/* give highest value to a winning move */
-		if (getWinnerResult == Piece.WHITE) {
-			return 100;
-		} else if (getWinnerResult == Piece.BLACK) {
-			/* very bad if opponent has a win */
-			return 1;
-		}
-		if ((oneCell.getRow() == 0)) {
-			return 50;
-		} else {
-			return 20;
-		}
-	}
-	
 	
 	/* Function called by referee to inform the player about the opponent's move
 	 *  Return -1 if the move is illegal otherwise return 0
