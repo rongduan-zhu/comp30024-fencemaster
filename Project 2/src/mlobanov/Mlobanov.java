@@ -49,6 +49,7 @@ public class Mlobanov implements Player, Piece {
 	private Board gameBoard;
 	private int moveCount = 0;
 	private Move opponentLastMove;
+	private int lowestMovesForTerminalState;
 	
 	/* Constructor */
 	public Mlobanov() {
@@ -69,6 +70,16 @@ public class Mlobanov implements Player, Piece {
 		// initialise the board
 		System.out.println("I have been initialised. My colour is " + p + " and my opponent is " + getOpponentColour());
 		gameBoard = new Board(n);
+		/* Calculate lowest number of moves required for terminal state
+		 * for given board size. Assumes board dimension is > 1.
+		 * Includes moves for other player */
+		if (n == 3) {
+			/* Can make a quick tripod here */
+			lowestMovesForTerminalState = 9;
+		} else {
+			/* Fastest win is with a ring */
+			lowestMovesForTerminalState = 11;
+		}
 		
 		return 0;
 	}
@@ -203,11 +214,11 @@ public class Mlobanov implements Player, Piece {
 				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 				
-				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
+				System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 				
 				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* Undo the temporary move. */
 				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
@@ -230,26 +241,13 @@ public class Mlobanov implements Player, Piece {
 	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta) {
 		
 		int value, getWinnerResult;
-		int nextSearchColour;
-		
-		/* nextSearchColour is changed to the opposite searchColour in order
-		 * to search with the opposite searchColour at the next level. 
-		 * Content is set to the move's searchColour so that the current
-		 * player will 'take' the piece before searching the next level.  */
-		
-		String content;
-		nextSearchColour = oppositeColour(searchColour);
-		if (searchColour == Piece.BLACK) {
-			content = Cell.BLACK;
-		} else {
-			content = Cell.WHITE;  
-		}
 		
 		/* Make a temporary move in order to detect a terminal state later, 
 		 * if it exists */
+		String content = pieceColourToCellColour(searchColour);
 		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
 		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-
+		
 		/* Check if board is in terminal state or at depth limit for 
 		 * searching. */
 		getWinnerResult = getWinner();
@@ -257,9 +255,6 @@ public class Mlobanov implements Player, Piece {
 			
 			/* Evaluate move. */
 			value = minimaxEvaluateMove(moveCell, getWinnerResult);
-			if (getWinnerResult == 2) {
-				//System.out.println("Black has won with a move at " + moveCell.getRow() + ", " + moveCell.getCol() + " and the value of this move is " + value);
-			}
 			
 			/* Undo the temporary move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
@@ -271,7 +266,9 @@ public class Mlobanov implements Player, Piece {
 		Cell oneCell;
 		int newAlpha = alpha;
 		int newBeta = beta;
-	
+		int nextSearchColour;
+		nextSearchColour = oppositeColour(searchColour);
+		
 		if (nextSearchColour == getColour()) {
 			for (int i = 0; i < gameBoard.getNumRows(); i++) {
 				for (int j = 0; j < gameBoard.getNumRows(); j++) {
@@ -282,8 +279,14 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					
+					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
+					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
+					
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);			
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);	
+					
+					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
+					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
 					
 					/* Alpha beta pruning. */
 					if (value > newAlpha) {
@@ -308,8 +311,14 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					
+					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
+					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
+					
 					/* Recurse and find the value of the node. */
 					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
+					
+					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
+					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
 					
 					/* Alpha beta pruning. */
 					if (value < newBeta) {
@@ -340,6 +349,10 @@ public class Mlobanov implements Player, Piece {
 		if (getWinnerResult == getOpponentColour()) {
 			return -100;
 		}
+		if (oneCell.getRow() == 3) {
+			return 20;
+		}
+		
 		return 5;
 	}
 	
@@ -537,9 +550,13 @@ public class Mlobanov implements Player, Piece {
 	 *  
 	 */
 	// THIS FUNCTION TAKES TOO LONG TO BE ABLE TO BE USED IN MINIMAX
+	// -1 = INVALID/Non-Terminal State, 0 = EMPTY/DRAW, 1 = WHITE, 2 = BLACK
 	public int getWinner() {
 		
-		// -1 = INVALID/Non-Terminal State, 0 = EMPTY/DRAW, 1 = WHITE, 2 = BLACK
+		/* If not enough cells have been taken, can't be a terminal state */
+		if (gameBoard.getOccupiedCells() < getLowestMovesForTerminalState()) {
+			return -1;
+		}
 		LoopSearch findLoop = new LoopSearch(gameBoard);
 		TripodAgent findTripod = new TripodAgent(gameBoard);
 		// test if there is a tripod win
@@ -639,5 +656,9 @@ public class Mlobanov implements Player, Piece {
 			return Cell.BLACK;
 		}
 		return Cell.INVALID;
+	}
+
+	public int getLowestMovesForTerminalState() {
+		return lowestMovesForTerminalState;
 	}
 }
