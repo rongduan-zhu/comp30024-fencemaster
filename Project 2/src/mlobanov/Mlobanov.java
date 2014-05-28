@@ -254,7 +254,7 @@ public class Mlobanov implements Player, Piece {
 		if ((getWinnerResult >= 0) || (depth == 0)) {
 			
 			/* Evaluate move. */
-			value = minimaxEvaluateMove(moveCell, getWinnerResult);
+			value = minimaxEvaluateMove(getWinnerResult);
 			
 			/* Undo the temporary move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
@@ -270,8 +270,8 @@ public class Mlobanov implements Player, Piece {
 		nextSearchColour = oppositeColour(searchColour);
 		
 		if (nextSearchColour == getColour()) {
-			for (int i = 0; i < gameBoard.getNumRows(); i++) {
-				for (int j = 0; j < gameBoard.getNumRows(); j++) {
+			for (int i = 0; i < gameBoard.getNumRows(); ++i) {
+				for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 					
 					/* Ensure cell is valid and not taken */
 					oneCell = gameBoard.getCell(i, j);
@@ -302,8 +302,8 @@ public class Mlobanov implements Player, Piece {
 			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
 			return newAlpha;
 		} else {
-			for (int i = 0; i < gameBoard.getNumRows(); i++) {
-				for (int j = 0; j < gameBoard.getNumRows(); j++) {
+			for (int i = 0; i < gameBoard.getNumRows(); ++i) {
+				for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 					
 					/* Ensure cell is valid and not taken */
 					oneCell = gameBoard.getCell(i, j);
@@ -342,18 +342,33 @@ public class Mlobanov implements Player, Piece {
 	 * @param oneCell - The cell that would be taken
 	 * @return Value of the move 
 	 */
-	public int minimaxEvaluateMove(Cell oneCell, int getWinnerResult) {
+	public int minimaxEvaluateMove(int getWinnerResult) {
 		if (getWinnerResult == getColour()) {
 			return 100;
 		}
 		if (getWinnerResult == getOpponentColour()) {
 			return -100;
 		}
-		if (oneCell.getRow() == 3) {
-			return 20;
+		int value = 0;
+		Cell oneCell;
+		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
+			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
+				oneCell = gameBoard.getCell(i, j);
+				if (oneCell == null) {
+					continue;
+				}
+				
+				if (oneCell.getRow() == 3) {
+					if (oneCell.getContent().equals(pieceColourToCellColour(getColour()))) {
+						value += 5;
+					} else if (oneCell.getContent().equals(pieceColourToCellColour(getOpponentColour()))) {
+						value -= 5;
+					}
+				}
+			}
 		}
 		
-		return 5;
+		return value;
 	}
 	
 	/** 
