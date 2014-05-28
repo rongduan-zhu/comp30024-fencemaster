@@ -217,8 +217,13 @@ public class Mlobanov implements Player, Piece {
 				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
+				int neighbourCounter = gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
 
+<<<<<<< HEAD
 				value = minimaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) 0, (short) 0);
+=======
+				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) neighbourCounter, (short) 0);
+>>>>>>> 2659ffa8cfb735812f9e2e2b3018262626cb8437
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -274,6 +279,7 @@ public class Mlobanov implements Player, Piece {
 
 		if (nextSearchColour == getColour()) {
 			for (int i = 0; i < gameBoard.getNumRows(); ++i) {
+				short tempNeighbourCounter = neighbourCounter;
 				for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 
 					/* Ensure cell is valid and not taken */
@@ -281,15 +287,15 @@ public class Mlobanov implements Player, Piece {
 					if (oneCell == null || oneCell.taken()) {
 						continue;
 					}
-					neighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
-					System.out.println(neighbourCounter);
+
+					tempNeighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
 					//secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
 					
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta, neighbourCounter, secondaryCounter);
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta, tempNeighbourCounter, secondaryCounter);
 
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
