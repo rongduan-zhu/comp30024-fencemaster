@@ -7,7 +7,7 @@ import java.util.Scanner;
 import aiproj.fencemaster.Piece;
 
 public class Test {
-	
+
 	public static void main(String[] args) {
 		try {
 			System.setIn(new FileInputStream("input.txt"));
@@ -15,9 +15,9 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Scanner stdIn = new Scanner(System.in);
-		
+
 		// correct input begins with an integer
 		if (!stdIn.hasNextInt()) {
 			System.out.println("Error: No dimension detected. Exiting program.");
@@ -30,17 +30,17 @@ public class Test {
 			System.out.println("Error: Board dimension too small. Exiting program.");
 			System.exit(1);
 		}
-		
+
 		Board board = createBoardFromInput(stdIn, dimension);
 		System.out.println(board);
-		
+
 		Mlobanov player = new Mlobanov();
-		player.init(board, Piece.WHITE);
+		player.init(board, Piece.BLACK);
 		player.makeMove();
 
 		stdIn.close();
 	}
-	
+
 	/**
 	 * @param stdIn, input stream
 	 * @param dimension, dimension of the board, that is how long an individual edge is
@@ -76,7 +76,7 @@ public class Test {
 		}
 		return board;
 	}
-	
+
 	public static boolean validInput(String item) {
 		return item.equals(Cell.BLACK) || item.equals(Cell.WHITE) || item.equals(Cell.EMPTY);
 	}

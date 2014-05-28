@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 /**
- * 
+ *
  * @author Maxim Lobanov (mlobanov) & Rongduan Zhu (rz)
  *
  */
@@ -24,7 +24,8 @@ public class Board {
 	private Integer occupiedCells = 0;
 	/** Dimension of the board */
 	private Integer dimension;
-
+	/** Stores all edge cells*/
+	private ArrayList<ArrayList<Integer> > edgeNodes = new ArrayList<ArrayList<Integer> >();
 	/**
 	 * Board constructor, makes a board with all Cells initialized to empty
 	 * @param numRows, specifying total number of rows of board
@@ -45,6 +46,9 @@ public class Board {
 			cellArray.add(new ArrayList<Cell>());
 			for (int j = 0; j < this.numRows; j++) {
 				cellArray.get(i).add(new Cell(i, j));
+				if (isEdgeNode(i, j)) {
+					edgeNodes.add(new ArrayList<Integer>(Arrays.asList(i, j)));
+				}
 			}
 		}
 	}
@@ -302,6 +306,66 @@ public class Board {
 	/**
 	 * @param row, row index, 0 based
 	 * @param column, column index, 0 based
+	 * @param colour the secondary connection should be
+	 * @return returns all secondary connections that have the same colour as "colour"
+	 * 		    eg [[1,2], [1,3]]
+	 */
+	public ArrayList<ArrayList<Integer> > getSecondaryConnection(int row, int column, String colour) {
+		/* Got to check for 6 directions, assume checking for x's neighbours, then
+		 * got to check for x's top, right, bottom-right/bottom-left, bottom, left,
+		 * and top-left/top-right */
+		if (!isValidPosition(row, column)) {
+			return null;
+		}
+		ArrayList<ArrayList<Integer>> neighbours = new ArrayList<ArrayList<Integer>>();
+
+		//Checks top
+		if (isValidPosition(row - 2, column - 1)) {
+			if (get(row - 2, column - 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 2, column - 1)));
+			}
+		}
+
+		//Checks right
+		if (isValidPosition(row - 1, column + 1)) {
+			if (get(row - 1, column + 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column + 1)));
+			}
+		}
+
+		//Checks bottom-right
+		if (isValidPosition(row + 1, column + 2)) {
+			if (get(row + 1, column + 2).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column + 2)));
+			}
+		}
+
+		//Checks bottom
+		if (isValidPosition(row + 2, column)) {
+			if (get(row + 2, column).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 2, column)));
+			}
+		}
+
+		//Checks left
+		if (isValidPosition(row + 1, column - 1)) {
+			if (get(row + 1, column - 1).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row + 1, column - 1)));
+			}
+		}
+
+		//Checks top-left
+		if (isValidPosition(row - 1, column - 2)) {
+			if (get(row - 1, column - 2).equals(colour)) {
+				neighbours.add(new ArrayList<Integer>(Arrays.asList(row - 1, column - 2)));
+			}
+		}
+		return neighbours;
+	}
+
+	/**
+	 * @param row, row index, 0 based
+	 * @param column, column index, 0 based
 	 * @return true if (row, column) is on an edge but not corner
 	 */
 	public boolean isEdgeNode(int row, int column) {
@@ -423,6 +487,13 @@ public class Board {
 	 */
 	public void incrementOccupiedCells() {
 		++occupiedCells;
+	}
+
+	/**
+	 * Gets a list of all nodes on an edge
+	 */
+	public ArrayList<ArrayList<Integer>> getEdgeNodes() {
+		return edgeNodes;
 	}
 
 }
