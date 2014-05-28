@@ -192,7 +192,7 @@ public class Mlobanov implements Player, Piece {
 		 * a real board. */
 		bestCell = new Cell(0, 0);
 		
-		String content = pieceColourToCellColour(getColour());
+		//String content = pieceColourToCellColour(getColour());
 
 		/* java -cp . aiproj.fencemaster.Referee N mlobanov.Mlobanov mlobanov.Mlobanov */
 		
@@ -214,11 +214,11 @@ public class Mlobanov implements Player, Piece {
 				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 				
-				System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
+				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 				
 				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 				
 				/* Undo the temporary move. */
 				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
@@ -445,8 +445,8 @@ public class Mlobanov implements Player, Piece {
 		 * searching. */
 		getWinnerResult = getWinner();
 		if ((getWinnerResult >= 0) || (depth == 0)) {
-			/* Evaluate move from the perspective of white. */
-			value = negamaxEvaluateMove(moveCell, getWinnerResult);
+			/* Evaluate move from the perspective of the player. */
+			value = negamaxEvaluateMove(getWinnerResult);
 			
 			/* The value is negated if it was opponent's move as the
 			 * heuristic is always calculated from player's perspective. */
@@ -501,18 +501,36 @@ public class Mlobanov implements Player, Piece {
 	}
 	
 	/**
-	 * Calculate value of the move from the perspective of white
-	 * @param oneCell - The cell that would be taken
+	 * Calculate value of the move from the perspective of the player
 	 * @return Value of the move 
 	 */
-	public int negamaxEvaluateMove(Cell oneCell, int getWinnerResult) {
+	public int negamaxEvaluateMove(int getWinnerResult) {
 		if (getWinnerResult == getColour()) {
 			return 100;
 		}
 		if (getWinnerResult == getOpponentColour()) {
 			return -100;
 		}
-		return 5;
+		int value = 0;
+		Cell oneCell;
+		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
+			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
+				oneCell = gameBoard.getCell(i, j);
+				if (oneCell == null) {
+					continue;
+				}
+				
+				if (oneCell.getRow() == 3) {
+					if (oneCell.getContent().equals(pieceColourToCellColour(getColour()))) {
+						value += 5;
+					} else if (oneCell.getContent().equals(pieceColourToCellColour(getOpponentColour()))) {
+						value -= 5;
+					}
+				}
+			}
+		}
+		
+		return value;
 	}
 	
 	public int oppositeColour(int pieceColour) {
@@ -619,6 +637,26 @@ public class Mlobanov implements Player, Piece {
 		output.println(gameBoard);
 	}
 	
+	public static int cellColourToPieceColour(String cellColour) {
+		if (cellColour.equals(Cell.WHITE)) {
+			return 1;
+		}
+		if (cellColour.equals(Cell.BLACK)) {
+			return 2;
+		}
+		return -1;
+	}
+	
+	public static String pieceColourToCellColour(int pieceColour) {
+		if (pieceColour == Piece.WHITE) {
+			return Cell.WHITE;
+		}
+		if (pieceColour == Piece.BLACK) {
+			return Cell.BLACK;
+		}
+		return Cell.INVALID;
+	}
+	
 	/* Getters and Setters */
 
 	public int getColour() {
@@ -653,25 +691,6 @@ public class Mlobanov implements Player, Piece {
 		this.opponentColour = opponentColour;
 	}
 	
-	public static int cellColourToPieceColour(String cellColour) {
-		if (cellColour.equals(Cell.WHITE)) {
-			return 1;
-		}
-		if (cellColour.equals(Cell.BLACK)) {
-			return 2;
-		}
-		return -1;
-	}
-	
-	public static String pieceColourToCellColour(int pieceColour) {
-		if (pieceColour == Piece.WHITE) {
-			return Cell.WHITE;
-		}
-		if (pieceColour == Piece.BLACK) {
-			return Cell.BLACK;
-		}
-		return Cell.INVALID;
-	}
 
 	public int getLowestMovesForTerminalState() {
 		return lowestMovesForTerminalState;

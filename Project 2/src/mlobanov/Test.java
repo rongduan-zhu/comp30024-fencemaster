@@ -35,7 +35,7 @@ public class Test {
 		System.out.println(board);
 		
 		Mlobanov player = new Mlobanov();
-		player.init(board, Piece.BLACK);
+		player.init(board, Piece.WHITE);
 		player.makeMove();
 
 		stdIn.close();

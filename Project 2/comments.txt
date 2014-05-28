@@ -3,18 +3,36 @@ We attempt to create a skeleton which is a set of cells which are not connected,
 
 We generally favour tripods as they are easier to create as well as the individual cells giving strategical value on the board (e.g. preventing opponent tripod) even if the tripod is blocked. Rings also tend to be able to be denied using very few moves whereas tripods are much harder to prevent.
 
-We use Negamax Search with Alpha Beta pruning in order to search for the best move
+We use Minimax Search with Alpha Beta pruning in order to search for the best move
 
 
 
 * Evaluation Function:
 
 Evaluation Function?
- * 		Higher value to positions near stones of your own colour
- * 			Highest bonus for direct neighbour
- * 			Second highest for a stone that forms a secondary connection (can connect to it no matter what)
- * 			Third highest for stone that is 2 stones away from another one of your stones
- 	
+
+Higher value to positions near stones of your own colour
+	Highest bonus for direct neighbour
+	Second highest for a stone that forms a secondary connection (can connect to it no matter what)
+	Third highest for stone that is 2 stones away from another one of your stones
+
+Maintain secondary connections:
+	When you have a secondary connection and opponent plays in one of the two empty cells to attempt to block your connection, give a bonus to the cell that connects your secondary connection.
+	Look at neighbours of last placed stone and look for pattern of your piece, empty location and your piece. If you find this pattern, put a piece in that cell
+
+Connecting to edges
+	Give bonus if you connect to an edge or if you extend a group that is connected to an edge.
+
+Joining big group
+	Give bonus to join two groups
+	Give bonus to joining a group that is a large size
+
+Check for winning states
+	Whenever a piece is placed, 'place' a piece in each cell next to it and check if there is a win
+
+REFERENCE: 
+
+http://webdocs.cs.ualberta.ca/~hayward/theses/ewalds.pdf
 
 
 * Creative Techniques:
