@@ -218,7 +218,7 @@ public class Mlobanov implements Player, Piece {
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
-				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (byte) 0, (byte) 0);
+				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) 0, (short) 0);
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -240,7 +240,7 @@ public class Mlobanov implements Player, Piece {
 
 
 
-	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta, byte neighbourCounter, byte secondaryCounter) {
+	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta, short neighbourCounter, short secondaryCounter) {
 
 		int value, getWinnerResult;
 
@@ -281,12 +281,9 @@ public class Mlobanov implements Player, Piece {
 					if (oneCell == null || oneCell.taken()) {
 						continue;
 					}
-					if (gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size() > 0) {
-						++neighbourCounter;
-					}
-					if (gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size() > 0) {
-						++secondaryCounter;
-					}
+					neighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
+					secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
+					
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
@@ -318,13 +315,9 @@ public class Mlobanov implements Player, Piece {
 					if (oneCell == null || oneCell.taken()) {
 						continue;
 					}
-					
-					if (gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size() > 0) {
-						++neighbourCounter;
-					}
-					if (gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size() > 0) {
-						++secondaryCounter;
-					}
+
+					neighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
+					secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
@@ -356,7 +349,7 @@ public class Mlobanov implements Player, Piece {
 	 * @param oneCell - The cell that would be taken
 	 * @return Value of the move
 	 */
-	public int minimaxEvaluateBoard(int getWinnerResult, byte neighbourCount, byte secondaryCount) {
+	public int minimaxEvaluateBoard(int getWinnerResult, short neighbourCount, short secondaryCount) {
 		if (getWinnerResult == getColour()) {
 			return Integer.MAX_VALUE;
 		}
@@ -370,7 +363,7 @@ public class Mlobanov implements Player, Piece {
 		int neighbourBonus = 5,
 			secondaryNeighbourBonus = 3;
 		String colour =  moveRef.getContent();
-		
+
 		float min = 1000,
 			  distInverse = 0;
 
