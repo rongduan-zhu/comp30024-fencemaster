@@ -352,10 +352,10 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int minimaxEvaluateBoard(int getWinnerResult, short neighbourCount, short secondaryCount) {
 		if (getWinnerResult == getColour()) {
-			return Integer.MAX_VALUE;
+			return 1000;
 		}
 		if (getWinnerResult == getOpponentColour()) {
-			return Integer.MIN_VALUE;
+			return -1000;
 		}
 
 		/*int value = 0,
