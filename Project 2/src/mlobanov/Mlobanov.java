@@ -218,7 +218,7 @@ public class Mlobanov implements Player, Piece {
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
-				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) 0, (short) 0);
+				value = minimaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) 0, (short) 0);
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -282,6 +282,7 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					neighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
+					System.out.println(neighbourCounter);
 					//secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
 					
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
@@ -355,12 +356,12 @@ public class Mlobanov implements Player, Piece {
 			return Integer.MIN_VALUE;
 		}
 
-		int value = 0,
+		/*int value = 0,
 			onEdgeBonus = 2,
-			counter = 0;
+			counter = 0;*/
 		int neighbourBonus = 5,
 			secondaryNeighbourBonus = 3;
-		String colour =  moveRef.getContent();
+		/*String colour =  moveRef.getContent();
 
 		float min = 1000,
 			  distInverse = 0;
@@ -383,7 +384,7 @@ public class Mlobanov implements Player, Piece {
 					distInverse += 1 / (min == 0 ? 0.5f : min);
 				}
 			}
-		}
+		}*/
 
 		//distInverse / counter to normalize the dist average with number of stones you have
 		return neighbourCount * neighbourBonus;
@@ -576,7 +577,7 @@ public class Mlobanov implements Player, Piece {
 
 		// Can't place a piece on top of another piece or invalid position
 		String cellContent = gameBoard.getCell(m.Row, m.Col).getContent();
-		if (!cellContent.equals(Cell.EMPTY)) {
+		if (!cellContent.equals(Cell.EMPTY) && !cellContent.equals(Cell.INVALID)) {
 			// check if the content is our own cell colour (in the case of a swap)
 			if (cellContent.equals(pieceColourToCellColour(getColour()))) {
 				if (getMoveCount() == 2 && m.IsSwap){
