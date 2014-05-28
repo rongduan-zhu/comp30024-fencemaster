@@ -219,11 +219,7 @@ public class Mlobanov implements Player, Piece {
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 				int neighbourCounter = gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
 
-<<<<<<< HEAD
-				value = minimaxValue(oneCell, getColour(), 2, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) 0, (short) 0);
-=======
 				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) neighbourCounter, (short) 0);
->>>>>>> 2659ffa8cfb735812f9e2e2b3018262626cb8437
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
