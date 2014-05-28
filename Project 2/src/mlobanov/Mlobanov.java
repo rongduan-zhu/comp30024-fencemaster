@@ -218,7 +218,7 @@ public class Mlobanov implements Player, Piece {
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
-				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (byte) 0, (byte) 0);
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -240,7 +240,7 @@ public class Mlobanov implements Player, Piece {
 
 
 
-	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta) {
+	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta, byte neighbourCounter, byte secondaryCounter) {
 
 		int value, getWinnerResult;
 
@@ -257,7 +257,7 @@ public class Mlobanov implements Player, Piece {
 
 			/* Evaluate move. */
 			moveRef = moveCell;
-			value = minimaxEvaluateBoard(getWinnerResult);
+			value = minimaxEvaluateBoard(getWinnerResult, neighbourCounter, secondaryCounter);
 
 			/* Undo the temporary move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
@@ -281,12 +281,17 @@ public class Mlobanov implements Player, Piece {
 					if (oneCell == null || oneCell.taken()) {
 						continue;
 					}
-
+					if (gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size() > 0) {
+						++neighbourCounter;
+					}
+					if (gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size() > 0) {
+						++secondaryCounter;
+					}
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta, neighbourCounter, secondaryCounter);
 
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
@@ -313,12 +318,18 @@ public class Mlobanov implements Player, Piece {
 					if (oneCell == null || oneCell.taken()) {
 						continue;
 					}
-
+					
+					if (gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size() > 0) {
+						++neighbourCounter;
+					}
+					if (gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size() > 0) {
+						++secondaryCounter;
+					}
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta, neighbourCounter, secondaryCounter);
 
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
@@ -345,7 +356,7 @@ public class Mlobanov implements Player, Piece {
 	 * @param oneCell - The cell that would be taken
 	 * @return Value of the move
 	 */
-	public int minimaxEvaluateBoard(int getWinnerResult) {
+	public int minimaxEvaluateBoard(int getWinnerResult, byte neighbourCount, byte secondaryCount) {
 		if (getWinnerResult == getColour()) {
 			return Integer.MAX_VALUE;
 		}
@@ -359,9 +370,7 @@ public class Mlobanov implements Player, Piece {
 		int neighbourBonus = 5,
 			secondaryNeighbourBonus = 3;
 		String colour =  moveRef.getContent();
-
-		int sameColourNeighbours = gameBoard.getNeighbours(moveRef.getRow(), moveRef.getCol(), Board.ALL_NEIGHBOURS).size();
-		int sameColourSecondaryNeighbours = gameBoard.getSecondaryConnection(moveRef.getRow(), moveRef.getCol(), colour).size();
+		
 		float min = 1000,
 			  distInverse = 0;
 
@@ -386,8 +395,8 @@ public class Mlobanov implements Player, Piece {
 		}
 
 		//distInverse / counter to normalize the dist average with number of stones you have
-		return sameColourNeighbours * neighbourBonus
-				+ sameColourSecondaryNeighbours * secondaryNeighbourBonus
+		return neighbourCount * neighbourBonus
+				+ secondaryCount * secondaryNeighbourBonus
 				+ (int) (distInverse / counter);
 	}
 
