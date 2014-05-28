@@ -282,7 +282,7 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					neighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
-					secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
+					//secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
 					
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
@@ -316,8 +316,6 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 
-					neighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
-					secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
@@ -388,9 +386,9 @@ public class Mlobanov implements Player, Piece {
 		}
 
 		//distInverse / counter to normalize the dist average with number of stones you have
-		return neighbourCount * neighbourBonus
-				+ secondaryCount * secondaryNeighbourBonus
-				+ (int) (distInverse / counter);
+		return neighbourCount * neighbourBonus;
+				//+ secondaryCount * secondaryNeighbourBonus
+				//+ (int) (distInverse / counter);
 	}
 
 	/**
