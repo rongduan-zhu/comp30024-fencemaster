@@ -12,18 +12,6 @@ import aiproj.fencemaster.*;
  *
  */
 
-/* MARKING:
- * out of 22
- * 4 - quality of code and comments
- * 4 - correctness and readability of code
- * 		ALL SUBMITTED FILES MUST HAVE MAXIMUM LINE LENGTH OF 79 CHARACTERS
- * 7 - results of testing performance of game playing against other agents that uni provides
- * 7 - creativity of solution
- */
-
-/* TO DO:
- * Need some way to determine if you can win with the next move
- */
 public class Mlobanov implements Player, Piece {
 	private int colour;
 	private int opponentColour;
@@ -92,9 +80,6 @@ public class Mlobanov implements Player, Piece {
 	 *  Return object of class Move
 	 */
 	public Move makeMove() {
-		/* distance between two points (x1,y1) and (x2,y2) is:
-		 * (abs(x1-x2) + abs(y1-y2) + abs( (x1-y1) - (x2-y2))) / 2
-		 */
 		Move newMove;
 
 		// determine if best move is to swap
@@ -166,7 +151,6 @@ public class Mlobanov implements Player, Piece {
 		int value;
 		int maxValue = Integer.MIN_VALUE;
 		int cellsToSearchTotal, cellsLeft;
-		boolean limit = false;
 		Cell oneCell, bestCell;
 		/* Defining best cell to prevent possible uninitialised variable
 		 * error. Value doesn't matter as value will always be changed on
@@ -203,11 +187,7 @@ public class Mlobanov implements Player, Piece {
 					setDepthToSearch(1);
 				}
 
-				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
-
 				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
-
-//				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -397,6 +377,9 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.get(i, j).equals(myColour)) {
 
 					for (int k = 0; k < edgeList.size(); ++k) {
+						/* distance between two points (x1,y1) and (x2,y2) is:
+						 * (abs(x1-x2) + abs(y1-y2) + abs( (x1-y1) - (x2-y2))) / 2
+						 */
 						float dist = (Math.abs(i - edgeList.get(k).get(0)) +
 						            Math.abs(j - edgeList.get(k).get(1)) +
 						            Math.abs( (i - j) -
@@ -467,7 +450,7 @@ public class Mlobanov implements Player, Piece {
 
 					secondaryConnectionCount -= gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
-											moveRef.getCol(), myColour).size();
+											moveRef.getCol(), theirColour).size();
 				}
 			}
 		}
@@ -476,14 +459,10 @@ public class Mlobanov implements Player, Piece {
 			criticalFeature = (short) (criticalPoints * criticalPointBonus);
 		}
 
-		/*totalHeuristicValue = neighbourCount * neighbourBonus
+		totalHeuristicValue = neighbourCount * neighbourBonus
 				+ secondaryConnectionCount * secondaryNeighbourBonus
 				- distBonus * (int) distTotal
-				+ criticalFeature; */
-		
-		totalHeuristicValue = neighbourCount * neighbourBonus
-		+ secondaryConnectionCount * secondaryNeighbourBonus
-		- distBonus * (int) distTotal;
+				+ criticalFeature;
 
 		if (totalHeuristicValue > getWinvalue()) {
 			totalHeuristicValue = getWinvalue() - 1;
@@ -545,7 +524,6 @@ public class Mlobanov implements Player, Piece {
 		if (!swapped) {
 			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 		}
-		/*System.out.println("Updating row and column: " + m.Row + ", " + m.Col + " for opponent:");*/
 		/* Update instance variable of opponent's last move. */
 		setOpponentLastMove(m);
 		return 0;

@@ -1,7 +1,5 @@
 package mlobanov;
 
-import aiproj.fencemaster.Piece;
-
 /**
  *
  * @author Maxim Lobanov (mlobanov) and Rongduan Zhu (rz)
