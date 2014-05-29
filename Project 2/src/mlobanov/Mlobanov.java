@@ -217,9 +217,8 @@ public class Mlobanov implements Player, Piece {
 				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
-				short neighbourCounter = (short)gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
 
-				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE, (short) neighbourCounter, (short) 0);
+				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -241,9 +240,9 @@ public class Mlobanov implements Player, Piece {
 
 
 
-	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta, short neighbourCounter, short secondaryCounter) {
+	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta) {
 
-		int value, getWinnerResult;
+		int value, getWinnerResult, neighbours;
 
 		/* Make a temporary move in order to detect a terminal state later,
 		 * if it exists */
@@ -253,12 +252,19 @@ public class Mlobanov implements Player, Piece {
 
 		/* Check if board is in terminal state or at depth limit for
 		 * searching. */
-		getWinnerResult = getWinner();
+		neighbours = gameBoard.getNeighbours(moveCell.getRow(), 
+							moveCell.getCol(), Board.ALL_NEIGHBOURS).size();
+		
+		if (neighbours == 0) {
+			getWinnerResult = -1;
+		} else {
+			getWinnerResult = getWinner();
+		}
 		if ((getWinnerResult >= 0) || (depth == 0)) {
 
 			/* Evaluate move. */
 			moveRef = moveCell;
-			value = minimaxEvaluateBoard(getWinnerResult, neighbourCounter, secondaryCounter);
+			value = minimaxEvaluateBoard(getWinnerResult);
 
 			/* Undo the temporary move */
 			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
@@ -284,16 +290,12 @@ public class Mlobanov implements Player, Piece {
 					if (oneCell == null || oneCell.taken()) {
 						continue;
 					}
-					//tempNeighbourCounter = neighbourCounter;
-
-					//tempNeighbourCounter += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
-					//secondaryCounter += gameBoard.getSecondaryConnection(i, j, gameBoard.get(i, j)).size();
 					
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta, neighbourCounter, secondaryCounter);
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
 
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
@@ -325,7 +327,7 @@ public class Mlobanov implements Player, Piece {
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
 
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta, neighbourCounter, secondaryCounter);
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
 
 					/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
 					gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
@@ -352,7 +354,7 @@ public class Mlobanov implements Player, Piece {
 	 * @param oneCell - The cell that would be taken
 	 * @return Value of the move
 	 */
-	public int minimaxEvaluateBoard(int getWinnerResult, short neighbourCount, short secondaryCount) {
+	public int minimaxEvaluateBoard(int getWinnerResult) {
 		if (getWinnerResult == getColour()) {
 			return 1000;
 		}
@@ -370,12 +372,6 @@ public class Mlobanov implements Player, Piece {
 			sCount = 0;
 		String colour =  pieceColourToCellColour(getColour());
 		
-		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
-			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
-				
-			}
-		}
-
 		float min = 1000,
 			  distTotal = 0;
 		
