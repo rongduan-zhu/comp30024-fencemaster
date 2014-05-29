@@ -17,6 +17,16 @@ losing state respectively. For a draw, we assign the value of 0.
 If the board is not in a winning state, we return a value that is evaluated
 from our heuristics.
 
+* Heuristics:
+
+- Position of move:
+When a piece is placed next to a piece of the same colour we assign a value
+of 2 for this
+
+
+
+
+
 Higher value to positions near stones of your own colour
 	Highest bonus for direct neighbour
 	Second highest for a stone that forms a secondary connection (can connect to it no matter what)

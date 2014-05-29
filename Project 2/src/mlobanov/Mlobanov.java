@@ -342,7 +342,7 @@ public class Mlobanov implements Player, Piece {
 		} else if (getWinnerResult == getOpponentColour()) {
 			/* Loss */
 			return getLossvalue();
-		} else {
+		} else if (getWinnerResult == 0) {
 			/* Draw */
 			return 0;
 		}
