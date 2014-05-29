@@ -51,6 +51,9 @@ public class Mlobanov implements Player, Piece {
 	private Move opponentLastMove;
 	private Cell moveRef;
 	private int lowestMovesForTerminalState;
+	private static final int WINVALUE = 1000,
+							 LOSSVALUE = -1000;
+			
 
 
 	/* Constructor(You can delete this line) */
@@ -220,7 +223,7 @@ public class Mlobanov implements Player, Piece {
 
 				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
 				/* Undo the temporary move. */
 				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
@@ -233,7 +236,7 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}
-
+		
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
 		return nextMove;
 	}
@@ -356,10 +359,10 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int minimaxEvaluateBoard(int getWinnerResult) {
 		if (getWinnerResult == getColour()) {
-			return 1000;
+			return getWinvalue();
 		}
 		if (getWinnerResult == getOpponentColour()) {
-			return -1000;
+			return getLossvalue();
 		}
 
 		int value = 0,
@@ -370,6 +373,8 @@ public class Mlobanov implements Player, Piece {
 			distBonus = 5;
 		int nCount = 0,
 			sCount = 0;
+		
+		int totalHeuristicValue;
 		String colour =  pieceColourToCellColour(getColour());
 		
 		float min = 1000,
@@ -411,174 +416,26 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}
-
-		//distInverse / counter to normalize the dist average with number of stones you have
-		return nCount * neighbourBonus
+		
+		totalHeuristicValue = nCount * neighbourBonus
 				+ sCount * secondaryNeighbourBonus
 				- distBonus * (int) distTotal;
-	}
+		
+		if (totalHeuristicValue > getWinvalue()) {
+			totalHeuristicValue = getWinvalue() - 1;
+		} else if (totalHeuristicValue < getLossvalue()) {
+			totalHeuristicValue = getLossvalue() + 1;
+		}
 
+		//distInverse / counter to normalize the dist average with number of stones you have
+		return totalHeuristicValue;
+	}
+	
 	/**
-	 * Find the best value move using Negamax search
-	 * @return - The best value move to make
+	 * Gets opposite colour to the input piece
+	 * @param pieceColour - input piece colour
+	 * @return Opposite colour to the input colour piece
 	 */
-	public Move negamaxDecision() {
-		Move nextMove;
-		int value;
-		int maxValue = Integer.MIN_VALUE;
-		Cell oneCell, bestCell;
-		/* Defining best cell to prevent possible uninitialised variable
-		 * error. Value doesn't matter as value will always be changed on
-		 * a real board. */
-		bestCell = new Cell(0, 0);
-
-		//String content = pieceColourToCellColour(getColour());
-
-		/* java -cp . aiproj.fencemaster.Referee N mlobanov.Mlobanov mlobanov.Mlobanov */
-
-		/* Begin negamax search with every empty position on the board
-		 * as the root node. */
-		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
-			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
-
-				/* Ensure the cell is valid and not taken. */
-				oneCell = gameBoard.getCell(i, j);
-				if (oneCell == null || oneCell.taken()) {
-					continue;
-				}
-
-				/* using depth = 0 reveals true value of a cell. */
-
-				/* Make a temporary move in order to detect a terminal state
-				 * later, if it exists. */
-				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(content);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);*/
-
-				System.out.println("BEGINNING NEGAMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
-
-				value = negamaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
-
-				System.out.println("value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
-
-				/* Undo the temporary move. */
-				/*gameBoard.getCell(oneCell.getRow(), oneCell.getCol()).setContent(Cell.EMPTY);
-				gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);*/
-
-				/* Save the cell with the highest value. */
-				if (value > maxValue) {
-					maxValue = value;
-					bestCell = oneCell;
-				}
-			}
-		}
-
-		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
-		return nextMove;
-	}
-
-
-
-	public int negamaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta) {
-
-		int value, getWinnerResult;
-
-		/* Make a temporary move in order to detect a terminal state later,
-		 * if it exists */
-		String content = pieceColourToCellColour(searchColour);
-		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(content);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-
-		/* Check if board is in terminal state or at depth limit for
-		 * searching. */
-		getWinnerResult = getWinner();
-		if ((getWinnerResult >= 0) || (depth == 0)) {
-			/* Evaluate move from the perspective of the player. */
-			value = negamaxEvaluateMove(getWinnerResult);
-
-			/* The value is negated if it was opponent's move as the
-			 * heuristic is always calculated from player's perspective. */
-
-			if (searchColour == getOpponentColour()) {
-				value *= -1;
-			}
-			/* Undo the temporary move. */
-			gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-			gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-			return value;
-		}
-
-		/* Not at a terminal state or depth limit */
-		Cell oneCell;
-		int maxValue = Integer.MIN_VALUE;
-		int newAlpha = alpha;
-		int nextSearchColour;
-		nextSearchColour = oppositeColour(searchColour);
-
-		/* Negamax search at the next depth over the remaining moves on
-		 * the board */
-		outerLoop:
-		for (int i = 0; i < gameBoard.getNumRows(); i++) {
-			for (int j = 0; j < gameBoard.getNumRows(); j++) {
-
-				/* Ensure cell is valid and not taken. */
-				oneCell = gameBoard.getCell(i, j);
-				if (oneCell == null || oneCell.taken()) {
-					continue;
-				}
-
-				/* Recurse and find the value of the node. */
-				value = -1 * negamaxValue(oneCell, nextSearchColour, depth - 1, -beta, -newAlpha);
-
-				if (value > maxValue) {
-					maxValue = value;
-				}
-				/* Alpha beta pruning. */
-				if (maxValue > newAlpha) {
-					newAlpha = maxValue;
-				}
-				if (newAlpha >= beta) {
-					break outerLoop;
-				}
-			}
-		}
-		/* Undo the temporary move */
-		gameBoard.getCell(moveCell.getRow(), moveCell.getCol()).setContent(Cell.EMPTY);
-		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() - 1);
-		return maxValue;
-	}
-
-	/**
-	 * Calculate value of the move from the perspective of the player
-	 * @return Value of the move
-	 */
-	public int negamaxEvaluateMove(int getWinnerResult) {
-		if (getWinnerResult == getColour()) {
-			return 100;
-		}
-		if (getWinnerResult == getOpponentColour()) {
-			return -100;
-		}
-		int value = 0;
-		Cell oneCell;
-		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
-			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
-				oneCell = gameBoard.getCell(i, j);
-				if (oneCell == null) {
-					continue;
-				}
-
-				if (oneCell.getRow() == 3) {
-					if (oneCell.getContent().equals(pieceColourToCellColour(getColour()))) {
-						value += 5;
-					} else if (oneCell.getContent().equals(pieceColourToCellColour(getOpponentColour()))) {
-						value -= 5;
-					}
-				}
-			}
-		}
-
-		return value;
-	}
 
 	public int oppositeColour(int pieceColour) {
 		if (pieceColour == Piece.WHITE) {
@@ -601,10 +458,10 @@ public class Mlobanov implements Player, Piece {
 			return -1;
 		}
 
-		// Can't place a piece on top of another piece or invalid position
+		/* Can't place a piece on top of another piece or invalid position. */
 		String cellContent = gameBoard.getCell(m.Row, m.Col).getContent();
 		if (!cellContent.equals(Cell.EMPTY) && !cellContent.equals(Cell.INVALID)) {
-			// check if the content is our own cell colour (in the case of a swap)
+			/*  Check if the content is our own cell colour (in the case of a swap) */
 			if (cellContent.equals(pieceColourToCellColour(getColour()))) {
 				if (getMoveCount() == 2 && m.IsSwap){
 					swapped = true;
@@ -629,8 +486,6 @@ public class Mlobanov implements Player, Piece {
 	/* This function when called by referee should return the winner
 	 *
 	 */
-	// THIS FUNCTION TAKES TOO LONG TO BE ABLE TO BE USED IN MINIMAX
-	// -1 = INVALID/Non-Terminal State, 0 = EMPTY/DRAW, 1 = WHITE, 2 = BLACK
 	public int getWinner() {
 
 		/* If not enough cells have been taken, can't be a terminal state */
@@ -639,13 +494,13 @@ public class Mlobanov implements Player, Piece {
 		}
 		LoopSearch findLoop = new LoopSearch(gameBoard);
 		TripodAgent findTripod = new TripodAgent(gameBoard);
-		// test if there is a tripod win
+		/* Test for a tripod win. */
 		ArrayList<Boolean> tripods = findTripod.searchForTripod();
 		int result = whoWon(tripods);
 		if (result != -1) {
 			return result;
 		}
-		// test if there is a loop win
+		/* Test for a loop win */
 		ArrayList<Boolean> loops = new ArrayList<Boolean> (
 				Arrays.asList(
 						findLoop.searchForLoop(Cell.BLACK),
@@ -667,6 +522,11 @@ public class Mlobanov implements Player, Piece {
 	* takes result as [blackResult, whiteResult]
 	* returns 2 if black won, 1 if white, -1 if none
 	*/
+	/**
+	 * Determines winner from array of results from tripod search/loop search
+	 * @param result - Array format [Black win?, White win?]
+	 * @return The winner in a format used for getWinner() 
+	 */
 	private int whoWon(ArrayList<Boolean> result) {
 		if (result.get(0)) {
 			return 2;
@@ -741,5 +601,13 @@ public class Mlobanov implements Player, Piece {
 
 	public int getLowestMovesForTerminalState() {
 		return lowestMovesForTerminalState;
+	}
+
+	public static int getWinvalue() {
+		return WINVALUE;
+	}
+
+	public static int getLossvalue() {
+		return LOSSVALUE;
 	}
 }

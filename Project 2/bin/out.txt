@@ -242,126 +242,54 @@ BBWWW-
    ------
     -----
 
-I am making a move at 6, 2
-Putting Piece 6:2 by 1
-BBW--    
+I am making a move at 0, 4
+Putting Piece 0:4 by 1
+BBW-W    
 BBWWW-   
 -BWWWW-  
 -BB----- 
 -BB------
  WB------
-  W------
+  -------
    ------
     -----
 
-I am making a move at 5, 3
-Putting Piece 5:3 by 2
-BBW--    
+I am making a move at 6, 2
+Putting Piece 6:2 by 2
+BBW-W    
 BBWWW-   
 -BWWWW-  
 -BB----- 
 -BB------
- WBB-----
-  W------
+ WB------
+  B------
    ------
-    -----
-
-I am making a move at 1, 5
-Putting Piece 1:5 by 1
-BBW--    
-BBWWWW   
--BWWWW-  
--BB----- 
--BB------
- WBB-----
-  W------
-   ------
-    -----
-
-I am making a move at 4, 3
-Putting Piece 4:3 by 2
-BBW--    
-BBWWWW   
--BWWWW-  
--BB----- 
--BBB-----
- WBB-----
-  W------
-   ------
-    -----
-
-I am making a move at 0, 4
-Putting Piece 0:4 by 1
-BBW-W    
-BBWWWW   
--BWWWW-  
--BB----- 
--BBB-----
- WBB-----
-  W------
-   ------
-    -----
-
-I am making a move at 6, 3
-Putting Piece 6:3 by 2
-BBW-W    
-BBWWWW   
--BWWWW-  
--BB----- 
--BBB-----
- WBB-----
-  WB-----
-   ------
-    -----
-
-I am making a move at 2, 0
-Putting Piece 2:0 by 1
-BBW-W    
-BBWWWW   
-WBWWWW-  
--BB----- 
--BBB-----
- WBB-----
-  WB-----
-   ------
-    -----
-
-I am making a move at 7, 3
-Putting Piece 7:3 by 2
-BBW-W    
-BBWWWW   
-WBWWWW-  
--BB----- 
--BBB-----
- WBB-----
-  WB-----
-   B-----
     -----
 
 --------------------------------------
 P2 Board is :
 BBW-W    
-BBWWWW   
-WBWWWW-  
+BBWWW-   
+-BWWWW-  
 -BB----- 
--BBB-----
- WBB-----
-  WB-----
-   B-----
+-BB------
+ WB------
+  B------
+   ------
     -----
 
 P1 Board is :
 BBW-W    
-BBWWWW   
-WBWWWW-  
+BBWWW-   
+-BWWWW-  
 -BB----- 
--BBB-----
- WBB-----
-  WB-----
-   B-----
+-BB------
+ WB------
+  B------
+   ------
     -----
 
 Player one (White) indicate winner as: 2
 Player two (Black) indicate winner as: 2
-Total Number of Moves Played in the Game: 28
+Total Number of Moves Played in the Game: 22
 Referee Finished !
