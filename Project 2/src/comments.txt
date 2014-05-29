@@ -1,9 +1,15 @@
 * Search Strategy:
 We attempt to create a skeleton which is a set of cells which are not connected, but rather are one cell away from being connected and their connection cannot be prevented. We call this connection a secondary connection. Once a skeleton is made correctly, victory is assured by connecting the skeleton into a tripod/loop while preventing the enemy's attempts at winning.
 
-We generally favour tripods as they are easier to create as well as the individual cells giving strategical value on the board (e.g. preventing opponent tripod) even if the tripod is blocked. Rings also tend to be able to be denied using very few moves whereas tripods are much harder to prevent.
+From playing the game, we have found that tripods are the strongest way to
+win. This is because in the formation of a tripod, you can place pieces on
+valauble positions of the board so that even if your tripod is blocked
+you can threaten other tripods or winning conditions. As well as this,
+it is quite easy to block a ring with a single move. Exceptions to this
+include larger rings, however they take much longer to set up and hence a 
+tripod will win the game faster.
 
-We use Minimax Search with Alpha Beta pruning in order to search for the best move
+For our searching algorithm we use Minimax Search with Alpha Beta pruning.
 
 
 
@@ -12,19 +18,37 @@ We use Minimax Search with Alpha Beta pruning in order to search for the best mo
 We use several heuristics in combination for our evaluation function.
 
 Firstly, we assign the values of +1000 and -1000 to a winning state and a 
-losing state respectively. For a draw, we assign the value of 0.
-
-If the board is not in a winning state, we return a value that is evaluated
+losing state respectively. For a draw, we assign the value of 0. If the 
+board is not in a winning state, we return a value that is evaluated
 from our heuristics.
+
+This allows us to block opponent victories by detecting them in advance
+and positioning our pieces to block them.
 
 * Heuristics:
 
-- Position of move:
+- Connecting to your own pieces:
+
 When a piece is placed next to a piece of the same colour we assign a value
-of 2 for this
+of 2 for this. This is because connecting to your own pieces is required
+to form loops and tripods and hence is a favourable move.
 
+Secondly, if a piece is placed at distance = 2 (including the piece) away,
+in a certain configuration, we give this a value of 1. The specific
+configuration we look for is a diamond shape with the two pieces at the
+top at bottom (vertical diamond) or left and right (horizontal diamond).
+We call this kind of configuration a secondary connection because no matter
+where the opposing player goes, you can simply take the other empty cell
+connecting the two pieces and the pieces will be connected. There is some
+situations where this does not hold true. An exmaple being when you have 
+multiple secondary connections and an opponent placing a piece in one also 
+blocks part of another one. This means that you won't be able to guarentee
+you can connect all of them, however this is a much rarer scenario and it
+is still valuable to form secondary connections. 
 
+- Distance to edge:
 
+We assign a heuristic value to pieces based on their distance from edges.
 
 
 Higher value to positions near stones of your own colour

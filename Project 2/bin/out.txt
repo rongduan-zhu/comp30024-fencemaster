@@ -2,10 +2,108 @@
 Referee started !
 I have been initialised. My colour is 1 and my opponent is 2
 I have been initialised. My colour is 2 and my opponent is 1
-I am making a move at 1, 1
-Putting Piece 1:1 by 1
-------     
--W-----    
+I am making a move at 0, 0
+Putting Piece 0:0 by 1
+W-----     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 0, 0
+Putting Piece 0:0 by 2
+B-----     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 0, 1
+Putting Piece 0:1 by 1
+BW----     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 0, 2
+Putting Piece 0:2 by 2
+BWB---     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 0, 3
+Putting Piece 0:3 by 1
+BWBW--     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 0, 4
+Putting Piece 0:4 by 2
+BWBWB-     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 0, 5
+Putting Piece 0:5 by 1
+BWBWBW     
+-------    
+--------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 1, 0
+Putting Piece 1:0 by 2
+BWBWBW     
+B------    
 --------   
 ---------  
 ---------- 
@@ -17,9 +115,9 @@ Putting Piece 1:1 by 1
      ------
 
 I am making a move at 1, 1
-Putting Piece 1:1 by 2
-------     
--B-----    
+Putting Piece 1:1 by 1
+BWBWBW     
+BW-----    
 --------   
 ---------  
 ---------- 
@@ -31,9 +129,9 @@ Putting Piece 1:1 by 2
      ------
 
 I am making a move at 1, 2
-Putting Piece 1:2 by 1
-------     
--BW----    
+Putting Piece 1:2 by 2
+BWBWBW     
+BWB----    
 --------   
 ---------  
 ---------- 
@@ -45,9 +143,9 @@ Putting Piece 1:2 by 1
      ------
 
 I am making a move at 1, 3
-Putting Piece 1:3 by 2
-------     
--BWB---    
+Putting Piece 1:3 by 1
+BWBWBW     
+BWBW---    
 --------   
 ---------  
 ---------- 
@@ -59,9 +157,9 @@ Putting Piece 1:3 by 2
      ------
 
 I am making a move at 1, 4
-Putting Piece 1:4 by 1
-------     
--BWBW--    
+Putting Piece 1:4 by 2
+BWBWBW     
+BWBWB--    
 --------   
 ---------  
 ---------- 
@@ -73,136 +171,10 @@ Putting Piece 1:4 by 1
      ------
 
 I am making a move at 1, 5
-Putting Piece 1:5 by 2
-------     
--BWBWB-    
+Putting Piece 1:5 by 1
+BWBWBW     
+BWBWBW-    
 --------   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 2, 1
-Putting Piece 2:1 by 1
-------     
--BWBWB-    
--W------   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 2, 6
-Putting Piece 2:6 by 2
-------     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 0, 0
-Putting Piece 0:0 by 1
-W-----     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 0, 1
-Putting Piece 0:1 by 2
-WB----     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 0, 2
-Putting Piece 0:2 by 1
-WBW---     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 0, 3
-Putting Piece 0:3 by 2
-WBWB--     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 0, 4
-Putting Piece 0:4 by 1
-WBWBW-     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 0, 5
-Putting Piece 0:5 by 2
-WBWBWB     
--BWBWB-    
--W----B-   
----------  
----------- 
------------
- ----------
-  ---------
-   --------
-    -------
-     ------
-
-I am making a move at 1, 0
-Putting Piece 1:0 by 1
-WBWBWB     
-WBWBWB-    
--W----B-   
 ---------  
 ---------- 
 -----------
@@ -214,9 +186,9 @@ WBWBWB-
 
 I am making a move at 1, 6
 Putting Piece 1:6 by 2
-WBWBWB     
-WBWBWBB    
--W----B-   
+BWBWBW     
+BWBWBWB    
+--------   
 ---------  
 ---------- 
 -----------
@@ -228,9 +200,23 @@ WBWBWBB
 
 I am making a move at 2, 0
 Putting Piece 2:0 by 1
-WBWBWB     
-WBWBWBB    
-WW----B-   
+BWBWBW     
+BWBWBWB    
+W-------   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 2, 1
+Putting Piece 2:1 by 2
+BWBWBW     
+BWBWBWB    
+WB------   
 ---------  
 ---------- 
 -----------
@@ -241,10 +227,10 @@ WW----B-
      ------
 
 I am making a move at 2, 2
-Putting Piece 2:2 by 2
-WBWBWB     
-WBWBWBB    
-WWB---B-   
+Putting Piece 2:2 by 1
+BWBWBW     
+BWBWBWB    
+WBW-----   
 ---------  
 ---------- 
 -----------
@@ -255,10 +241,10 @@ WWB---B-
      ------
 
 I am making a move at 2, 3
-Putting Piece 2:3 by 1
-WBWBWB     
-WBWBWBB    
-WWBW--B-   
+Putting Piece 2:3 by 2
+BWBWBW     
+BWBWBWB    
+WBWB----   
 ---------  
 ---------- 
 -----------
@@ -269,10 +255,10 @@ WWBW--B-
      ------
 
 I am making a move at 2, 4
-Putting Piece 2:4 by 2
-WBWBWB     
-WBWBWBB    
-WWBWB-B-   
+Putting Piece 2:4 by 1
+BWBWBW     
+BWBWBWB    
+WBWBW---   
 ---------  
 ---------- 
 -----------
@@ -283,10 +269,24 @@ WWBWB-B-
      ------
 
 I am making a move at 2, 5
-Putting Piece 2:5 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWB-   
+Putting Piece 2:5 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWB--   
+---------  
+---------- 
+-----------
+ ----------
+  ---------
+   --------
+    -------
+     ------
+
+I am making a move at 2, 6
+Putting Piece 2:6 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBW-   
 ---------  
 ---------- 
 -----------
@@ -298,9 +298,9 @@ WWBWBWB-
 
 I am making a move at 2, 7
 Putting Piece 2:7 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 ---------  
 ---------- 
 -----------
@@ -312,9 +312,9 @@ WWBWBWBB
 
 I am making a move at 3, 0
 Putting Piece 3:0 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 W--------  
 ---------- 
 -----------
@@ -326,9 +326,9 @@ W--------
 
 I am making a move at 3, 1
 Putting Piece 3:1 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WB-------  
 ---------- 
 -----------
@@ -340,9 +340,9 @@ WB-------
 
 I am making a move at 3, 2
 Putting Piece 3:2 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBW------  
 ---------- 
 -----------
@@ -354,9 +354,9 @@ WBW------
 
 I am making a move at 3, 3
 Putting Piece 3:3 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWB-----  
 ---------- 
 -----------
@@ -368,9 +368,9 @@ WBWB-----
 
 I am making a move at 3, 4
 Putting Piece 3:4 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBW----  
 ---------- 
 -----------
@@ -382,9 +382,9 @@ WBWBW----
 
 I am making a move at 3, 5
 Putting Piece 3:5 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWB---  
 ---------- 
 -----------
@@ -396,9 +396,9 @@ WBWBWB---
 
 I am making a move at 3, 6
 Putting Piece 3:6 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBW--  
 ---------- 
 -----------
@@ -410,9 +410,9 @@ WBWBWBW--
 
 I am making a move at 3, 7
 Putting Piece 3:7 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWB-  
 ---------- 
 -----------
@@ -424,9 +424,9 @@ WBWBWBWB-
 
 I am making a move at 3, 8
 Putting Piece 3:8 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 ---------- 
 -----------
@@ -438,9 +438,9 @@ WBWBWBWBW
 
 I am making a move at 4, 0
 Putting Piece 4:0 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 B--------- 
 -----------
@@ -452,9 +452,9 @@ B---------
 
 I am making a move at 4, 1
 Putting Piece 4:1 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BW-------- 
 -----------
@@ -466,9 +466,9 @@ BW--------
 
 I am making a move at 4, 2
 Putting Piece 4:2 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWB------- 
 -----------
@@ -480,9 +480,9 @@ BWB-------
 
 I am making a move at 4, 3
 Putting Piece 4:3 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBW------ 
 -----------
@@ -494,9 +494,9 @@ BWBW------
 
 I am making a move at 4, 4
 Putting Piece 4:4 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWB----- 
 -----------
@@ -508,9 +508,9 @@ BWBWB-----
 
 I am making a move at 4, 5
 Putting Piece 4:5 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBW---- 
 -----------
@@ -522,9 +522,9 @@ BWBWBW----
 
 I am making a move at 4, 6
 Putting Piece 4:6 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWB--- 
 -----------
@@ -536,9 +536,9 @@ BWBWBWB---
 
 I am making a move at 4, 7
 Putting Piece 4:7 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBW-- 
 -----------
@@ -550,9 +550,9 @@ BWBWBWBW--
 
 I am making a move at 4, 8
 Putting Piece 4:8 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWB- 
 -----------
@@ -564,9 +564,9 @@ BWBWBWBWB-
 
 I am making a move at 4, 9
 Putting Piece 4:9 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 -----------
@@ -578,9 +578,9 @@ BWBWBWBWBW
 
 I am making a move at 5, 0
 Putting Piece 5:0 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 B----------
@@ -592,9 +592,9 @@ B----------
 
 I am making a move at 5, 1
 Putting Piece 5:1 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BW---------
@@ -606,9 +606,9 @@ BW---------
 
 I am making a move at 5, 2
 Putting Piece 5:2 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWB--------
@@ -620,9 +620,9 @@ BWB--------
 
 I am making a move at 5, 3
 Putting Piece 5:3 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBW-------
@@ -634,9 +634,9 @@ BWBW-------
 
 I am making a move at 5, 4
 Putting Piece 5:4 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWB------
@@ -648,9 +648,9 @@ BWBWB------
 
 I am making a move at 5, 5
 Putting Piece 5:5 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBW-----
@@ -662,9 +662,9 @@ BWBWBW-----
 
 I am making a move at 5, 6
 Putting Piece 5:6 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWB----
@@ -676,9 +676,9 @@ BWBWBWB----
 
 I am making a move at 5, 7
 Putting Piece 5:7 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBW---
@@ -690,9 +690,9 @@ BWBWBWBW---
 
 I am making a move at 5, 8
 Putting Piece 5:8 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWB--
@@ -704,9 +704,9 @@ BWBWBWBWB--
 
 I am making a move at 5, 9
 Putting Piece 5:9 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBW-
@@ -718,9 +718,9 @@ BWBWBWBWBW-
 
 I am making a move at 5, 10
 Putting Piece 5:10 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -732,9 +732,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 1
 Putting Piece 6:1 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -746,9 +746,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 2
 Putting Piece 6:2 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -760,9 +760,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 3
 Putting Piece 6:3 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -774,9 +774,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 4
 Putting Piece 6:4 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -788,9 +788,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 5
 Putting Piece 6:5 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -802,9 +802,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 6
 Putting Piece 6:6 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -816,9 +816,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 7
 Putting Piece 6:7 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -830,9 +830,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 8
 Putting Piece 6:8 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -844,9 +844,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 9
 Putting Piece 6:9 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -858,9 +858,9 @@ BWBWBWBWBWB
 
 I am making a move at 6, 10
 Putting Piece 6:10 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -872,9 +872,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 2
 Putting Piece 7:2 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -886,9 +886,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 3
 Putting Piece 7:3 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -900,9 +900,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 4
 Putting Piece 7:4 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -914,9 +914,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 5
 Putting Piece 7:5 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -928,9 +928,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 6
 Putting Piece 7:6 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -942,9 +942,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 7
 Putting Piece 7:7 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -956,9 +956,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 8
 Putting Piece 7:8 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -970,9 +970,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 9
 Putting Piece 7:9 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -984,9 +984,9 @@ BWBWBWBWBWB
 
 I am making a move at 7, 10
 Putting Piece 7:10 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -998,9 +998,9 @@ BWBWBWBWBWB
 
 I am making a move at 8, 3
 Putting Piece 8:3 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -1012,9 +1012,9 @@ BWBWBWBWBWB
 
 I am making a move at 8, 4
 Putting Piece 8:4 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -1026,9 +1026,9 @@ BWBWBWBWBWB
 
 I am making a move at 8, 5
 Putting Piece 8:5 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -1040,9 +1040,9 @@ BWBWBWBWBWB
 
 I am making a move at 8, 6
 Putting Piece 8:6 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -1054,9 +1054,9 @@ BWBWBWBWBWB
 
 I am making a move at 8, 7
 Putting Piece 8:7 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
@@ -1066,132 +1066,258 @@ BWBWBWBWBWB
     -------
      ------
 
-I am making a move at 9, 5
-Putting Piece 9:5 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
-WBWBWBWBW  
-BWBWBWBWBW 
-BWBWBWBWBWB
- WBWBWBWBWB
-  WBWBWBWBW
-   BWBWB---
-    -W-----
-     ------
-
 I am making a move at 8, 8
-Putting Piece 8:8 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+Putting Piece 8:8 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBB--
-    -W-----
+   BWBWBW--
+    -------
      ------
 
 I am making a move at 8, 9
-Putting Piece 8:9 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+Putting Piece 8:9 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBW-
-    -W-----
+   BWBWBWB-
+    -------
      ------
 
 I am making a move at 8, 10
-Putting Piece 8:10 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+Putting Piece 8:10 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBWB
-    -W-----
+   BWBWBWBW
+    -------
      ------
 
 I am making a move at 9, 4
-Putting Piece 9:4 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+Putting Piece 9:4 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBWB
-    WW-----
+   BWBWBWBW
+    B------
+     ------
+
+I am making a move at 9, 5
+Putting Piece 9:5 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BW-----
      ------
 
 I am making a move at 9, 6
 Putting Piece 9:6 by 2
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBWB
-    WWB----
+   BWBWBWBW
+    BWB----
      ------
 
-I am making a move at 10, 6
-Putting Piece 10:6 by 1
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+I am making a move at 9, 7
+Putting Piece 9:7 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBWB
-    WWB----
-     -W----
+   BWBWBWBW
+    BWBW---
+     ------
+
+I am making a move at 9, 8
+Putting Piece 9:8 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWB--
+     ------
+
+I am making a move at 9, 9
+Putting Piece 9:9 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBW-
+     ------
+
+I am making a move at 9, 10
+Putting Piece 9:10 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     ------
+
+I am making a move at 10, 5
+Putting Piece 10:5 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     W-----
+
+I am making a move at 10, 6
+Putting Piece 10:6 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     WB----
+
+I am making a move at 10, 7
+Putting Piece 10:7 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     WBW---
+
+I am making a move at 10, 8
+Putting Piece 10:8 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     WBWB--
+
+I am making a move at 10, 9
+Putting Piece 10:9 by 1
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     WBWBW-
+
+I am making a move at 10, 10
+Putting Piece 10:10 by 2
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
+WBWBWBWBW  
+BWBWBWBWBW 
+BWBWBWBWBWB
+ WBWBWBWBWB
+  WBWBWBWBW
+   BWBWBWBW
+    BWBWBWB
+     WBWBWB
 
 --------------------------------------
 P2 Board is :
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBWB
-    WWB----
-     -W----
+   BWBWBWBW
+    BWBWBWB
+     WBWBWB
 
 P1 Board is :
-WBWBWB     
-WBWBWBB    
-WWBWBWBB   
+BWBWBW     
+BWBWBWB    
+WBWBWBWB   
 WBWBWBWBW  
 BWBWBWBWBW 
 BWBWBWBWBWB
  WBWBWBWBWB
   WBWBWBWBW
-   BWBWBBWB
-    WWB----
-     -W----
+   BWBWBWBW
+    BWBWBWB
+     WBWBWB
 
-Player one (White) indicate winner as: 1
-Player two (Black) indicate winner as: 1
-Total Number of Moves Played in the Game: 83
+Player one (White) indicate winner as: 0
+Player two (Black) indicate winner as: 0
+Total Number of Moves Played in the Game: 92
 Referee Finished !

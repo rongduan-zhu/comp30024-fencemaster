@@ -173,7 +173,6 @@ public class Mlobanov implements Player, Piece {
 		 * a real board. */
 		bestCell = new Cell(0, 0);
 
-		
 		setDepthToSearch(2);
 		
 		/* Begin minimax search with every empty position on the board
@@ -202,14 +201,13 @@ public class Mlobanov implements Player, Piece {
 				} else {
 					/* Early game we only need to search to 2 levels deep */
 					setDepthToSearch(1);
-					
 				}
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
 				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -310,7 +308,8 @@ public class Mlobanov implements Player, Piece {
 						continue;
 					}
 					/* Recurse and find the value of the node. */
-					value = minimaxValue(oneCell, nextSearchColour, depth - 1, newAlpha, newBeta);
+					value = minimaxValue(oneCell, nextSearchColour, depth - 1, 
+										newAlpha, newBeta);
 
 					/* Alpha beta pruning. */
 					if (value < newBeta) {
@@ -363,7 +362,7 @@ public class Mlobanov implements Player, Piece {
 
 		int totalHeuristicValue;
 		String myColour =  pieceColourToCellColour(getColour());
-		String theirColour = pieceColourToCellColour(getOpponentColour());
+		String theirColour =  pieceColourToCellColour(getOpponentColour());
 
 		float min, distTotal;
 		distTotal = 0;
@@ -394,7 +393,7 @@ public class Mlobanov implements Player, Piece {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				min = 1000;
 				if (gameBoard.isValidPosition(i, j) &&
-					gameBoard.get(i, j).equals(colour)) {
+					gameBoard.get(i, j).equals(myColour)) {
 
 					for (int k = 0; k < edgeList.size(); ++k) {
 						float dist = (Math.abs(i - edgeList.get(k).get(0)) +
@@ -439,10 +438,14 @@ public class Mlobanov implements Player, Piece {
 			criticalFeature = (short) (criticalPoints * criticalPointBonus);
 		}
 
-		totalHeuristicValue = neighbourCount * neighbourBonus
+		/*totalHeuristicValue = neighbourCount * neighbourBonus
 				+ secondaryConnectionCount * secondaryNeighbourBonus
 				- distBonus * (int) distTotal
-				+ criticalFeature;
+				+ criticalFeature; */
+		
+		totalHeuristicValue = neighbourCount * neighbourBonus
+		+ secondaryConnectionCount * secondaryNeighbourBonus
+		- distBonus * (int) distTotal;
 
 		if (totalHeuristicValue > getWinvalue()) {
 			totalHeuristicValue = getWinvalue() - 1;
