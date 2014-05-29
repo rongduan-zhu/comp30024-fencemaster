@@ -1,4 +1,4 @@
-* Search Strategy:
+* General:
 
 From playing the game, we have found that tripods are the strongest way to
 win. This is because in the formation of a tripod, you can place pieces on
@@ -12,7 +12,7 @@ For our searching algorithm we use Minimax Search with Alpha Beta pruning.
 
 We use a combination of heuristics in order to make up our evaluation 
 function as detailed below. This allows us to determine the best possible
-move.
+move. Our creative techniques are also detailed below.
 
 
 * Evaluation Function:
@@ -35,7 +35,9 @@ When a piece is placed next to a piece of the same colour we assign a value
 of 2 for this. This is because connecting to your own pieces is required
 to form loops and tripods and hence is a favourable move.
 
-Secondly, if a piece is placed at distance = 2 (including the piece) away,
+- Secondary Connections:
+
+If a piece is placed at distance = 2 (including the piece) away,
 in a certain configuration, we give this a value of 1. The specific
 configuration we look for is a diamond shape with the two pieces at the
 top at bottom (vertical diamond) or left and right (horizontal diamond).
@@ -67,7 +69,10 @@ high value positions at the start of the game in order to set up a strong
 infrastructure. Later on, these positions may become less valuable depending
 on the board state.
 
-* Creative Techniques:
+
+
+
+* Strategy & Creative Techniques:
 
 Initially our player could not calculate moves fast enough. 
 We had to make some optimisations in order to speed up our player. 
@@ -80,4 +85,23 @@ To counteract this, we assume that for the before the first X moves
 (x=9 for board size 3 and x=11 otherwise) there cannot possibly be a win,
 so we do not check for a winner in these states. 
 Secondly, if a move is made in minimax that does not connect to a piece of
- the same colour, getWinner() is not called as it can't be a winning move.
+the same colour, getWinner() is not called as it can't be a winning move.
+
+Depth limit of the minimax search was also a big factor in the running time
+of our player. As a result, we dynamically adjust the depth to search 
+depending on how many possible moves there are to search. We had planned
+to also limit the cells that we search to only the cells nearby each players
+cells allowing us to limit to number of cells however we ran out of time
+to implement this.
+
+For our valuable cells heuristic, we had also planned to give additional
+value to corner cells of this smaller board outline (of valuable cells)
+as when you take one of these cells, you are distance=1 of two edges, a very
+valuable position, however we ran out of time.
+
+For swapping, we evaluate the position of whether the position of the
+piece that the other player took is valuable using minimax. It is almost
+always favourable to swap as going first leads to a large advantage. In our
+play tests we found that if the first player always played perfectly, the 
+worst outcome for them was a draw. As a result, we made sure to emphasize
+the use of swapping.
