@@ -341,7 +341,7 @@ public class Mlobanov implements Player, Piece {
 		int value = 0,
 			onEdgeBonus = 2,
 			counter = 0;
-		int neighbourBonus = 3,
+		int neighbourBonus = 1,
 			secondaryNeighbourBonus = 1,
 			distBonus = 5;
 		int neighbourCount = 0,
@@ -377,7 +377,7 @@ public class Mlobanov implements Player, Piece {
 							if (gameBoard.isEdgeNode(i, j) &&
 								whichEdge[gameBoard.whichEdge(i, j)] > 0) {
 
-								dist = 2;
+								dist = 0f;
 
 							}
 							min = dist;
