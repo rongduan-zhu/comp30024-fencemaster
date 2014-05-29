@@ -207,7 +207,7 @@ public class Mlobanov implements Player, Piece {
 
 				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+//				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -428,6 +428,43 @@ public class Mlobanov implements Player, Piece {
 											Board.ALL_NEIGHBOURS).size();
 
 					secondaryConnectionCount += gameBoard
+								.getSecondaryConnection(moveRef.getRow(),
+											moveRef.getCol(), myColour).size();
+				} else if (gameBoard.isValidPosition(i, j) &&
+					gameBoard.get(i, j).equals(theirColour)) {
+
+					for (int k = 0; k < edgeList.size(); ++k) {
+						float dist = (Math.abs(i - edgeList.get(k).get(0)) +
+						            Math.abs(j - edgeList.get(k).get(1)) +
+						            Math.abs( (i - j) -
+						            (edgeList.get(k).get(0) -
+						            edgeList.get(k).get(1)) )
+						            ) / 2.0f;
+
+						if (dist < min) {
+							/* if there is a node on the same edge,
+							 * don't give it a high score */
+							if (gameBoard.isEdgeNode(i, j)) {
+								if (whichEdge[gameBoard.whichEdge(i, j)] > 0)
+									dist = 0;
+								else
+									dist = -1;
+							}
+							min = dist;
+						}
+					}
+					distTotal -= min;
+
+					/* if there is a node in list on a particular edge, don't
+					 * give bonus to any other node on the same edge */
+					if (gameBoard.isEdgeNode(i, j)) {
+						whichEdge[gameBoard.whichEdge(i, j)] = 1;
+					}
+
+					neighbourCount -= gameBoard.getNeighbours(i, j,
+											Board.ALL_NEIGHBOURS).size();
+
+					secondaryConnectionCount -= gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
 											moveRef.getCol(), myColour).size();
 				}
