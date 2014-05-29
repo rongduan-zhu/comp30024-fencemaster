@@ -6,6 +6,12 @@ import java.util.Scanner;
 
 import aiproj.fencemaster.Piece;
 
+/**
+ *
+ * @author Maxim Lobanov (mlobanov) and Rongduan Zhu (rz)
+ *
+ */
+
 public class Test {
 
 	public static void main(String[] args) {
