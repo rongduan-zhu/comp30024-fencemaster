@@ -64,14 +64,14 @@ public class Mlobanov implements Player, Piece {
 	 *  Return 0 for successful initialization and -1 for failed one.
 	 */
 	public int init(int n, int p) {
-		// initialise player colour
+		/* Initialise player and opponent */
 		setColour(p);
 		if (p == Piece.BLACK) {
 			setOpponentColour(Piece.WHITE);
 		} else {
 			setOpponentColour(Piece.BLACK);
 		}
-		// initialise the board
+		/* Initialise the board */
 		System.out.println("I have been initialised. My colour is " + p + " and my opponent is " + getOpponentColour());
 		gameBoard = new Board(n);
 		
@@ -183,13 +183,18 @@ public class Mlobanov implements Player, Piece {
 		Move nextMove;
 		int value;
 		int maxValue = Integer.MIN_VALUE;
+		int cellsSearched, cellsLeft;
 		Cell oneCell, bestCell;
 		/* Defining best cell to prevent possible uninitialised variable
 		 * error. Value doesn't matter as value will always be changed on
 		 * a real board. */
 		bestCell = new Cell(0, 0);
 
-		/* Begin negamax search with every empty position on the board
+		/* Estimate number of cells that will be searched with current board size */
+		cellsLeft = gameBoard.getTotalNumCells() - gameBoard.getOccupiedCells();
+		cellsSearched = (int)Math.pow((double)cellsLeft, (double)getDepthToSearch());
+		
+		/* Begin minimax search with every empty position on the board
 		 * as the root node. */
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
@@ -204,7 +209,7 @@ public class Mlobanov implements Player, Piece {
 
 				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -214,7 +219,6 @@ public class Mlobanov implements Player, Piece {
 			}
 		}
 
-		System.out.println(maxValue);
 		nextMove = new Move(getColour(), false, bestCell.getRow(),
 							bestCell.getCol());
 		return nextMove;
@@ -348,7 +352,7 @@ public class Mlobanov implements Player, Piece {
 			secondaryConnectionCount = 0;
 
 		int totalHeuristicValue;
-		String colour =  pieceColourToCellColour(getColour());
+		String cellColour =  pieceColourToCellColour(getColour());
 
 		float min, distTotal;
 		distTotal = 0;
@@ -358,6 +362,7 @@ public class Mlobanov implements Player, Piece {
 		ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
 		// list of nodes on the star path
 		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getClosestEdgeNodes();
+		System.out.println(closeToEdgeList);
 		
 		// if we want to get maximum of 4 critical points, maximum moves
 		// needed is 8
@@ -365,7 +370,7 @@ public class Mlobanov implements Player, Piece {
 			for (int i = 0; i < closeToEdgeList.size(); ++i) {
 				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
 				if (gameBoard.get(closePoint.get(0), 
-						closePoint.get(1)).equals(colour)) {
+						closePoint.get(1)).equals(cellColour)) {
 					return criticalPointBonus; 
 				}
 			}
