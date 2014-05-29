@@ -325,9 +325,9 @@ public class Mlobanov implements Player, Piece {
 			return 0;
 		}
 		
-		short neighbourBonus = 2,
-			secondaryNeighbourBonus = 1,
-			distBonus = 6,
+		short neighbourBonus = 3,
+			secondaryNeighbourBonus = 2,
+			distBonus = 2,
 			criticalPoints = 0,
 			criticalPointBonus = 20,
 			criticalFeature = 0;
