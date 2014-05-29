@@ -21,25 +21,6 @@ import aiproj.fencemaster.*;
  * 7 - creativity of solution
  */
 
-/* COMMENTS FILE:
- *  Describe approach taken in your solution in terms of:
- *  a) your search strategy
- *  b) your evaluation function
- *  c) any creative techniques you have applied such as how you optimised your search strategy or used machine learning
- */
-
-/* STRATEGY:
- *
- * Create a frame and then connect it to win while blocking opponent loop/high value positions
- *
- *
- * Evaluation Function? = w1f1(s) + w2f2(s) etc where w1 = weight and f1(s) = feature function e.g. number of white queens - black queens
- * 		Higher value to positions near stones of your own colour
- * 			Highest bonus for direct neighbour
- * 			Second highest for a stone that forms a virtual connection (can connect to it no matter what)
- * 			Third highest for stone that is 2 stones away from another one of your stones
- */
-
 /* TO DO:
  * Need some way to determine if you can win with the next move
  */
@@ -356,10 +337,14 @@ public class Mlobanov implements Player, Piece {
 	 */
 	public int minimaxEvaluateBoard(int getWinnerResult) {
 		if (getWinnerResult == getColour()) {
+			/* Win */
 			return getWinvalue();
-		}
-		if (getWinnerResult == getOpponentColour()) {
+		} else if (getWinnerResult == getOpponentColour()) {
+			/* Loss */
 			return getLossvalue();
+		} else {
+			/* Draw */
+			return 0;
 		}
 
 		short value = 0,
