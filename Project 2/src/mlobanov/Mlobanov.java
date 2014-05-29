@@ -430,6 +430,7 @@ public class Mlobanov implements Player, Piece {
 					secondaryConnectionCount += gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
 											moveRef.getCol(), myColour).size();
+					
 				} else if (gameBoard.isValidPosition(i, j) &&
 					gameBoard.get(i, j).equals(theirColour)) {
 
