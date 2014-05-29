@@ -53,7 +53,7 @@ public class Mlobanov implements Player, Piece {
 	private int lowestMovesForTerminalState;
 	private static final int WINVALUE = 1000,
 							 LOSSVALUE = -1000;
-			
+
 
 
 	/* Constructor(You can delete this line) */
@@ -212,15 +212,16 @@ public class Mlobanov implements Player, Piece {
 				}
 			}
 		}
-		
-		nextMove = new Move(getColour(), false, bestCell.getRow(), 
+
+		System.out.println(maxValue);
+		nextMove = new Move(getColour(), false, bestCell.getRow(),
 							bestCell.getCol());
 		return nextMove;
 	}
 
 
 
-	public int minimaxValue(Cell moveCell, int searchColour, int depth, 
+	public int minimaxValue(Cell moveCell, int searchColour, int depth,
 							int alpha, int beta) {
 
 		int value, getWinnerResult, neighbours;
@@ -235,9 +236,9 @@ public class Mlobanov implements Player, Piece {
 
 		/* Check if board is in terminal state or at depth limit for
 		 * searching. */
-		neighbours = gameBoard.getNeighbours(moveCell.getRow(), 
+		neighbours = gameBoard.getNeighbours(moveCell.getRow(),
 							moveCell.getCol(), Board.ALL_NEIGHBOURS).size();
-		
+
 		if (neighbours == 0) {
 			getWinnerResult = -1;
 		} else {
@@ -266,7 +267,7 @@ public class Mlobanov implements Player, Piece {
 
 		if (nextSearchColour == getColour()) {
 			for (int i = 0; i < gameBoard.getNumRows(); ++i) {
-				
+
 				for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 
 					/* Ensure cell is valid and not taken */
@@ -345,68 +346,66 @@ public class Mlobanov implements Player, Piece {
 			distBonus = 5;
 		int neighbourCount = 0,
 			secondaryConnectionCount = 0;
-		
+
 		int totalHeuristicValue;
 		String colour =  pieceColourToCellColour(getColour());
-		
+
 		float min, distTotal;
 		distTotal = 0;
-		
+
 		short whichEdge[] = {0, 0, 0, 0, 0, 0};
+		// get closest neighbours
+		ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
 
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				min = 1000;
-				if (gameBoard.isValidPosition(i, j) && 
+				if (gameBoard.isValidPosition(i, j) &&
 					gameBoard.get(i, j).equals(colour)) {
 
-					// get closest neighbours
-					ArrayList<ArrayList<Integer> > edgeList = gameBoard
-															.getEdgeNodes();
-					
 					for (int k = 0; k < edgeList.size(); ++k) {
 						float dist = (Math.abs(i - edgeList.get(k).get(0)) +
 						            Math.abs(j - edgeList.get(k).get(1)) +
-						            Math.abs( (i - j) - 
-						            (edgeList.get(k).get(0) - 
+						            Math.abs( (i - j) -
+						            (edgeList.get(k).get(0) -
 						            edgeList.get(k).get(1)) )
 						            ) / 2.0f;
-						
+
 						if (dist < min) {
-							/* if there is a node on the same edge, 
+							/* if there is a node on the same edge,
 							 * don't give it a high score */
-							if (gameBoard.isEdgeNode(i, j) && 
+							if (gameBoard.isEdgeNode(i, j) &&
 								whichEdge[gameBoard.whichEdge(i, j)] > 0) {
-								
+
 								dist = 2;
-							} else {
-								min = dist;
+
 							}
+							min = dist;
 						}
 					}
 					++counter;
 					distTotal += min;
-					
-					/* if there is a node in list on a particular edge, don't 
+
+					/* if there is a node in list on a particular edge, don't
 					 * give bonus to any other node on the same edge */
 					if (gameBoard.isEdgeNode(i, j)) {
 						whichEdge[gameBoard.whichEdge(i, j)] = 1;
 					}
-				
-					neighbourCount += gameBoard.getNeighbours(i, j, 
+
+					neighbourCount += gameBoard.getNeighbours(i, j,
 											Board.ALL_NEIGHBOURS).size();
-					
+
 					secondaryConnectionCount += gameBoard
-								.getSecondaryConnection(moveRef.getRow(), 
+								.getSecondaryConnection(moveRef.getRow(),
 											moveRef.getCol(), colour).size();
 				}
 			}
 		}
-		
+
 		totalHeuristicValue = neighbourCount * neighbourBonus
 				+ neighbourCount * secondaryNeighbourBonus
 				- distBonus * (int) distTotal;
-		
+
 		if (totalHeuristicValue > getWinvalue()) {
 			totalHeuristicValue = getWinvalue() - 1;
 		} else if (totalHeuristicValue < getLossvalue()) {
@@ -416,7 +415,7 @@ public class Mlobanov implements Player, Piece {
 		//distInverse / counter to normalize the dist average with number of stones you have
 		return totalHeuristicValue;
 	}
-	
+
 	/**
 	 * Gets opposite colour to the input piece
 	 * @param pieceColour - input piece colour
@@ -431,7 +430,7 @@ public class Mlobanov implements Player, Piece {
 		}
 	}
 
-	/* Function called by referee to inform the player about the opponent's 
+	/* Function called by referee to inform the player about the opponent's
 	 * move
 	 *  Return -1 if the move is illegal otherwise return 0
 	 */
@@ -450,7 +449,7 @@ public class Mlobanov implements Player, Piece {
 		if (!cellContent.equals(Cell.EMPTY) && !cellContent
 											.equals(Cell.INVALID)) {
 
-			/* Check if the content is our own cell colour 
+			/* Check if the content is our own cell colour
 		     * (in the case of a swap) */
 			if (cellContent.equals(pieceColourToCellColour(getColour()))) {
 				if (getMoveCount() == 2 && m.IsSwap){
@@ -511,7 +510,7 @@ public class Mlobanov implements Player, Piece {
 	/**
 	 * Determines winner from array of results from tripod search/loop search
 	 * @param result - Array format [Black win?, White win?]
-	 * @return The winner in a format used for getWinner() 
+	 * @return The winner in a format used for getWinner()
 	 */
 	private int whoWon(ArrayList<Boolean> result) {
 		if (result.get(0)) {
@@ -523,7 +522,7 @@ public class Mlobanov implements Player, Piece {
 		return -1;
 	}
 
-	/* Function called by referee to get the board configuration in 
+	/* Function called by referee to get the board configuration in
 	 * String format from player
 	 */
 	public void printBoard(PrintStream output) {
