@@ -207,7 +207,7 @@ public class Mlobanov implements Player, Piece {
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
-				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = minimaxValue(oneCell, getColour(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -347,7 +347,8 @@ public class Mlobanov implements Player, Piece {
 		int neighbourBonus = 2,
 			secondaryNeighbourBonus = 1,
 			distBonus = 6,
-			criticalPointBonus = 500;
+			criticalPoints = 0,
+			criticalPointBonus = 20;
 		int neighbourCount = 0,
 			secondaryConnectionCount = 0;
 
@@ -361,18 +362,20 @@ public class Mlobanov implements Player, Piece {
 		// get closest neighbours
 		ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
 		// list of nodes on the star path
-		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getClosestEdgeNodes();
-		System.out.println(closeToEdgeList);
+		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getImportantNodes();
 		
 		// if we want to get maximum of 4 critical points, maximum moves
 		// needed is 8
 		if (gameBoard.getOccupiedCells() <= 7) {
 			for (int i = 0; i < closeToEdgeList.size(); ++i) {
 				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
-				if (gameBoard.get(closePoint.get(0), 
-						closePoint.get(1)).equals(cellColour)) {
-					return criticalPointBonus; 
+				if (gameBoard.get(closePoint.get(0), closePoint.get(1)).equals(cellColour)) {
+					
+					criticalPoints++; 
 				}
+			}
+			if (criticalPoints > 0) {
+				return criticalPointBonus * criticalPoints;
 			}
 		}
 
@@ -416,7 +419,7 @@ public class Mlobanov implements Player, Piece {
 
 					secondaryConnectionCount += gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
-											moveRef.getCol(), colour).size();
+											moveRef.getCol(), cellColour).size();
 				}
 			}
 		}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Maxim Lobanov (mlobanov) & Rongduan Zhu (rz)
+ * @author Maxim Lobanov (mlobanov) and Rongduan Zhu (rz)
  *
  */
 
@@ -28,7 +28,7 @@ public class Board {
 	private ArrayList<ArrayList<Integer> > edgeNodes
 		= new ArrayList<ArrayList<Integer> >();
 	/** Stores all nodes on path closest to all edges */
-	private ArrayList<ArrayList<Integer> > closestEdgeNodes
+	private ArrayList<ArrayList<Integer> > importantNodes
 		= new ArrayList<ArrayList<Integer> >();
 	/**
 	 * Board constructor, makes a board with all Cells initialized to empty
@@ -55,8 +55,8 @@ public class Board {
 					edgeNodes.add(new ArrayList<Integer>(
 					              Arrays.asList(i, j)));
 				}
-				if (isClosestEdgeNode(i, j)) {
-					closestEdgeNodes.add(new ArrayList<Integer>(
+				if (isImportantNode(i, j)) {
+					importantNodes.add(new ArrayList<Integer>(
 					                     Arrays.asList(i, j)));
 				}
 			}
@@ -402,7 +402,7 @@ public class Board {
 	 * @param column, column index, 0 based
 	 * @return true if (row, column) is on an edge but not corner
 	 */
-	public boolean isClosestEdgeNode(int row, int column) {
+	public boolean isImportantNode(int row, int column) {
 		if (!isValidPosition(row, column)) {
 			return false;
 		}
@@ -560,7 +560,7 @@ public class Board {
 		return edgeNodes;
 	}
 
-	public ArrayList<ArrayList<Integer>> getClosestEdgeNodes() {
-		return closestEdgeNodes;
+	public ArrayList<ArrayList<Integer>> getImportantNodes() {
+		return importantNodes;
 	}
 }
