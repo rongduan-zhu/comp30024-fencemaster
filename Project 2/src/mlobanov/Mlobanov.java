@@ -357,11 +357,11 @@ public class Mlobanov implements Player, Piece {
 				if (gameBoard.get(closePoint.get(0), 
 						closePoint.get(1)).equals(myColour)) {
 					
-					criticalPoints++; 
+					++criticalPoints; 
 				} else if (gameBoard.get(closePoint.get(0),
 							closePoint.get(1)).equals(theirColour)) {
 					
-					criticalPoints--;
+					--criticalPoints;
 				}
 			}
 		}
