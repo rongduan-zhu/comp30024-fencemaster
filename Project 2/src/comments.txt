@@ -18,6 +18,8 @@ move. Our creative techniques are also detailed below.
 * Evaluation Function:
 
 We use several heuristics in combination for our evaluation function.
+These are all weighted accordingly from our test results to provide the best
+estimation of which move to make.
 
 Firstly, we assign the values of +1000 and -1000 to a winning state and a 
 losing state respectively. For a draw, we assign the value of 0. If the 
