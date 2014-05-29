@@ -52,8 +52,9 @@ public class Mlobanov implements Player, Piece {
 	private Cell moveRef;
 	private int depthToSearch;
 	private int lowestMovesForTerminalState;
-	private static final int WINVALUE = 1000,
+	private final int WINVALUE = 1000,
 							 LOSSVALUE = -1000;
+	private int CELL_CUTOFF = 4700; 
 
 	/* Constructor(You can delete this line) */
 	public Mlobanov() {
@@ -183,16 +184,16 @@ public class Mlobanov implements Player, Piece {
 		Move nextMove;
 		int value;
 		int maxValue = Integer.MIN_VALUE;
-		int cellsSearched, cellsLeft;
+		int cellsToSearchTotal, cellsLeft;
+		boolean limit = false;
 		Cell oneCell, bestCell;
 		/* Defining best cell to prevent possible uninitialised variable
 		 * error. Value doesn't matter as value will always be changed on
 		 * a real board. */
 		bestCell = new Cell(0, 0);
 
-		/* Estimate number of cells that will be searched with current board size */
-		cellsLeft = gameBoard.getTotalNumCells() - gameBoard.getOccupiedCells();
-		cellsSearched = (int)Math.pow((double)cellsLeft, (double)getDepthToSearch());
+		
+		setDepthToSearch(2);
 		
 		/* Begin minimax search with every empty position on the board
 		 * as the root node. */
@@ -204,12 +205,30 @@ public class Mlobanov implements Player, Piece {
 				if (oneCell == null || oneCell.taken()) {
 					continue;
 				}
+				
+				/* Estimate number of cells that will be searched with current board size */
+				cellsLeft = gameBoard.getTotalNumCells() - gameBoard.getOccupiedCells();
+				cellsToSearchTotal = (int)Math.pow((double)cellsLeft, (double)(getDepthToSearch()+1));
+				
+				/* We are going to have to call getWinner in minimaxValue,
+				 * so dynamically set how far down we search to prevent timeout.
+				 */				
+				if (gameBoard.getOccupiedCells() >= 4) {
+					while(cellsToSearchTotal > CELL_CUTOFF) {
+						setDepthToSearch(getDepthToSearch() - 1);
+						cellsToSearchTotal = (int)Math.pow((double)cellsLeft, (double)(getDepthToSearch()+1));
+					}
+				} else {
+					/* Early game we only need to search to 2 levels deep */
+					setDepthToSearch(1);
+					
+				}
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
-				value = minimaxValue(oneCell, getColour(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-				System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
+				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
 				/* Save the cell with the highest value. */
 				if (value > maxValue) {
@@ -239,8 +258,8 @@ public class Mlobanov implements Player, Piece {
 
 		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
 
-		/* Check if board is in terminal state or at depth limit for
-		 * searching. */
+		/* See if the piece was placed next to another piece of the same
+		 * colour. If not, don't have to check for winner */
 		neighbours = gameBoard.getNeighbours(moveCell.getRow(),
 							moveCell.getCol(), Board.ALL_NEIGHBOURS).size();
 
@@ -249,6 +268,8 @@ public class Mlobanov implements Player, Piece {
 		} else {
 			getWinnerResult = getWinner();
 		}
+		/* Check if board is in terminal state or at depth limit for
+		 * searching. */
 		if ((getWinnerResult >= 0) || (depth == 0)) {
 
 			/* Evaluate move. */
@@ -341,21 +362,23 @@ public class Mlobanov implements Player, Piece {
 			return getLossvalue();
 		}
 
-		int value = 0,
+		short value = 0,
 			onEdgeBonus = 2,
 			counter = 0;
 		
-		int neighbourBonus = 2,
+		short neighbourBonus = 2,
 			secondaryNeighbourBonus = 1,
 			distBonus = 6,
 			criticalPoints = 0,
-			criticalPointBonus = 20;
+			criticalPointBonus = 20,
+			criticalFeature = 0;
 		
-		int neighbourCount = 0,
+		short neighbourCount = 0,
 			secondaryConnectionCount = 0;
 
 		int totalHeuristicValue;
-		String cellColour =  pieceColourToCellColour(getColour());
+		String myColour =  pieceColourToCellColour(getColour());
+		String theirColour = pieceColourToCellColour(getOpponentColour());
 
 		float min, distTotal;
 		distTotal = 0;
@@ -366,19 +389,19 @@ public class Mlobanov implements Player, Piece {
 		// list of nodes on the star path
 		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getImportantNodes();
 		
-		// if we want to get maximum of 4 critical points, maximum moves
-		// needed is 8
+		/* Check if cells have been placed on important parts of board */
 		if (gameBoard.getOccupiedCells() <= 7) {
 			for (int i = 0; i < closeToEdgeList.size(); ++i) {
 				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
 				if (gameBoard.get(closePoint.get(0), 
-						closePoint.get(1)).equals(cellColour)) {
+						closePoint.get(1)).equals(myColour)) {
 					
 					criticalPoints++; 
+				} else if (gameBoard.get(closePoint.get(0),
+							closePoint.get(1)).equals(theirColour)) {
+					
+					criticalPoints--;
 				}
-			}
-			if (criticalPoints > 0) {
-				return criticalPointBonus * criticalPoints;
 			}
 		}
 
@@ -422,14 +445,19 @@ public class Mlobanov implements Player, Piece {
 
 					secondaryConnectionCount += gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
-											moveRef.getCol(), cellColour).size();
+											moveRef.getCol(), myColour).size();
 				}
 			}
 		}
+		
+		if (criticalPoints != 0) {
+			criticalFeature = (short) (criticalPoints * criticalPointBonus);
+		}
 
 		totalHeuristicValue = neighbourCount * neighbourBonus
-				+ neighbourCount * secondaryNeighbourBonus
-				- distBonus * (int) distTotal;
+				+ secondaryConnectionCount * secondaryNeighbourBonus
+				- distBonus * (int) distTotal
+				+ criticalFeature;
 
 		if (totalHeuristicValue > getWinvalue()) {
 			totalHeuristicValue = getWinvalue() - 1;
@@ -613,11 +641,11 @@ public class Mlobanov implements Player, Piece {
 		return lowestMovesForTerminalState;
 	}
 
-	public static int getWinvalue() {
+	public int getWinvalue() {
 		return WINVALUE;
 	}
 
-	public static int getLossvalue() {
+	public int getLossvalue() {
 		return LOSSVALUE;
 	}
 
