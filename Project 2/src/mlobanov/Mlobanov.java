@@ -361,10 +361,6 @@ public class Mlobanov implements Player, Piece {
 		if (getWinnerResult == getOpponentColour()) {
 			return getLossvalue();
 		}
-
-		short value = 0,
-			onEdgeBonus = 2,
-			counter = 0;
 		
 		short neighbourBonus = 2,
 			secondaryNeighbourBonus = 1,
@@ -389,8 +385,9 @@ public class Mlobanov implements Player, Piece {
 		// list of nodes on the star path
 		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getImportantNodes();
 		
-		/* Check if cells have been placed on important parts of board */
 		if (gameBoard.getOccupiedCells() <= 7) {
+			/* Check if cells have been placed on important parts of board 
+			 * if not, if its our cell, add to counter, else decrement counter*/
 			for (int i = 0; i < closeToEdgeList.size(); ++i) {
 				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
 				if (gameBoard.get(closePoint.get(0), 
@@ -405,6 +402,10 @@ public class Mlobanov implements Player, Piece {
 			}
 		}
 
+		/* iterate through whole board, checking for:
+		 * 	1. average distance all cells from the same player to the edge
+		 *  2. calculate total number of neighbours per piece
+		 *  3. calculate total number of secondary connections per piece */
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 				min = 1000;
@@ -431,7 +432,6 @@ public class Mlobanov implements Player, Piece {
 							min = dist;
 						}
 					}
-					++counter;
 					distTotal += min;
 
 					/* if there is a node in list on a particular edge, don't
