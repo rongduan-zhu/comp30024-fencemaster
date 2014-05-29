@@ -371,7 +371,6 @@ public class Mlobanov implements Player, Piece {
 						            edgeList.get(k).get(1)) )
 						            ) / 2.0f;
 
-						System.out.println(dist);
 						if (dist < min) {
 							/* if there is a node on the same edge,
 							 * don't give it a high score */
