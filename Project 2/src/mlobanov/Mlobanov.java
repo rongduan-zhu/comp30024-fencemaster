@@ -344,11 +344,13 @@ public class Mlobanov implements Player, Piece {
 		int value = 0,
 			onEdgeBonus = 2,
 			counter = 0;
+		
 		int neighbourBonus = 2,
 			secondaryNeighbourBonus = 1,
 			distBonus = 6,
 			criticalPoints = 0,
 			criticalPointBonus = 20;
+		
 		int neighbourCount = 0,
 			secondaryConnectionCount = 0;
 
@@ -369,7 +371,8 @@ public class Mlobanov implements Player, Piece {
 		if (gameBoard.getOccupiedCells() <= 7) {
 			for (int i = 0; i < closeToEdgeList.size(); ++i) {
 				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
-				if (gameBoard.get(closePoint.get(0), closePoint.get(1)).equals(cellColour)) {
+				if (gameBoard.get(closePoint.get(0), 
+						closePoint.get(1)).equals(cellColour)) {
 					
 					criticalPoints++; 
 				}
