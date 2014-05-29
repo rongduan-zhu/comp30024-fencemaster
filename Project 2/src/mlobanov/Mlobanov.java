@@ -243,7 +243,7 @@ public class Mlobanov implements Player, Piece {
 
 	public int minimaxValue(Cell moveCell, int searchColour, int depth, int alpha, int beta, short neighbourCounter, short secondaryCounter) {
 
-		int value, getWinnerResult;
+		int value, getWinnerResult, neighbours;
 
 		/* Make a temporary move in order to detect a terminal state later,
 		 * if it exists */
@@ -253,7 +253,14 @@ public class Mlobanov implements Player, Piece {
 
 		/* Check if board is in terminal state or at depth limit for
 		 * searching. */
-		getWinnerResult = getWinner();
+		neighbours = gameBoard.getNeighbours(moveCell.getRow(), 
+							moveCell.getCol(), Board.ALL_NEIGHBOURS).size();
+		
+		if (neighbours == 0) {
+			getWinnerResult = -1;
+		} else {
+			getWinnerResult = getWinner();
+		}
 		if ((getWinnerResult >= 0) || (depth == 0)) {
 
 			/* Evaluate move. */
