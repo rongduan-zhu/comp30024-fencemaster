@@ -118,7 +118,6 @@ public class Mlobanov implements Player, Piece {
 
 		gameBoard.getCell(newMove.Row, newMove.Col).setContent(self_colour);
 		gameBoard.setOccupiedCells(gameBoard.getOccupiedCells() + 1);
-		System.out.println("I am making a move at " + newMove.Row + ", " + newMove.Col);
 		return newMove;
 	}
 
