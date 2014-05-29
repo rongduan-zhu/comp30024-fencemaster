@@ -234,6 +234,7 @@ public class Mlobanov implements Player, Piece {
 			}
 		}
 
+		System.out.println(maxValue);
 		nextMove = new Move(getColour(), false, bestCell.getRow(), bestCell.getCol());
 		return nextMove;
 	}
@@ -376,13 +377,13 @@ public class Mlobanov implements Player, Piece {
 			  distTotal = 0;
 		
 		short whichEdge[] = {0, 0, 0, 0, 0, 0};
+		ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
 
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
-				min = 1000;
 				if (gameBoard.isValidPosition(i, j) && gameBoard.get(i, j).equals(colour)) {
+					min = 1000;
 					// get closest neighbours
-					ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
 					for (int k = 0; k < edgeList.size(); ++k) {
 						float dist = (Math.abs(i - edgeList.get(k).get(0)) +
 						            Math.abs(j - edgeList.get(k).get(1)) +
@@ -392,9 +393,9 @@ public class Mlobanov implements Player, Piece {
 							// if there is a node on the same edge, don't give it a high score
 							if (gameBoard.isEdgeNode(i, j) && whichEdge[gameBoard.whichEdge(i, j)] > 0) {
 								dist = 2;
-							} else {
-								min = dist;
-							}
+								
+							} 
+							min = dist;
 						}
 					}
 					++counter;
@@ -415,7 +416,7 @@ public class Mlobanov implements Player, Piece {
 		//distInverse / counter to normalize the dist average with number of stones you have
 		return nCount * neighbourBonus
 				+ sCount * secondaryNeighbourBonus
-				- distBonus * (int) distTotal;
+				- (int) distTotal * distBonus;
 	}
 
 	/**
