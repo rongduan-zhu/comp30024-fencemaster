@@ -23,7 +23,7 @@ public class Mlobanov implements Player, Piece {
 	private int lowestMovesForTerminalState;
 	private final int WINVALUE = 1000,
 							 LOSSVALUE = -1000;
-	private int CELL_CUTOFF = 4600; 
+	private int CELL_CUTOFF = 4500; 
 
 	/* Constructor(You can delete this line) */
 	public Mlobanov() {
