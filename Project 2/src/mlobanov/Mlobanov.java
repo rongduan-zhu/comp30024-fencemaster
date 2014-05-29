@@ -360,26 +360,29 @@ public class Mlobanov implements Player, Piece {
 			return -1000;
 		}
 
-		/*int value = 0,
+		int value = 0,
 			onEdgeBonus = 2,
-			counter = 0;*/
-		int neighbourBonus = 5,
-			secondaryNeighbourBonus = 3;
-		int nCount = 0;
+			counter = 0;
+		int neighbourBonus = 2,
+			secondaryNeighbourBonus = 5;
+		int nCount = 0,
+			sCount = 0;
+		String colour =  pieceColourToCellColour(getColour());
+		
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
-				if (gameBoard.isValidPosition(i, j) && gameBoard.get(i, j).equals(pieceColourToCellColour(getColour()))) {
-					nCount += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
-				}
+				
 			}
 		}
-		/*String colour =  moveRef.getContent();
 
 		float min = 1000,
-			  distInverse = 0;
+			  distTotal = 0;
+		
+		short whichEdge[] = {0, 0, 0, 0, 0, 0};
 
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
+				min = 1000;
 				if (gameBoard.isValidPosition(i, j) && gameBoard.get(i, j).equals(colour)) {
 					// get closest neighbours
 					ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
@@ -389,20 +392,33 @@ public class Mlobanov implements Player, Piece {
 						            Math.abs( (i - j) - (edgeList.get(k).get(0) - edgeList.get(k).get(1)) )
 						            ) / 2.0f;
 						if (dist < min) {
-							min = dist;
+							// if there is a node on the same edge, don't give it a high score
+							if (gameBoard.isEdgeNode(i, j) && whichEdge[gameBoard.whichEdge(i, j)] > 0) {
+								dist = 2;
+							} else {
+								min = dist;
+							}
 						}
 					}
 					++counter;
-					distInverse += 1 / (min == 0 ? 0.5f : min);
+					distTotal += min;
+					
+					// if there is a node in list on a particular edge, don't give bonus to any other
+					// node on the same edge
+					if (gameBoard.isEdgeNode(i, j)) {
+						whichEdge[gameBoard.whichEdge(i, j)] = 1;
+					}
+				
+					nCount += gameBoard.getNeighbours(i, j, Board.ALL_NEIGHBOURS).size();
+					sCount += gameBoard.getSecondaryConnection(moveRef.getRow(), moveRef.getCol(), colour).size();
 				}
 			}
-		}*/
+		}
 
 		//distInverse / counter to normalize the dist average with number of stones you have
-		return nCount * neighbourBonus;
-		//return neighbourCount * neighbourBonus;
-				//+ secondaryCount * secondaryNeighbourBonus
-				//+ (int) (distInverse / counter);
+		return nCount * neighbourBonus
+				+ sCount * secondaryNeighbourBonus
+				- (int) distTotal;
 	}
 
 	/**
