@@ -641,11 +641,11 @@ public class Mlobanov implements Player, Piece {
 		return lowestMovesForTerminalState;
 	}
 
-	public static int getWinvalue() {
+	public int getWinvalue() {
 		return WINVALUE;
 	}
 
-	public static int getLossvalue() {
+	public int getLossvalue() {
 		return LOSSVALUE;
 	}
 
