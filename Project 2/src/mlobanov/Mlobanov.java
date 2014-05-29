@@ -377,11 +377,11 @@ public class Mlobanov implements Player, Piece {
 				if (gameBoard.get(closePoint.get(0), 
 						closePoint.get(1)).equals(myColour)) {
 					
-					criticalPoints++; 
+					++criticalPoints; 
 				} else if (gameBoard.get(closePoint.get(0),
 							closePoint.get(1)).equals(theirColour)) {
 					
-					criticalPoints--;
+					--criticalPoints;
 				}
 			}
 		}
@@ -466,7 +466,7 @@ public class Mlobanov implements Player, Piece {
 
 					secondaryConnectionCount -= gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
-											moveRef.getCol(), myColour).size();
+											moveRef.getCol(), theirColour).size();
 				}
 			}
 		}
@@ -475,14 +475,10 @@ public class Mlobanov implements Player, Piece {
 			criticalFeature = (short) (criticalPoints * criticalPointBonus);
 		}
 
-		/*totalHeuristicValue = neighbourCount * neighbourBonus
+		totalHeuristicValue = neighbourCount * neighbourBonus
 				+ secondaryConnectionCount * secondaryNeighbourBonus
 				- distBonus * (int) distTotal
-				+ criticalFeature; */
-		
-		totalHeuristicValue = neighbourCount * neighbourBonus
-		+ secondaryConnectionCount * secondaryNeighbourBonus
-		- distBonus * (int) distTotal;
+				+ criticalFeature;
 
 		if (totalHeuristicValue > getWinvalue()) {
 			totalHeuristicValue = getWinvalue() - 1;
