@@ -2,6 +2,12 @@ package mlobanov;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *
+ * @author Maxim Lobanov (mlobanov) and Rongduan Zhu (rz)
+ *
+ */
+
 public class LoopSearch {
 	private Board board;
 

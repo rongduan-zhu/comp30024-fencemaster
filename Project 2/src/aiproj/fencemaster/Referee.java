@@ -1,16 +1,21 @@
 package aiproj.fencemaster;
 
 
-/*   
+/*
  *   Referee:
- *      A mediator between two players. It is responsible to initialize 
- *      the players and pass the plays between them and terminates the game. 
+ *      A mediator between two players. It is responsible to initialize
+ *      the players and pass the plays between them and terminates the game.
  *      It is the responsibility of the players to check whether they have won and
  *      maintain the board state.
  *
  *   @author msalehi
- *   Revised: If condition for IsSwap rule is added 
+ *   Revised: If condition for IsSwap rule is added
  *   if (!lastPlayedMove.IsSwap) ...
+ */
+/**
+ *
+ *  Maxim Lobanov (mlobanov) and Rongduan Zhu (rz)
+ *
  */
 
 
@@ -55,7 +60,7 @@ public class Referee implements Piece{
 		}
 
 		while(Continue && boardEmptyPieces>0)
-		{			
+		{
 
 			lastPlayedMove=P1.makeMove();
 			NumberofMoves++;
@@ -89,7 +94,7 @@ public class Referee implements Piece{
 					System.exit(1);
 				}
 				if (P2.getWinner()!=INVALID || P1.getWinner()!=INVALID)
-					Continue=false;			
+					Continue=false;
 			}
 		}
 		System.out.println("--------------------------------------");
