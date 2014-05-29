@@ -349,8 +349,8 @@ public class Mlobanov implements Player, Piece {
 		int totalHeuristicValue;
 		String colour =  pieceColourToCellColour(getColour());
 		
-		float min = 1000,
-			  distTotal = 0;
+		float min, distTotal;
+		distTotal = 0;
 		
 		short whichEdge[] = {0, 0, 0, 0, 0, 0};
 
@@ -363,6 +363,7 @@ public class Mlobanov implements Player, Piece {
 					// get closest neighbours
 					ArrayList<ArrayList<Integer> > edgeList = gameBoard
 															.getEdgeNodes();
+					
 					for (int k = 0; k < edgeList.size(); ++k) {
 						float dist = (Math.abs(i - edgeList.get(k).get(0)) +
 						            Math.abs(j - edgeList.get(k).get(1)) +
@@ -370,11 +371,14 @@ public class Mlobanov implements Player, Piece {
 						            (edgeList.get(k).get(0) - 
 						            edgeList.get(k).get(1)) )
 						            ) / 2.0f;
+						
+						System.out.println(dist);
 						if (dist < min) {
 							/* if there is a node on the same edge, 
 							 * don't give it a high score */
 							if (gameBoard.isEdgeNode(i, j) && 
 								whichEdge[gameBoard.whichEdge(i, j)] > 0) {
+								
 								dist = 2;
 							} else {
 								min = dist;
@@ -392,6 +396,7 @@ public class Mlobanov implements Player, Piece {
 				
 					neighbourCount += gameBoard.getNeighbours(i, j, 
 											Board.ALL_NEIGHBOURS).size();
+					
 					secondaryConnectionCount += gameBoard
 								.getSecondaryConnection(moveRef.getRow(), 
 											moveRef.getCol(), colour).size();
