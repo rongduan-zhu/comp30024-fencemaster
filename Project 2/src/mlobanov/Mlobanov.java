@@ -341,9 +341,10 @@ public class Mlobanov implements Player, Piece {
 		int value = 0,
 			onEdgeBonus = 2,
 			counter = 0;
-		int neighbourBonus = 1,
+		int neighbourBonus = 2,
 			secondaryNeighbourBonus = 1,
-			distBonus = 5;
+			distBonus = 6,
+			criticalPointBonus = 500;
 		int neighbourCount = 0,
 			secondaryConnectionCount = 0;
 
@@ -356,6 +357,20 @@ public class Mlobanov implements Player, Piece {
 		short whichEdge[] = {0, 0, 0, 0, 0, 0};
 		// get closest neighbours
 		ArrayList<ArrayList<Integer> > edgeList = gameBoard.getEdgeNodes();
+		// list of nodes on the star path
+		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getClosestEdgeNodes();
+		
+		// if we want to get maximum of 4 critical points, maximum moves
+		// needed is 8
+		if (gameBoard.getOccupiedCells() <= 7) {
+			for (int i = 0; i < closeToEdgeList.size(); ++i) {
+				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
+				if (gameBoard.get(closePoint.get(0), 
+						closePoint.get(1)).equals(colour)) {
+					return criticalPointBonus; 
+				}
+			}
+		}
 
 		for (int i = 0; i < gameBoard.getNumRows(); ++i) {
 			for (int j = 0; j < gameBoard.getNumRows(); ++j) {
@@ -374,11 +389,11 @@ public class Mlobanov implements Player, Piece {
 						if (dist < min) {
 							/* if there is a node on the same edge,
 							 * don't give it a high score */
-							if (gameBoard.isEdgeNode(i, j) &&
-								whichEdge[gameBoard.whichEdge(i, j)] > 0) {
-
-								dist = 0f;
-
+							if (gameBoard.isEdgeNode(i, j)) {
+								if (whichEdge[gameBoard.whichEdge(i, j)] > 0)
+									dist = 0;
+								else
+									dist = -1;
 							}
 							min = dist;
 						}

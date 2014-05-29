@@ -24,15 +24,20 @@ public class Board {
 	private Integer occupiedCells = 0;
 	/** Dimension of the board */
 	private Integer dimension;
-	/** Stores all edge cells*/
-	private ArrayList<ArrayList<Integer> > edgeNodes = new ArrayList<ArrayList<Integer> >();
+	/** Stores all edge cells */
+	private ArrayList<ArrayList<Integer> > edgeNodes
+		= new ArrayList<ArrayList<Integer> >();
+	/** Stores all nodes on path closest to all edges */
+	private ArrayList<ArrayList<Integer> > closestEdgeNodes
+		= new ArrayList<ArrayList<Integer> >();
 	/**
 	 * Board constructor, makes a board with all Cells initialized to empty
 	 * @param numRows, specifying total number of rows of board
 	 */
 	public Board(int dimension) {
-		/* Specifying capacity at start will save the time of dynamically reallocating
-		 * more memory */
+		/* Specifying capacity at start will save the time of dynamically
+		 * reallocating more memory
+		 * */
 		this.numRows = dimension * 2 - 1;
 		/* Assume edge length is x, then total number of valid positions is
 		 * 3*n^2 - 3*n + 1
@@ -47,7 +52,12 @@ public class Board {
 			for (int j = 0; j < this.numRows; j++) {
 				cellArray.get(i).add(new Cell(i, j));
 				if (isEdgeNode(i, j)) {
-					edgeNodes.add(new ArrayList<Integer>(Arrays.asList(i, j)));
+					edgeNodes.add(new ArrayList<Integer>(
+					              Arrays.asList(i, j)));
+				}
+				if (isClosestEdgeNode(i, j)) {
+					closestEdgeNodes.add(new ArrayList<Integer>(
+					                     Arrays.asList(i, j)));
 				}
 			}
 		}
@@ -390,6 +400,47 @@ public class Board {
 	/**
 	 * @param row, row index, 0 based
 	 * @param column, column index, 0 based
+	 * @return true if (row, column) is on an edge but not corner
+	 */
+	public boolean isClosestEdgeNode(int row, int column) {
+		if (!isValidPosition(row, column)) {
+			return false;
+		}
+		int columnBound = getColumnBound(row);
+		int boardMiddle = getMiddleRowIndex();
+		// Nothing on top and bottom row is on closest path
+		if (row == 0 || row == this.numRows - 1) {
+			return false;
+		}
+		// top second row and bottom second last row are on closest
+		// path besides the nodes touching an edge
+		if (row == 1 || row == this.numRows - 2) {
+			if (column != 0
+			    && column != columnBound
+			    && column != this.numRows - 1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		// if node is one node to away horizontally to the edge node, then its
+		// a node on the closest edge
+		if (row <= boardMiddle) {
+			if (column == 1 || column == columnBound - 1) {
+				return true;
+			}
+			return false;
+		} else {
+			if (column == columnBound + 1 || column == this.numRows - 2) {
+				return true;
+			}
+			return false;
+		}
+	}
+
+	/**
+	 * @param row, row index, 0 based
+	 * @param column, column index, 0 based
 	 * @return true if (row, column) is on an edge or a corner
 	 */
 	public boolean isEdgeOrCornerNode(int row, int column) {
@@ -408,6 +459,19 @@ public class Board {
 			}
 		}
 		return column == 0 || column == (this.numRows - 1);
+	}
+
+	/**
+	 * @param row, row index, 0 based
+	 * @param column, column index, 0 based
+	 * @return if the position is on a critical point
+	 */
+	public boolean isCriticalPoint(int row, int column) {
+		// first check if top 4 critical point, then check the bottom two
+		return (((row == 1 || row == getMiddleRowIndex())
+		        	&& (column == 1 || column == getColumnBound(row) - 1))
+		     || (row == numRows - 2
+		         	&& (column == getColumnBound(row) || column == numRows - 2)));
 	}
 
 	/**
@@ -496,4 +560,7 @@ public class Board {
 		return edgeNodes;
 	}
 
+	public ArrayList<ArrayList<Integer>> getClosestEdgeNodes() {
+		return closestEdgeNodes;
+	}
 }
