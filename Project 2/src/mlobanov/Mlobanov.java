@@ -23,7 +23,7 @@ public class Mlobanov implements Player, Piece {
 	private int lowestMovesForTerminalState;
 	private final int WINVALUE = 1000,
 							 LOSSVALUE = -1000;
-	private int CELL_CUTOFF = 4300; 
+	private int CELL_CUTOFF = 4600; 
 
 	/* Constructor(You can delete this line) */
 	public Mlobanov() {
@@ -42,7 +42,6 @@ public class Mlobanov implements Player, Piece {
 			setOpponentColour(Piece.BLACK);
 		}
 		/* Initialise the board */
-		System.out.println("I have been initialised. My colour is " + p + " and my opponent is " + getOpponentColour());
 		gameBoard = new Board(n);
 		
 		setDepthToSearch(1);
