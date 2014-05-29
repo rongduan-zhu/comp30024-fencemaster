@@ -363,8 +363,9 @@ public class Mlobanov implements Player, Piece {
 		int value = 0,
 			onEdgeBonus = 2,
 			counter = 0;
-		int neighbourBonus = 2,
-			secondaryNeighbourBonus = 5;
+		int neighbourBonus = 3,
+			secondaryNeighbourBonus = 1,
+			distBonus = 5;
 		int nCount = 0,
 			sCount = 0;
 		String colour =  pieceColourToCellColour(getColour());
@@ -418,7 +419,7 @@ public class Mlobanov implements Player, Piece {
 		//distInverse / counter to normalize the dist average with number of stones you have
 		return nCount * neighbourBonus
 				+ sCount * secondaryNeighbourBonus
-				- (int) distTotal;
+				- distBonus * (int) distTotal;
 	}
 
 	/**
