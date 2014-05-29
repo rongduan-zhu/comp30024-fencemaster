@@ -341,21 +341,23 @@ public class Mlobanov implements Player, Piece {
 			return getLossvalue();
 		}
 
-		int value = 0,
+		short value = 0,
 			onEdgeBonus = 2,
 			counter = 0;
 		
-		int neighbourBonus = 2,
+		short neighbourBonus = 2,
 			secondaryNeighbourBonus = 1,
 			distBonus = 6,
 			criticalPoints = 0,
-			criticalPointBonus = 20;
+			criticalPointBonus = 20,
+			criticalFeature = 0;
 		
-		int neighbourCount = 0,
+		short neighbourCount = 0,
 			secondaryConnectionCount = 0;
 
 		int totalHeuristicValue;
-		String cellColour =  pieceColourToCellColour(getColour());
+		String myColour =  pieceColourToCellColour(getColour());
+		String theirColour = pieceColourToCellColour(getOpponentColour());
 
 		float min, distTotal;
 		distTotal = 0;
@@ -366,19 +368,19 @@ public class Mlobanov implements Player, Piece {
 		// list of nodes on the star path
 		ArrayList<ArrayList<Integer> > closeToEdgeList = gameBoard.getImportantNodes();
 		
-		// if we want to get maximum of 4 critical points, maximum moves
-		// needed is 8
+		/* Check if cells have been placed on important parts of board */
 		if (gameBoard.getOccupiedCells() <= 7) {
 			for (int i = 0; i < closeToEdgeList.size(); ++i) {
 				ArrayList<Integer> closePoint = closeToEdgeList.get(i);
 				if (gameBoard.get(closePoint.get(0), 
-						closePoint.get(1)).equals(cellColour)) {
+						closePoint.get(1)).equals(myColour)) {
 					
 					criticalPoints++; 
+				} else if (gameBoard.get(closePoint.get(0),
+							closePoint.get(1)).equals(theirColour)) {
+					
+					criticalPoints--;
 				}
-			}
-			if (criticalPoints > 0) {
-				return criticalPointBonus * criticalPoints;
 			}
 		}
 
@@ -422,14 +424,19 @@ public class Mlobanov implements Player, Piece {
 
 					secondaryConnectionCount += gameBoard
 								.getSecondaryConnection(moveRef.getRow(),
-											moveRef.getCol(), cellColour).size();
+											moveRef.getCol(), myColour).size();
 				}
 			}
+		}
+		
+		if (criticalPoints != 0) {
+			criticalFeature = (short) (criticalPoints * criticalPointBonus);
 		}
 
 		totalHeuristicValue = neighbourCount * neighbourBonus
 				+ neighbourCount * secondaryNeighbourBonus
-				- distBonus * (int) distTotal;
+				- distBonus * (int) distTotal
+				+ criticalFeature;
 
 		if (totalHeuristicValue > getWinvalue()) {
 			totalHeuristicValue = getWinvalue() - 1;
