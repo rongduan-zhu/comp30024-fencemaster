@@ -50,11 +50,10 @@ public class Mlobanov implements Player, Piece {
 	private int moveCount = 0;
 	private Move opponentLastMove;
 	private Cell moveRef;
+	private int depthToSearch;
 	private int lowestMovesForTerminalState;
 	private static final int WINVALUE = 1000,
 							 LOSSVALUE = -1000;
-
-
 
 	/* Constructor(You can delete this line) */
 	public Mlobanov() {
@@ -75,6 +74,8 @@ public class Mlobanov implements Player, Piece {
 		// initialise the board
 		System.out.println("I have been initialised. My colour is " + p + " and my opponent is " + getOpponentColour());
 		gameBoard = new Board(n);
+		
+		setDepthToSearch(1);
 		/* Calculate lowest number of moves required for terminal state
 		 * for given board size. Assumes board dimension is > 1.
 		 * Includes moves for other player */
@@ -201,7 +202,7 @@ public class Mlobanov implements Player, Piece {
 
 				//System.out.println("BEGINNING MINIMAX SEARCH. ROOT NODE: " + oneCell.getRow() + ", " + oneCell.getCol());
 
-				value = minimaxValue(oneCell, getColour(), 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				value = minimaxValue(oneCell, getColour(), getDepthToSearch(), Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 				//System.out.println("Value of the cell " + oneCell.getRow() + ", " + oneCell.getCol() + " is " + value);
 
@@ -263,11 +264,9 @@ public class Mlobanov implements Player, Piece {
 		int newBeta = beta;
 		int nextSearchColour;
 		nextSearchColour = oppositeColour(searchColour);
-		//short tempNeighbourCounter;
 
 		if (nextSearchColour == getColour()) {
 			for (int i = 0; i < gameBoard.getNumRows(); ++i) {
-
 				for (int j = 0; j < gameBoard.getNumRows(); ++j) {
 
 					/* Ensure cell is valid and not taken */
@@ -594,5 +593,13 @@ public class Mlobanov implements Player, Piece {
 
 	public static int getLossvalue() {
 		return LOSSVALUE;
+	}
+
+	public int getDepthToSearch() {
+		return depthToSearch;
+	}
+
+	public void setDepthToSearch(int depthToSearch) {
+		this.depthToSearch = depthToSearch;
 	}
 }

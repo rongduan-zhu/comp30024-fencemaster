@@ -2,6 +2,7 @@
 Referee started !
 I have been initialised. My colour is 1 and my opponent is 2
 I have been initialised. My colour is 2 and my opponent is 1
+0
 I am making a move at 0, 1
 Putting Piece 0:1 by 1
 -W---    
@@ -14,6 +15,7 @@ Putting Piece 0:1 by 1
    ------
     -----
 
+0
 I am making a move at 0, 1
 Putting Piece 0:1 by 2
 -B---    
@@ -26,6 +28,7 @@ Putting Piece 0:1 by 2
    ------
     -----
 
+0
 I am making a move at 0, 2
 Putting Piece 0:2 by 1
 -BW--    
@@ -38,9 +41,10 @@ Putting Piece 0:2 by 1
    ------
     -----
 
-I am making a move at 0, 0
-Putting Piece 0:0 by 2
-BBW--    
+0
+I am making a move at 0, 3
+Putting Piece 0:3 by 2
+-BWB-    
 ------   
 -------  
 -------- 
@@ -50,246 +54,784 @@ BBW--
    ------
     -----
 
+0
+I am making a move at 1, 0
+Putting Piece 1:0 by 1
+-BWB-    
+W-----   
+-------  
+-------- 
+---------
+ --------
+  -------
+   ------
+    -----
+
+0
+I am making a move at 1, 5
+Putting Piece 1:5 by 2
+-BWB-    
+W----B   
+-------  
+-------- 
+---------
+ --------
+  -------
+   ------
+    -----
+
+4
+I am making a move at 2, 0
+Putting Piece 2:0 by 1
+-BWB-    
+W----B   
+W------  
+-------- 
+---------
+ --------
+  -------
+   ------
+    -----
+
+4
+I am making a move at 2, 6
+Putting Piece 2:6 by 2
+-BWB-    
+W----B   
+W-----B  
+-------- 
+---------
+ --------
+  -------
+   ------
+    -----
+
+8
+I am making a move at 3, 0
+Putting Piece 3:0 by 1
+-BWB-    
+W----B   
+W-----B  
+W------- 
+---------
+ --------
+  -------
+   ------
+    -----
+
+8
+I am making a move at 3, 7
+Putting Piece 3:7 by 2
+-BWB-    
+W----B   
+W-----B  
+W------B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+11
+I am making a move at 2, 1
+Putting Piece 2:1 by 1
+-BWB-    
+W----B   
+WW----B  
+W------B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+11
+I am making a move at 0, 4
+Putting Piece 0:4 by 2
+-BWBB    
+W----B   
+WW----B  
+W------B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+18
+I am making a move at 3, 1
+Putting Piece 3:1 by 1
+-BWBB    
+W----B   
+WW----B  
+WW-----B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+18
+I am making a move at 1, 4
+Putting Piece 1:4 by 2
+-BWBB    
+W---BB   
+WW----B  
+WW-----B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+21
+I am making a move at 1, 1
+Putting Piece 1:1 by 1
+-BWBB    
+WW--BB   
+WW----B  
+WW-----B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+25
+I am making a move at 2, 5
+Putting Piece 2:5 by 2
+-BWBB    
+WW--BB   
+WW---BB  
+WW-----B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+24
+I am making a move at 0, 0
+Putting Piece 0:0 by 1
+WBWBB    
+WW--BB   
+WW---BB  
+WW-----B 
+---------
+ --------
+  -------
+   ------
+    -----
+
+32
+I am making a move at 3, 6
+Putting Piece 3:6 by 2
+WBWBB    
+WW--BB   
+WW---BB  
+WW----BB 
+---------
+ --------
+  -------
+   ------
+    -----
+
+27
 I am making a move at 1, 2
 Putting Piece 1:2 by 1
-BBW--    
---W---   
--------  
--------- 
+WBWBB    
+WWW-BB   
+WW---BB  
+WW----BB 
 ---------
  --------
   -------
    ------
     -----
 
-I am making a move at 1, 1
-Putting Piece 1:1 by 2
-BBW--    
--BW---   
--------  
--------- 
----------
- --------
-  -------
-   ------
-    -----
-
+35
 I am making a move at 1, 3
-Putting Piece 1:3 by 1
-BBW--    
--BWW--   
--------  
--------- 
+Putting Piece 1:3 by 2
+WBWBB    
+WWWBBB   
+WW---BB  
+WW----BB 
 ---------
  --------
   -------
    ------
     -----
 
-I am making a move at 1, 0
-Putting Piece 1:0 by 2
-BBW--    
-BBWW--   
--------  
--------- 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 2, 3
-Putting Piece 2:3 by 1
-BBW--    
-BBWW--   
----W---  
--------- 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 2, 1
-Putting Piece 2:1 by 2
-BBW--    
-BBWW--   
--B-W---  
--------- 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 2, 2
-Putting Piece 2:2 by 1
-BBW--    
-BBWW--   
--BWW---  
--------- 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 3, 1
-Putting Piece 3:1 by 2
-BBW--    
-BBWW--   
--BWW---  
--B------ 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 2, 4
-Putting Piece 2:4 by 1
-BBW--    
-BBWW--   
--BWWW--  
--B------ 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 3, 2
-Putting Piece 3:2 by 2
-BBW--    
-BBWW--   
--BWWW--  
--BB----- 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 1, 4
-Putting Piece 1:4 by 1
-BBW--    
-BBWWW-   
--BWWW--  
--BB----- 
----------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 4, 2
-Putting Piece 4:2 by 2
-BBW--    
-BBWWW-   
--BWWW--  
--BB----- 
---B------
- --------
-  -------
-   ------
-    -----
-
-I am making a move at 2, 5
-Putting Piece 2:5 by 1
-BBW--    
-BBWWW-   
--BWWWW-  
--BB----- 
---B------
- --------
-  -------
-   ------
-    -----
-
+30
 I am making a move at 4, 1
-Putting Piece 4:1 by 2
-BBW--    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
+Putting Piece 4:1 by 1
+WBWBB    
+WWWBBB   
+WW---BB  
+WW----BB 
+-W-------
  --------
   -------
    ------
     -----
 
+35
 I am making a move at 5, 1
-Putting Piece 5:1 by 1
-BBW--    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
- W-------
+Putting Piece 5:1 by 2
+WBWBB    
+WWWBBB   
+WW---BB  
+WW----BB 
+-W-------
+ B-------
   -------
    ------
     -----
 
-I am making a move at 5, 2
-Putting Piece 5:2 by 2
-BBW--    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
- WB------
+33
+I am making a move at 4, 0
+Putting Piece 4:0 by 1
+WBWBB    
+WWWBBB   
+WW---BB  
+WW----BB 
+WW-------
+ B-------
   -------
    ------
     -----
 
-I am making a move at 0, 4
-Putting Piece 0:4 by 1
-BBW-W    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
- WB------
-  -------
-   ------
-    -----
-
+39
 I am making a move at 6, 2
 Putting Piece 6:2 by 2
-BBW-W    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
- WB------
+WBWBB    
+WWWBBB   
+WW---BB  
+WW----BB 
+WW-------
+ B-------
   B------
    ------
     -----
+
+35
+I am making a move at 2, 2
+Putting Piece 2:2 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WW----BB 
+WW-------
+ B-------
+  B------
+   ------
+    -----
+
+43
+I am making a move at 7, 3
+Putting Piece 7:3 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WW----BB 
+WW-------
+ B-------
+  B------
+   B-----
+    -----
+
+37
+I am making a move at 3, 2
+Putting Piece 3:2 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-------
+ B-------
+  B------
+   B-----
+    -----
+
+46
+I am making a move at 4, 7
+Putting Piece 4:7 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----B-
+ B-------
+  B------
+   B-----
+    -----
+
+37
+I am making a move at 5, 8
+Putting Piece 5:8 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----B-
+ B------W
+  B------
+   B-----
+    -----
+
+49
+I am making a move at 4, 8
+Putting Piece 4:8 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ B------W
+  B------
+   B-----
+    -----
+
+41
+I am making a move at 6, 8
+Putting Piece 6:8 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ B------W
+  B-----W
+   B-----
+    -----
+
+52
+I am making a move at 5, 2
+Putting Piece 5:2 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB-----W
+  B-----W
+   B-----
+    -----
+
+45
+I am making a move at 7, 8
+Putting Piece 7:8 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB-----W
+  B-----W
+   B----W
+    -----
+
+59
+I am making a move at 6, 3
+Putting Piece 6:3 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB-----W
+  BB----W
+   B----W
+    -----
+
+48
+I am making a move at 5, 7
+Putting Piece 5:7 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB----W
+   B----W
+    -----
+
+62
+I am making a move at 7, 4
+Putting Piece 7:4 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB----W
+   BB---W
+    -----
+
+55
+I am making a move at 6, 7
+Putting Piece 6:7 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB---W
+    -----
+
+66
+I am making a move at 8, 5
+Putting Piece 8:5 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB---W
+    -B---
+
+58
+I am making a move at 7, 7
+Putting Piece 7:7 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB--WW
+    -B---
+
+73
+I am making a move at 8, 4
+Putting Piece 8:4 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB--WW
+    BB---
+
+62
+I am making a move at 8, 7
+Putting Piece 8:7 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB--WW
+    BB-W-
+
+77
+I am making a move at 8, 6
+Putting Piece 8:6 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB--WW
+    BBBW-
+
+69
+I am making a move at 8, 8
+Putting Piece 8:8 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BB--WW
+    BBBWW
+
+84
+I am making a move at 7, 5
+Putting Piece 7:5 by 2
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BBB-WW
+    BBBWW
+
+72
+I am making a move at 7, 6
+Putting Piece 7:6 by 1
+WBWBB    
+WWWBBB   
+WWW--BB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BBBWWW
+    BBBWW
+
+86
+I am making a move at 2, 4
+Putting Piece 2:4 by 2
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW---BB 
+WW-----BB
+ BB----WW
+  BB---WW
+   BBBWWW
+    BBBWW
+
+74
+I am making a move at 4, 2
+Putting Piece 4:2 by 1
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW---BB 
+WWW----BB
+ BB----WW
+  BB---WW
+   BBBWWW
+    BBBWW
+
+88
+I am making a move at 3, 5
+Putting Piece 3:5 by 2
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW--BBB 
+WWW----BB
+ BB----WW
+  BB---WW
+   BBBWWW
+    BBBWW
+
+76
+I am making a move at 6, 6
+Putting Piece 6:6 by 1
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW--BBB 
+WWW----BB
+ BB----WW
+  BB--WWW
+   BBBWWW
+    BBBWW
+
+90
+I am making a move at 4, 6
+Putting Piece 4:6 by 2
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW--BBB 
+WWW---BBB
+ BB----WW
+  BB--WWW
+   BBBWWW
+    BBBWW
+
+78
+I am making a move at 5, 6
+Putting Piece 5:6 by 1
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW--BBB 
+WWW---BBB
+ BB---WWW
+  BB--WWW
+   BBBWWW
+    BBBWW
+
+92
+I am making a move at 6, 4
+Putting Piece 6:4 by 2
+WBWBB    
+WWWBBB   
+WWW-BBB  
+WWW--BBB 
+WWW---BBB
+ BB---WWW
+  BBB-WWW
+   BBBWWW
+    BBBWW
+
+76
+I am making a move at 2, 3
+Putting Piece 2:3 by 1
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWW--BBB 
+WWW---BBB
+ BB---WWW
+  BBB-WWW
+   BBBWWW
+    BBBWW
+
+94
+I am making a move at 5, 3
+Putting Piece 5:3 by 2
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWW--BBB 
+WWW---BBB
+ BBB--WWW
+  BBB-WWW
+   BBBWWW
+    BBBWW
+
+74
+I am making a move at 6, 5
+Putting Piece 6:5 by 1
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWW--BBB 
+WWW---BBB
+ BBB--WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+87
+I am making a move at 3, 4
+Putting Piece 3:4 by 2
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWW-BBBB 
+WWW---BBB
+ BBB--WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+71
+I am making a move at 3, 3
+Putting Piece 3:3 by 1
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWW---BBB
+ BBB--WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+84
+I am making a move at 4, 5
+Putting Piece 4:5 by 2
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWW--BBBB
+ BBB--WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+68
+I am making a move at 4, 3
+Putting Piece 4:3 by 1
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWWW-BBBB
+ BBB--WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+77
+I am making a move at 5, 4
+Putting Piece 5:4 by 2
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWWW-BBBB
+ BBBB-WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+-1000
+I am making a move at 4, 4
+Putting Piece 4:4 by 1
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWWWWBBBB
+ BBBB-WWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
+
+1000
+I am making a move at 5, 5
+Putting Piece 5:5 by 2
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWWWWBBBB
+ BBBBBWWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
 
 --------------------------------------
 P2 Board is :
-BBW-W    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
- WB------
-  B------
-   ------
-    -----
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWWWWBBBB
+ BBBBBWWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
 
 P1 Board is :
-BBW-W    
-BBWWW-   
--BWWWW-  
--BB----- 
--BB------
- WB------
-  B------
-   ------
-    -----
+WBWBB    
+WWWBBB   
+WWWWBBB  
+WWWWBBBB 
+WWWWWBBBB
+ BBBBBWWW
+  BBBWWWW
+   BBBWWW
+    BBBWW
 
 Player one (White) indicate winner as: 2
 Player two (Black) indicate winner as: 2
-Total Number of Moves Played in the Game: 22
+Total Number of Moves Played in the Game: 62
 Referee Finished !
